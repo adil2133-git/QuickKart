@@ -8,8 +8,12 @@ import {
   ChevronRight, Store, Phone,
 } from "lucide-react";
 import { useDriverDeliveryStore } from "../state/driverDeliveryState";
-import { useDriverDashboardStore } from "../state/driverDashboarState";
+import { useDriverDashboardStore } from "../state/driverDashboardState";
 import { useDriverDeliveryActions } from "../hooks/useDriverDelivery";
+import { useDriverWalletStore } from "../state/driverWalletState";
+import { useDriverWalletActions } from "../hooks/useDriverWallet";
+import { useDriverEarningsStore } from "../state/driverEarningsState";
+import { useDriverEarningsActions } from "../hooks/useDriverEarnings";
 import { toast } from "sonner";
 
 // Framer Motion stagger helpers
@@ -120,7 +124,14 @@ function KpiCards() {
   const statsLoading = useDriverDeliveryStore((s) => s.statsLoading);
   const { fetchTodayStats } = useDriverDeliveryActions();
 
-  useEffect(() => { void fetchTodayStats(); }, [fetchTodayStats]);
+  const walletSummary = useDriverWalletStore((s) => s.summary);
+  const walletLoading = useDriverWalletStore((s) => s.isLoading);
+  const { fetchWalletSummary } = useDriverWalletActions();
+
+  useEffect(() => {
+    void fetchTodayStats();
+    void fetchWalletSummary();
+  }, [fetchTodayStats, fetchWalletSummary]);
 
   const kpis = [
     {
@@ -131,6 +142,7 @@ function KpiCards() {
         ? `${stats.earningsChangePercent > 0 ? "+" : ""}${stats.earningsChangePercent}% vs yesterday`
         : "Today",
       subColor: (stats?.earningsChangePercent ?? 0) >= 0 ? "text-emerald-600" : "text-rose-500",
+      loading: statsLoading && !stats,
     },
     {
       icon: PackageCheck,
@@ -138,6 +150,7 @@ function KpiCards() {
       value: String(stats?.completedCount ?? 0),
       sub: "Today",
       subColor: "text-[#6E7C74]",
+      loading: statsLoading && !stats,
     },
     {
       icon: Star,
@@ -145,13 +158,15 @@ function KpiCards() {
       value: "—",
       sub: "Coming soon",
       subColor: "text-[#6E7C74]",
+      loading: false,
     },
     {
       icon: Wallet,
       label: "Wallet",
-      value: "₹0",
+      value: `₹${(walletSummary?.availableBalance ?? 0).toLocaleString("en-IN", { maximumFractionDigits: 0 })}`,
       sub: "Available balance",
       subColor: "text-[#6E7C74]",
+      loading: walletLoading && !walletSummary,
     },
   ];
 
@@ -339,12 +354,19 @@ function LocationAndChart() {
   const locationStatus = useDriverDashboardStore((s) => s.locationStatus);
   const currentArea = useDriverDashboardStore((s) => s.currentArea);
 
-  // Placeholder weekly data — replace with real API when available
-  const weekData = [
-    { day: "Mon", v: 0 }, { day: "Tue", v: 0 }, { day: "Wed", v: 0 },
-    { day: "Thu", v: 0 }, { day: "Fri", v: 0 }, { day: "Sat", v: 0 },
-    { day: "Sun", v: 0 },
-  ];
+  const earningsSummary = useDriverEarningsStore((s) => s.summary);
+  const earningsLoading = useDriverEarningsStore((s) => s.isLoading);
+  const { fetchEarningsSummary } = useDriverEarningsActions();
+
+  useEffect(() => {
+    void fetchEarningsSummary();
+  }, [fetchEarningsSummary]);
+
+  const defaultDays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+  const weekData =
+    earningsSummary?.last7Days && earningsSummary.last7Days.length > 0
+      ? earningsSummary.last7Days.map((d) => ({ day: d.label, v: d.total }))
+      : defaultDays.map((day) => ({ day, v: 0 }));
 
   const statusDot: Record<string, string> = {
     active: "bg-emerald-500",
@@ -380,30 +402,41 @@ function LocationAndChart() {
 
       {/* Weekly sparkline */}
       <motion.div variants={card} className="rounded-2xl border border-[#E3E7E1] bg-white p-4">
-        <p className="mb-3 text-[10px] font-bold uppercase tracking-widest text-[#6E7C74]">Weekly Earnings</p>
+        <div className="mb-2 flex items-center justify-between">
+          <p className="text-[10px] font-bold uppercase tracking-widest text-[#6E7C74]">Weekly Earnings</p>
+          {earningsSummary && (
+            <span className="text-xs font-bold text-[#1F4D3D]">
+              ₹{(earningsSummary.thisWeek ?? 0).toLocaleString("en-IN", { maximumFractionDigits: 0 })}
+            </span>
+          )}
+        </div>
         <div className="h-20">
-          <ResponsiveContainer width="100%" height="100%">
-            <AreaChart data={weekData}>
-              <defs>
-                <linearGradient id="earningsGrad" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#1F4D3D" stopOpacity={0.2} />
-                  <stop offset="95%" stopColor="#1F4D3D" stopOpacity={0} />
-                </linearGradient>
-              </defs>
-              <Tooltip
-                contentStyle={{ fontSize: 10, borderRadius: 8, border: "1px solid #E3E7E1" }}
-                formatter={(v: unknown) => [`₹${v}`, "Earnings"]}
-              />
-              <Area
-                type="monotone"
-                dataKey="v"
-                stroke="#1F4D3D"
-                strokeWidth={2}
-                fill="url(#earningsGrad)"
-                dot={false}
-              />
-            </AreaChart>
-          </ResponsiveContainer>
+          {earningsLoading && !earningsSummary ? (
+            <div className="h-full w-full animate-pulse rounded-lg bg-[#F5F7F3]" />
+          ) : (
+            <ResponsiveContainer width="100%" height="100%">
+              <AreaChart data={weekData}>
+                <defs>
+                  <linearGradient id="earningsGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#1F4D3D" stopOpacity={0.25} />
+                    <stop offset="95%" stopColor="#1F4D3D" stopOpacity={0} />
+                  </linearGradient>
+                </defs>
+                <Tooltip
+                  contentStyle={{ fontSize: 11, borderRadius: 8, border: "1px solid #E3E7E1", backgroundColor: "#ffffff" }}
+                  formatter={(v: unknown) => [`₹${Number(v ?? 0).toLocaleString("en-IN")}`, "Earned"]}
+                />
+                <Area
+                  type="monotone"
+                  dataKey="v"
+                  stroke="#1F4D3D"
+                  strokeWidth={2}
+                  fill="url(#earningsGrad)"
+                  dot={false}
+                />
+              </AreaChart>
+            </ResponsiveContainer>
+          )}
         </div>
         <div className="mt-1 flex justify-between text-[10px] text-[#6E7C74]">
           {weekData.map((d) => <span key={d.day}>{d.day}</span>)}

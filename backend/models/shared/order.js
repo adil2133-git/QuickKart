@@ -183,6 +183,11 @@ const orderSchema = new mongoose.Schema(
             ],
             default: "PENDING",
         },
+
+        deliveredAt: {
+            type: Date,
+            default: null,
+        },
     },
     {
         timestamps: {

@@ -340,7 +340,8 @@ const advanceDeliveryStage = async (req, res) => {
         let completedAt = null;
         let tierUp = null;
         if (stage === "DELIVERED") {
-            completedAt = new Date().toISOString();
+            order.deliveredAt = new Date();
+            completedAt = order.deliveredAt.toISOString();
             driver.totalDeliveries += 1;
             driver.availabilityStatus = "ONLINE";
 
@@ -511,7 +512,7 @@ const getCompletedDeliveries = async (req, res) => {
             totalAmount: o.totalAmount,
             paymentMethod: o.paymentMethod,
             itemCount: (o.products || []).reduce((s, i) => s + i.quantity, 0),
-            completedAt: o.createdAt,
+            completedAt: o.deliveredAt || o.createdAt,
             earnings: o.deliveryCharge ?? 0,
         }));
 
@@ -539,17 +540,27 @@ const getTodayStats = async (req, res) => {
         const startOfYesterday = new Date(startOfDay);
         startOfYesterday.setDate(startOfYesterday.getDate() - 1);
 
+        const todayFilter = {
+            driverId: driver._id,
+            orderStatus: "DELIVERED",
+            $or: [
+                { deliveredAt: { $gte: startOfDay } },
+                { deliveredAt: null, createdAt: { $gte: startOfDay } },
+            ],
+        };
+
+        const yesterdayFilter = {
+            driverId: driver._id,
+            orderStatus: "DELIVERED",
+            $or: [
+                { deliveredAt: { $gte: startOfYesterday, $lt: startOfDay } },
+                { deliveredAt: null, createdAt: { $gte: startOfYesterday, $lt: startOfDay } },
+            ],
+        };
+
         const [todayOrders, yesterdayOrders] = await Promise.all([
-            Order.find({
-                driverId: driver._id,
-                orderStatus: "DELIVERED",
-                createdAt: { $gte: startOfDay },
-            }).lean(),
-            Order.find({
-                driverId: driver._id,
-                orderStatus: "DELIVERED",
-                createdAt: { $gte: startOfYesterday, $lt: startOfDay },
-            }).lean(),
+            Order.find(todayFilter).lean(),
+            Order.find(yesterdayFilter).lean(),
         ]);
 
         const todayEarnings = todayOrders.reduce((s, o) => s + (o.deliveryCharge || 0), 0);
@@ -656,13 +667,24 @@ const getEarningsSummary = async (req, res) => {
         const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
         const startOfLastMonth = new Date(now.getFullYear(), now.getMonth() - 1, 1);
 
+        const dateExpr = { $ifNull: ["$deliveredAt", "$createdAt"] };
         const sumInRange = async (from, to) => {
             const result = await Order.aggregate([
                 {
                     $match: {
                         driverId: driver._id,
                         orderStatus: "DELIVERED",
-                        createdAt: to ? { $gte: from, $lt: to } : { $gte: from },
+                    },
+                },
+                {
+                    $project: {
+                        deliveryCharge: 1,
+                        effectiveDate: dateExpr,
+                    },
+                },
+                {
+                    $match: {
+                        effectiveDate: to ? { $gte: from, $lt: to } : { $gte: from },
                     },
                 },
                 { $group: { _id: null, total: { $sum: "$deliveryCharge" }, count: { $sum: 1 } } },
@@ -692,12 +714,22 @@ const getEarningsSummary = async (req, res) => {
                     $match: {
                         driverId: driver._id,
                         orderStatus: "DELIVERED",
-                        createdAt: { $gte: sevenDaysAgo },
+                    },
+                },
+                {
+                    $project: {
+                        deliveryCharge: 1,
+                        effectiveDate: dateExpr,
+                    },
+                },
+                {
+                    $match: {
+                        effectiveDate: { $gte: sevenDaysAgo },
                     },
                 },
                 {
                     $group: {
-                        _id: { $dateToString: { format: "%Y-%m-%d", date: "$createdAt" } },
+                        _id: { $dateToString: { format: "%Y-%m-%d", date: "$effectiveDate" } },
                         total: { $sum: "$deliveryCharge" },
                     },
                 },

@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import api from "../../../api/axios";
-import { useDriverDashboardStore } from "../state/driverDashboarState";
+import { useDriverDashboardStore } from "../state/driverDashboardState";
 import { useDriverDeliveryStore } from "../state/driverDeliveryState";
 
 // Send a location ping if the driver moved more than this many metres,
