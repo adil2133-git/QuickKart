@@ -261,7 +261,7 @@ export default function PendingApproval({ role }: PendingApprovalProps) {
     role === "store" ? (profile as StoreProfileInfo).coordinates : null;
 
   return (
-    <div className="flex h-screen w-screen overflow-hidden font-sans bg-[#F9F8F6] select-none">
+    <div className="flex min-h-screen min-h-[100dvh] w-full overflow-hidden font-sans bg-[#F9F8F6] select-none">
       
       {/* ── Left Split-Screen Hero Panel ────────────────────────────────── */}
       <aside className="hidden md:flex flex-col justify-between w-[360px] lg:w-[440px] xl:w-[480px] h-full p-8 lg:p-12 relative overflow-hidden bg-[#063826] text-white flex-shrink-0">
@@ -296,8 +296,20 @@ export default function PendingApproval({ role }: PendingApprovalProps) {
       </aside>
 
       {/* ── Right Main Area ─────────────────────────────────────────────── */}
-      <main className="flex-1 h-full overflow-y-auto p-6 sm:p-10 lg:p-12">
+      <main className="flex-1 h-full overflow-y-auto p-4 sm:p-8 lg:p-12">
         <div className="max-w-[560px] mx-auto space-y-6">
+
+          {/* Mobile Brand Header */}
+          <div className="md:hidden flex items-center justify-between pb-3 mb-2 border-b border-black/5">
+            <button onClick={() => navigate("/")} className="flex items-center gap-1.5 text-left cursor-pointer">
+              <span className="text-xl font-bold tracking-tight text-[#063826]" style={{ fontFamily: "Fraunces, serif" }}>
+                QuickKart
+              </span>
+            </button>
+            <button onClick={handleLogout} className="text-xs font-semibold text-red-600 hover:underline cursor-pointer flex items-center gap-1">
+              <LogOut size={12} /> Logout
+            </button>
+          </div>
 
           {/* APPROVED CELEBRATION CARD */}
           {isApproved && (

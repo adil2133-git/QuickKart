@@ -157,7 +157,7 @@ export default function DeliveryPartnerRegistration() {
   });
 
   return (
-    <div className="flex h-screen w-screen overflow-hidden font-sans bg-[#F9F8F6] select-none">
+    <div className="flex min-h-screen min-h-[100dvh] w-full overflow-hidden font-sans bg-[#F9F8F6] select-none">
       
       {/* Left Panel: Hero Image & Branding */}
       <aside className="hidden md:flex flex-col justify-between w-[360px] lg:w-[440px] xl:w-[480px] h-full p-8 lg:p-12 relative overflow-hidden bg-[#063826] text-white flex-shrink-0">
@@ -191,13 +191,25 @@ export default function DeliveryPartnerRegistration() {
       </aside>
 
       {/* Right Panel: Form Area */}
-      <main className="flex-1 h-full overflow-y-auto p-6 sm:p-10 lg:p-12">
+      <main className="flex-1 h-full overflow-y-auto p-4 sm:p-8 lg:p-12">
         <div className="max-w-[560px] mx-auto">
+
+          {/* Mobile Brand Header */}
+          <div className="md:hidden flex items-center justify-between pb-3 mb-4 border-b border-black/5">
+            <button onClick={() => navigate("/")} className="flex items-center gap-1.5 text-left cursor-pointer">
+              <span className="text-xl font-bold tracking-tight text-[#063826]" style={{ fontFamily: "Fraunces, serif" }}>
+                QuickKart
+              </span>
+            </button>
+            <button onClick={() => navigate("/login")} className="text-xs font-semibold text-[#063826] hover:underline cursor-pointer">
+              Sign In
+            </button>
+          </div>
 
           {/* Page Heading */}
           <div className="mb-4">
             <h2 
-              className="text-3xl sm:text-4xl font-bold text-[#063826]"
+              className="text-2xl sm:text-4xl font-bold text-[#063826]"
               style={{ fontFamily: "Fraunces, serif" }}
             >
               Join as a Delivery Partner
@@ -208,7 +220,7 @@ export default function DeliveryPartnerRegistration() {
           </div>
 
           {/* Admin Review Notice Pill */}
-          <div className="flex items-center gap-3 p-4 mb-6 rounded-full bg-[#E2EDE7]/70 border border-[#C5DCD0] text-xs text-[#063826]">
+          <div className="flex items-center gap-3 p-3.5 sm:p-4 mb-6 rounded-2xl sm:rounded-3xl bg-[#E2EDE7]/70 border border-[#C5DCD0] text-xs text-[#063826]">
             <Info size={18} className="shrink-0 text-[#063826]" />
             <p className="leading-tight italic">
               Your account will be reviewed by our admin team once submitted. We'll notify you via phone once approved.

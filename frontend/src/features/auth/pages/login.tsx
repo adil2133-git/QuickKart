@@ -89,7 +89,7 @@ export default function QuickKartLogin() {
   });
 
   return (
-    <div className="relative flex h-screen w-full flex-col justify-between overflow-hidden bg-[#F0F2ED] font-sans text-[#16241D] select-none">
+    <div className="relative flex min-h-screen min-h-[100dvh] w-full flex-col justify-between overflow-y-auto bg-[#F0F2ED] font-sans text-[#16241D] select-none">
       {showForgot && <ForgotPasswordModal onClose={() => setShowForgot(false)} />}
       {showCreateAccount && <CreateAccountModal onClose={() => setShowCreateAccount(false)} />}
 
@@ -108,8 +108,8 @@ export default function QuickKartLogin() {
       </div>
 
       {/* Main Container */}
-      <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-1 flex-col justify-center px-6 py-2 lg:px-12">
-        <div className="grid items-center gap-8 lg:grid-cols-12">
+      <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-1 flex-col justify-center px-4 py-8 sm:px-6 lg:px-12 my-auto">
+        <div className="grid items-center gap-8 lg:grid-cols-12 py-4">
 
           {/* Left Column: Brand Headline & Statement */}
           <div className="flex flex-col justify-center lg:col-span-6">

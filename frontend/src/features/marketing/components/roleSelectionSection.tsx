@@ -32,7 +32,7 @@ export function RoleSelectionSection() {
           </h2>
         </motion.div>
 
-        <div className="grid gap-8 md:grid-cols-3">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {/* Customer Card */}
           <motion.div
             custom={0}
@@ -43,7 +43,7 @@ export function RoleSelectionSection() {
             whileHover={{ y: -8 }}
             className="group flex flex-col overflow-hidden rounded-3xl border border-[#E3E7E1] bg-white transition-all duration-300 hover:shadow-2xl"
           >
-            <div className="relative h-64 w-full overflow-hidden bg-[#F5F7F3]">
+            <div className="relative h-56 sm:h-64 w-full overflow-hidden bg-[#F5F7F3]">
               <img
                 src={customerImg}
                 alt="Order Groceries"
@@ -55,7 +55,7 @@ export function RoleSelectionSection() {
                 For Shoppers
               </div>
             </div>
-            <div className="flex flex-1 flex-col p-7">
+            <div className="flex flex-1 flex-col p-6 sm:p-7">
               <h3 className="mb-2 text-xl font-bold text-[#16241D]" style={{ fontFamily: "Fraunces, serif" }}>Order Groceries</h3>
               <p className="mb-6 flex-1 text-sm leading-relaxed text-[#6E7C74]">
                 Shop from nearby supermarkets with real-time stock verification. Get exact items delivered to your door in 15 minutes.
@@ -79,7 +79,7 @@ export function RoleSelectionSection() {
             whileHover={{ y: -8 }}
             className="group flex flex-col overflow-hidden rounded-3xl border border-[#E3E7E1] bg-white transition-all duration-300 hover:shadow-2xl"
           >
-            <div className="relative h-64 w-full overflow-hidden bg-[#F5F7F3]">
+            <div className="relative h-56 sm:h-64 w-full overflow-hidden bg-[#F5F7F3]">
               <img
                 src={storePartnerImg}
                 alt="Partner Store"
@@ -91,7 +91,7 @@ export function RoleSelectionSection() {
                 For Supermarkets
               </div>
             </div>
-            <div className="flex flex-1 flex-col p-7">
+            <div className="flex flex-1 flex-col p-6 sm:p-7">
               <h3 className="mb-2 text-xl font-bold text-[#16241D]" style={{ fontFamily: "Fraunces, serif" }}>Partner Your Store</h3>
               <p className="mb-6 flex-1 text-sm leading-relaxed text-[#6E7C74]">
                 Bring your supermarket online, sync inventory live via POS integration, and reach thousands of neighborhood customers daily.
@@ -115,7 +115,7 @@ export function RoleSelectionSection() {
             whileHover={{ y: -8 }}
             className="group flex flex-col overflow-hidden rounded-3xl border border-[#E3E7E1] bg-white transition-all duration-300 hover:shadow-2xl"
           >
-            <div className="relative h-64 w-full overflow-hidden bg-[#F5F7F3]">
+            <div className="relative h-56 sm:h-64 w-full overflow-hidden bg-[#F5F7F3]">
               <img
                 src={driverPartnerImg}
                 alt="Become a Delivery Partner"
@@ -127,7 +127,7 @@ export function RoleSelectionSection() {
                 For Drivers
               </div>
             </div>
-            <div className="flex flex-1 flex-col p-7">
+            <div className="flex flex-1 flex-col p-6 sm:p-7">
               <h3 className="mb-2 text-xl font-bold text-[#16241D]" style={{ fontFamily: "Fraunces, serif" }}>Become a Driver</h3>
               <p className="mb-6 flex-1 text-sm leading-relaxed text-[#6E7C74]">
                 Deliver on your own schedule with transparent per-order earnings, performance bonuses, and weekly direct payouts.

@@ -65,14 +65,14 @@ export default function CustomerRegistration() {
 
   return (
     <div 
-      className="relative flex h-screen w-full items-center justify-center p-3 sm:p-4 overflow-hidden font-sans bg-cover bg-center bg-no-repeat select-none"
+      className="relative flex min-h-screen min-h-[100dvh] w-full items-center justify-center px-4 py-8 sm:py-12 overflow-y-auto font-sans bg-cover bg-center bg-no-repeat select-none"
       style={{ backgroundImage: `url(${customerRegBg})` }}
     >
       {/* Soft dark vignette overlay for focus */}
       <div className="absolute inset-0 bg-black/15 backdrop-brightness-[0.96]" />
 
       {/* Centered Glassmorphic Registration Card */}
-      <div className="relative z-10 w-full max-w-[420px] rounded-[32px] border border-white/90 bg-gradient-to-b from-white/90 via-white/85 to-white/75 p-5 sm:p-6 shadow-[0_25px_60px_rgba(0,0,0,0.22)] backdrop-blur-2xl transition-all">
+      <div className="relative z-10 w-full max-w-[420px] my-auto rounded-[32px] border border-white/90 bg-gradient-to-b from-white/90 via-white/85 to-white/75 p-5 sm:p-6 shadow-[0_25px_60px_rgba(0,0,0,0.22)] backdrop-blur-2xl transition-all">
         
         {/* Top Branding Header */}
         <div className="text-center mb-3">
@@ -191,7 +191,7 @@ export default function CustomerRegistration() {
           </div>
 
           {/* Password & Confirm Side-by-Side Grid */}
-          <div className="grid grid-cols-2 gap-2">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-2">
             {/* Password */}
             <div>
               <label className="block text-left text-[11px] font-semibold text-[#1A3326] mb-1 pl-1">

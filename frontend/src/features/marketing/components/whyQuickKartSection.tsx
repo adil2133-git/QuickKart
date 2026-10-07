@@ -133,12 +133,12 @@ export function WhyQuickKartSection() {
               />
 
               {/* Overlaid Floating Card (Bottom-Left) */}
-              <div className="absolute bottom-5 left-5 max-w-[280px] sm:max-w-xs rounded-2xl border border-white/80 bg-white/75 p-4 backdrop-blur-md shadow-lg text-left">
+              <div className="absolute bottom-3 left-3 right-3 sm:right-auto sm:bottom-5 sm:left-5 max-w-full sm:max-w-xs rounded-2xl border border-white/80 bg-white/75 p-3.5 sm:p-4 backdrop-blur-md shadow-lg text-left">
                 <p className="text-[10px] font-bold uppercase tracking-wider text-[#145C43] flex items-center gap-1.5">
                   <span className="h-2 w-2 rounded-full bg-[#145C43] animate-pulse" />
                   LIVE INVENTORY
                 </p>
-                <p className="mt-1.5 text-xs text-[#16241D] font-medium leading-relaxed">
+                <p className="mt-1 text-xs text-[#16241D] font-medium leading-relaxed">
                   Sourcing from Whole Foods, Downtown Market...
                 </p>
               </div>
@@ -195,7 +195,7 @@ export function WhyQuickKartSection() {
             <div className="mt-9">
               <Link
                 to="/register/customer"
-                className="group inline-flex items-center gap-2.5 rounded-full bg-[#0A1F17] px-8 py-4 text-sm font-bold text-white shadow-lg transition-all hover:bg-[#145C43] hover:shadow-xl active:scale-98"
+                className="group inline-flex w-full sm:w-auto items-center justify-center gap-2.5 rounded-full bg-[#0A1F17] px-8 py-4 text-sm font-bold text-white shadow-lg transition-all hover:bg-[#145C43] hover:shadow-xl active:scale-98"
               >
                 Experience the Difference <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
               </Link>

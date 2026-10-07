@@ -13,7 +13,7 @@ export function Footer() {
   return (
     <footer className="bg-[#0A1F17] px-6 pt-16 text-white">
       <div className="mx-auto max-w-7xl">
-        <div className="grid gap-12 pb-12 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
+        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr] pb-12">
           <div>
             <div className="mb-4 flex items-center gap-2">
               <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#145C43] text-white">

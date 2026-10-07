@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuthStore, type UserRole } from "../features/auth/state/authState";
 
 const ROLE_HOME: Record<UserRole, string> = {
-  CUSTOMER: "/home",
+  CUSTOMER: "/customer/home",
   ADMIN: "/admin/dashboard",
   DRIVER: "/driver/dashboard",
   STORE: "/store/dashboard",
@@ -16,75 +16,23 @@ export default function NotFound() {
   const buttonLabel = isAuthenticated && user ? "Go to your dashboard" : "Go to login";
 
   return (
-    <div
-      style={{
-        minHeight: "100vh",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        backgroundColor: "#F7F8F5",
-        padding: 24,
-      }}
-    >
-      <div
-        style={{
-          maxWidth: 440,
-          textAlign: "center",
-          background: "#FFFFFF",
-          border: "1px solid #E3E7E1",
-          borderRadius: 16,
-          padding: "48px 40px",
-          boxShadow: "0 4px 24px rgba(22, 36, 29, 0.06)",
-        }}
-      >
-        <div
-          style={{
-            fontSize: 56,
-            fontWeight: 800,
-            color: "#145C43",
-            lineHeight: 1,
-            marginBottom: 8,
-            letterSpacing: "-2px",
-          }}
-        >
+    <div className="min-h-screen min-h-[100dvh] flex items-center justify-center bg-[#F7F8F5] px-4 py-8 sm:p-6 font-sans">
+      <div className="w-full max-w-[440px] text-center bg-white border border-[#E3E7E1] rounded-3xl p-6 sm:p-10 shadow-lg shadow-[#16241D]/[0.04]">
+        <div className="text-5xl sm:text-6xl font-extrabold text-[#145C43] leading-none mb-3 tracking-tight" style={{ fontFamily: "Fraunces, serif" }}>
           404
         </div>
 
-        <h1
-          style={{
-            fontSize: 22,
-            fontWeight: 700,
-            color: "#16241D",
-            margin: "0 0 8px",
-          }}
-        >
+        <h1 className="text-xl sm:text-2xl font-bold text-[#16241D] mb-2" style={{ fontFamily: "Fraunces, serif" }}>
           This page doesn't exist
         </h1>
 
-        <p
-          style={{
-            fontSize: 15,
-            color: "#6E7C74",
-            margin: "0 0 32px",
-            lineHeight: 1.5,
-          }}
-        >
+        <p className="text-sm text-[#6E7C74] mb-8 leading-relaxed">
           Check the URL, or head back to somewhere that does.
         </p>
 
         <button
           onClick={() => navigate(destination, { replace: true })}
-          style={{
-            width: "100%",
-            padding: "14px 0",
-            background: "#145C43",
-            color: "#FFFFFF",
-            border: "none",
-            borderRadius: 10,
-            fontSize: 15,
-            fontWeight: 600,
-            cursor: "pointer",
-          }}
+          className="w-full py-3.5 px-6 bg-[#145C43] hover:bg-[#114E39] text-white rounded-full text-sm font-semibold transition-all shadow-md shadow-[#145C43]/20 cursor-pointer"
         >
           {buttonLabel}
         </button>

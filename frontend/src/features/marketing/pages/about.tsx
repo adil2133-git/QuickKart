@@ -49,7 +49,7 @@ function AboutHero() {
 
           <motion.h1
             variants={fadeUp}
-            className="text-[2.8rem] leading-[1.06] tracking-tight md:text-[4rem]"
+            className="text-3xl sm:text-4xl md:text-[4rem] leading-[1.1] tracking-tight"
             style={{ fontFamily: "Fraunces, serif", fontWeight: 480 }}
           >
             Grocery delivery that
@@ -267,7 +267,7 @@ function Mission() {
             Neighbourhood supermarkets already have the stock, the knowledge, and the community trust. QuickKart gives them the digital infrastructure — real-time inventory, intelligent routing, automated logistics — so they can compete and thrive alongside large chains. We believe faster, more transparent grocery delivery should be built on the stores already in your neighbourhood, not warehouses built to replace them.
           </motion.p>
 
-          <motion.div variants={container} className="mt-14 grid gap-px overflow-hidden rounded-3xl border border-white/10 bg-white/10 md:grid-cols-3">
+          <motion.div variants={container} className="mt-14 grid gap-px overflow-hidden rounded-3xl border border-white/10 bg-white/10 grid-cols-1 sm:grid-cols-3">
             {[
               { stat: "40+",     label: "Neighbourhoods served" },
               { stat: "3 roles", label: "One unified platform" },
@@ -300,14 +300,14 @@ function AboutCTA() {
         <p className="mb-8 text-[1rem] leading-relaxed text-[#16241D]/60">
           Whether you want faster groceries, a bigger customer base for your store, or flexible delivery earnings — there's a place for you.
         </p>
-        <div className="flex flex-wrap justify-center gap-3">
-          <Link to="/register/customer" className="group inline-flex items-center gap-2 rounded-full bg-[#145C43] px-6 py-3.5 text-sm font-semibold text-white transition-transform hover:-translate-y-0.5 hover:bg-[#114E39]">
+        <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-3">
+          <Link to="/register/customer" className="group inline-flex items-center justify-center gap-2 rounded-full bg-[#145C43] px-6 py-3.5 text-sm font-semibold text-white transition-transform hover:-translate-y-0.5 hover:bg-[#114E39]">
             Order groceries <ArrowRight size={15} className="transition-transform group-hover:translate-x-1" />
           </Link>
-          <Link to="/register/store" className="inline-flex items-center gap-2 rounded-full border border-[#16241D]/15 px-6 py-3.5 text-sm font-semibold text-[#16241D] transition-colors hover:bg-[#16241D]/[0.04]">
+          <Link to="/register/store" className="inline-flex items-center justify-center gap-2 rounded-full border border-[#16241D]/15 px-6 py-3.5 text-sm font-semibold text-[#16241D] transition-colors hover:bg-[#16241D]/[0.04]">
             Partner your store
           </Link>
-          <Link to="/register/delivery" className="inline-flex items-center gap-2 rounded-full border border-[#16241D]/15 px-6 py-3.5 text-sm font-semibold text-[#16241D] transition-colors hover:bg-[#16241D]/[0.04]">
+          <Link to="/register/delivery" className="inline-flex items-center justify-center gap-2 rounded-full border border-[#16241D]/15 px-6 py-3.5 text-sm font-semibold text-[#16241D] transition-colors hover:bg-[#16241D]/[0.04]">
             Become a driver
           </Link>
         </div>
