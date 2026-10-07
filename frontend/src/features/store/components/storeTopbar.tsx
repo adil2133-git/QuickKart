@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Bell } from "lucide-react";
+import { Bell, Menu } from "lucide-react";
 import { useNotificationStore } from "../../shared/state/notificationState";
 import { useNotificationActions } from "../../shared/hooks/useNotifications";
 
@@ -34,9 +34,10 @@ function timeAgo(iso: string) {
 interface TopbarProps {
   notificationCount?: number;
   onNotificationClick?: () => void;
+  onMenuClick?: () => void;
 }
 
-export default function Topbar({ onNotificationClick }: TopbarProps) {
+export default function Topbar({ onNotificationClick, onMenuClick }: TopbarProps) {
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const title = titleFromPath(pathname);
@@ -60,8 +61,20 @@ export default function Topbar({ onNotificationClick }: TopbarProps) {
   }, [setOpen]);
 
   return (
-    <header className="flex h-[72px] flex-shrink-0 items-center justify-between border-b border-[#E3E7E1] bg-white px-8">
-      <h2 className="text-2xl font-bold text-[#16241D]">{title}</h2>
+    <header className="flex h-[72px] flex-shrink-0 items-center justify-between border-b border-[#E3E7E1] bg-white px-4 sm:px-8">
+      <div className="flex items-center gap-3">
+        {onMenuClick && (
+          <button
+            type="button"
+            onClick={onMenuClick}
+            aria-label="Open sidebar"
+            className="flex md:hidden h-10 w-10 items-center justify-center rounded-xl border border-[#E3E7E1] text-[#16241D] hover:bg-slate-100 cursor-pointer"
+          >
+            <Menu className="h-5 w-5" />
+          </button>
+        )}
+        <h2 className="text-xl sm:text-2xl font-bold text-[#16241D]">{title}</h2>
+      </div>
 
       <div className="relative">
         <button

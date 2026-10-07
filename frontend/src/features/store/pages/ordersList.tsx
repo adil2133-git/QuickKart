@@ -153,25 +153,25 @@ export default function OrdersPage() {
     const prepTimeAvg = 18;
 
     return (
-        <div className="flex min-h-0 flex-1 flex-col gap-6 overflow-y-auto bg-[#F7F8F5] p-8 font-['Inter',sans-serif]">
+        <div className="flex min-h-0 flex-1 flex-col gap-4 sm:gap-6 overflow-y-auto bg-[#F7F8F5] p-4 sm:p-6 lg:p-8 font-['Inter',sans-serif]">
 
             {/* ── Header ───────────────────────────────────────────────────────── */}
-            <div className="flex items-center justify-between">
-                <h1 className="text-2xl font-bold text-[#16241D]">Incoming Orders</h1>
-                <div className="flex items-center gap-2 rounded-xl border border-[#E3E7E1] bg-white px-4 py-2 text-sm text-[#6E7C74]">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <h1 className="text-xl sm:text-2xl font-bold text-[#16241D]">Incoming Orders</h1>
+                <div className="flex items-center gap-2 rounded-xl border border-[#E3E7E1] bg-white px-3.5 sm:px-4 py-2 text-xs sm:text-sm text-[#6E7C74] w-fit">
                     <Calendar className="h-4 w-4 text-[#1F4D3D]" />
                     <span>{formatDate(new Date().toISOString())}</span>
                 </div>
             </div>
 
             {/* ── Tabs + search ─────────────────────────────────────────────────── */}
-            <div className="flex flex-wrap items-center gap-3">
-                <div className="flex rounded-xl border border-[#E3E7E1] bg-white p-1">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+                <div className="flex rounded-xl border border-[#E3E7E1] bg-white p-1 overflow-x-auto scrollbar-hide max-w-full shrink-0">
                     {TABS.map((tab) => (
                         <button
                             key={tab.key}
                             onClick={() => handleTabChange(tab.key)}
-                            className={`rounded-lg px-4 py-2 text-sm font-medium transition-all cursor-pointer ${activeTab === tab.key
+                            className={`rounded-lg px-3.5 sm:px-4 py-2 text-xs sm:text-sm font-medium transition-all cursor-pointer whitespace-nowrap ${activeTab === tab.key
                                 ? "bg-[#1F4D3D] text-white shadow-sm"
                                 : "text-[#6E7C74] hover:text-[#16241D]"
                                 }`}
@@ -181,7 +181,7 @@ export default function OrdersPage() {
                     ))}
                 </div>
 
-                <div className="flex flex-1 items-center gap-2 rounded-xl border border-[#E3E7E1] bg-white px-4 py-2.5 min-w-[220px]">
+                <div className="flex w-full sm:flex-1 items-center gap-2 rounded-xl border border-[#E3E7E1] bg-white px-4 py-2.5 min-w-[200px]">
                     <Search className="h-4 w-4 flex-shrink-0 text-[#6E7C74]" />
                     <input
                         type="text"
@@ -194,10 +194,11 @@ export default function OrdersPage() {
             </div>
 
             {/* ── Table ────────────────────────────────────────────────────────── */}
-            <div className="overflow-hidden rounded-2xl border border-[#E3E7E1] bg-white">
+            <div className="overflow-x-auto rounded-2xl border border-[#E3E7E1] bg-white">
+                <div className="min-w-[860px]">
 
                 {/* Header row */}
-                <div className="grid grid-cols-[1fr_1.6fr_0.7fr_0.9fr_0.7fr_0.7fr_0.8fr_1.3fr] gap-3 border-b border-[#E3E7E1] px-6 py-3 bg-[#F5F7F3]">
+                <div className="grid grid-cols-[1fr_1.6fr_0.7fr_0.9fr_0.7fr_0.7fr_0.8fr_1.3fr] gap-3 border-b border-[#E3E7E1] px-4 sm:px-6 py-3 bg-[#F5F7F3]">
                     {["ORDER ID", "CUSTOMER", "ITEMS", "AMOUNT", "PAYMENT", "TIME", "STATUS", "ACTIONS"].map((h) => (
                         <span key={h} className="text-xs font-semibold tracking-wider text-[#6E7C74] whitespace-nowrap">
                             {h}
@@ -292,10 +293,11 @@ export default function OrdersPage() {
                         </div>
                     ))
                 )}
+                </div>
 
                 {/* ── Pagination ───────────────────────────────────────────────── */}
                 {!isLoadingOrders && total > 0 && (
-                    <div className="flex items-center justify-between border-t border-[#E3E7E1] px-6 py-3">
+                    <div className="flex flex-col sm:flex-row items-center justify-between border-t border-[#E3E7E1] px-4 sm:px-6 py-3 gap-3">
                         <span className="text-xs text-[#6E7C74]">
                             Showing {Math.min((page - 1) * 10 + 1, total)}–{Math.min(page * 10, total)} of {total} orders
                         </span>
@@ -332,46 +334,46 @@ export default function OrdersPage() {
             </div>
 
             {/* ── Stats row ────────────────────────────────────────────────────── */}
-            <div className="grid grid-cols-3 gap-4">
-                <div className="flex items-center justify-between rounded-2xl border border-[#E3E7E1] bg-white p-5">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4">
+                <div className="flex items-center justify-between rounded-2xl border border-[#E3E7E1] bg-white p-4 sm:p-5">
                     <div className="flex-1 min-w-0">
                         <p className="text-xs font-semibold uppercase tracking-widest text-[#6E7C74]">Active Drivers</p>
-                        <p className="mt-1 text-3xl font-bold text-[#16241D]">
+                        <p className="mt-1 text-2xl sm:text-3xl font-bold text-[#16241D]">
                             {activeDrivers}
-                            <span className="ml-2 text-sm font-medium text-emerald-600">+2 available</span>
+                            <span className="ml-2 text-xs sm:text-sm font-medium text-emerald-600">+2 available</span>
                         </p>
                         <div className="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-[#F5F7F3]">
                             <div className="h-full rounded-full bg-[#1F4D3D]" style={{ width: `${(activeDrivers / 20) * 100}%` }} />
                         </div>
                     </div>
-                    <Truck className="h-8 w-8 flex-shrink-0 text-[#1F4D3D] ml-4" />
+                    <Truck className="h-7 w-7 sm:h-8 sm:w-8 flex-shrink-0 text-[#1F4D3D] ml-3 sm:ml-4" />
                 </div>
 
-                <div className="flex items-center justify-between rounded-2xl border border-[#E3E7E1] bg-white p-5">
+                <div className="flex items-center justify-between rounded-2xl border border-[#E3E7E1] bg-white p-4 sm:p-5">
                     <div className="flex-1 min-w-0">
                         <p className="text-xs font-semibold uppercase tracking-widest text-[#6E7C74]">Prep Time Avg</p>
-                        <p className="mt-1 text-3xl font-bold text-[#16241D]">
+                        <p className="mt-1 text-2xl sm:text-3xl font-bold text-[#16241D]">
                             {prepTimeAvg}m
-                            <span className="ml-2 text-sm font-medium text-amber-600">+3m increase</span>
+                            <span className="ml-2 text-xs sm:text-sm font-medium text-amber-600">+3m increase</span>
                         </p>
                         <div className="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-[#F5F7F3]">
                             <div className="h-full rounded-full bg-[#1F4D3D]" style={{ width: `${(prepTimeAvg / 60) * 100}%` }} />
                         </div>
                     </div>
-                    <Clock className="h-8 w-8 flex-shrink-0 text-[#1F4D3D] ml-4" />
+                    <Clock className="h-7 w-7 sm:h-8 sm:w-8 flex-shrink-0 text-[#1F4D3D] ml-3 sm:ml-4" />
                 </div>
 
-                <div className="flex flex-col justify-between rounded-2xl bg-[#E7EFEA] border border-[#1F4D3D]/30 p-5">
+                <div className="flex flex-col justify-between rounded-2xl bg-[#E7EFEA] border border-[#1F4D3D]/30 p-4 sm:p-5">
                     <div>
                         <div className="mb-1 flex items-center gap-2">
                             <Zap className="h-4 w-4 text-[#1F4D3D]" />
                             <p className="text-xs font-bold uppercase tracking-widest text-[#1F4D3D]">Rush Hour Alert</p>
                         </div>
-                        <p className="mt-1 text-sm text-[#16241D]">
+                        <p className="mt-1 text-xs sm:text-sm text-[#16241D]">
                             Expect 15+ more orders in the next hour based on daily trends.
                         </p>
                     </div>
-                    <button className="mt-4 self-start rounded-xl bg-[#1F4D3D] px-5 py-2 text-sm font-semibold text-white transition-all hover:bg-[#163D30] cursor-pointer">
+                    <button className="mt-4 self-start rounded-xl bg-[#1F4D3D] px-4 sm:px-5 py-2 text-xs sm:text-sm font-semibold text-white transition-all hover:bg-[#163D30] cursor-pointer">
                         Boost Staff
                     </button>
                 </div>

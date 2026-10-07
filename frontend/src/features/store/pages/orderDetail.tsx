@@ -174,8 +174,8 @@ export default function OrderDetailPage() {
       )}
 
       {/* ── Progress tracker ───────────────────────────────────────────────────── */}
-      <div className="border-b border-[#E3E7E1] bg-white px-8 py-5">
-        <div className="flex items-center">
+      <div className="border-b border-[#E3E7E1] bg-white px-4 sm:px-8 py-3.5 sm:py-5 overflow-x-auto scrollbar-hide">
+        <div className="flex items-center min-w-[380px]">
           {PROGRESS_STEPS.map((step, idx) => {
             const state = getStepState(step.key, order.orderStatus);
             const isLast = idx === PROGRESS_STEPS.length - 1;
@@ -203,7 +203,7 @@ export default function OrderDetailPage() {
                   )}
                 </div>
                 <span
-                  className={`mt-2 text-xs font-medium ${
+                  className={`mt-2 text-xs font-medium text-center ${
                     state === "idle" ? "text-[#6E7C74]" : "text-[#16241D]"
                   }`}
                 >
@@ -217,7 +217,7 @@ export default function OrderDetailPage() {
 
       {/* ── No drivers found banner ───────────────────────────────────────────── */}
       {order.orderStatus === "READY_FOR_PICKUP" && order.driverSearchFailed && (
-        <div className="mx-8 mt-6 flex items-start justify-between gap-4 rounded-2xl border border-amber-300 bg-amber-50 p-5">
+        <div className="mx-4 sm:mx-8 mt-4 sm:mt-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 rounded-2xl border border-amber-300 bg-amber-50 p-4 sm:p-5">
           <div className="flex items-start gap-3">
             <AlertTriangle className="mt-0.5 h-5 w-5 flex-shrink-0 text-amber-600" />
             <div>
@@ -231,7 +231,7 @@ export default function OrderDetailPage() {
               </p>
             </div>
           </div>
-          <div className="flex flex-shrink-0 items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
             <button
               onClick={handleRetryDriverSearch}
               disabled={isUpdatingStatus}
@@ -253,20 +253,20 @@ export default function OrderDetailPage() {
       )}
 
       {/* ── Content ────────────────────────────────────────────────────────────── */}
-      <div className="flex flex-1 gap-6 overflow-y-auto p-8">
+      <div className="flex flex-col lg:flex-row flex-1 gap-6 overflow-y-auto p-4 sm:p-6 lg:p-8">
         {/* Left column */}
         <div className="flex flex-1 flex-col gap-4">
           {/* Customer card */}
-          <div className="rounded-2xl border border-[#E3E7E1] bg-white p-6">
-            <div className="flex items-start justify-between">
+          <div className="rounded-2xl border border-[#E3E7E1] bg-white p-4 sm:p-6">
+            <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-2">
               <div>
-                <h3 className="text-lg font-bold text-[#16241D]">{order.recipientName}</h3>
-                <div className="mt-1 flex items-center gap-1.5 text-sm text-[#6E7C74]">
+                <h3 className="text-base sm:text-lg font-bold text-[#16241D]">{order.recipientName}</h3>
+                <div className="mt-1 flex items-center gap-1.5 text-xs sm:text-sm text-[#6E7C74]">
                   <MapPin className="h-4 w-4 flex-shrink-0 text-[#1F4D3D]" />
                   <span>{order.deliveryAddress}</span>
                 </div>
               </div>
-              <span className="rounded-full bg-[#E7EFEA] px-3 py-1 text-xs font-semibold text-[#1F4D3D]">
+              <span className="rounded-full bg-[#E7EFEA] px-3 py-1 text-xs font-semibold text-[#1F4D3D] w-fit">
                 Home Delivery
               </span>
             </div>
@@ -341,8 +341,8 @@ export default function OrderDetailPage() {
         </div>
 
         {/* Right column — Order summary */}
-        <div className="w-72 flex-shrink-0">
-          <div className="rounded-2xl border border-[#E3E7E1] bg-white p-6">
+        <div className="w-full lg:w-72 flex-shrink-0">
+          <div className="rounded-2xl border border-[#E3E7E1] bg-white p-4 sm:p-6">
             <h3 className="text-base font-bold text-[#16241D]">Order Summary</h3>
 
             <div className="mt-4 space-y-3">
@@ -370,7 +370,7 @@ export default function OrderDetailPage() {
       </div>
 
       {/* ── Bottom action bar ─────────────────────────────────────────────────── */}
-      <div className="flex items-center justify-between border-t border-[#E3E7E1] bg-white px-8 py-4">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-t border-[#E3E7E1] bg-white px-4 sm:px-8 py-3.5 sm:py-4">
          <div className="flex items-center gap-2">
           <span
             className={`h-2.5 w-2.5 rounded-full ${
@@ -379,7 +379,7 @@ export default function OrderDetailPage() {
                 : "bg-emerald-500"
             }`}
           />
-          <span className="text-sm font-semibold text-[#16241D]">
+          <span className="text-xs sm:text-sm font-semibold text-[#16241D]">
             CURRENTLY:{" "}
             {order.orderStatus === "READY_FOR_PICKUP" && order.driverSearchFailed
               ? "NO DRIVERS FOUND"
@@ -387,8 +387,8 @@ export default function OrderDetailPage() {
           </span>
         </div>
 
-        <div className="flex items-center gap-3">
-          <button className="rounded-full border border-[#E3E7E1] px-6 py-2.5 text-sm font-semibold text-[#1F4D3D] transition-colors hover:bg-[#F5F7F3] cursor-pointer">
+        <div className="flex flex-wrap items-center gap-2 sm:gap-3 w-full sm:w-auto">
+          <button className="flex-1 sm:flex-initial rounded-full border border-[#E3E7E1] px-4 sm:px-6 py-2.5 text-xs sm:text-sm font-semibold text-[#1F4D3D] transition-colors hover:bg-[#F5F7F3] cursor-pointer text-center">
             Contact Customer
           </button>
 
@@ -396,7 +396,7 @@ export default function OrderDetailPage() {
             <button
               onClick={handleStartPacking}
               disabled={isUpdatingStatus}
-              className="flex items-center gap-2 rounded-full bg-[#A9CC3B] hover:bg-[#98B933] active:bg-[#87A62C] px-6 py-2.5 text-sm font-bold text-[#16241D] transition-colors cursor-pointer disabled:opacity-50"
+              className="flex-1 sm:flex-initial flex items-center justify-center gap-2 rounded-full bg-[#A9CC3B] hover:bg-[#98B933] active:bg-[#87A62C] px-5 sm:px-6 py-2.5 text-xs sm:text-sm font-bold text-[#16241D] transition-colors cursor-pointer disabled:opacity-50"
             >
               <Package className="h-4 w-4" />
               Start Packing
@@ -407,7 +407,7 @@ export default function OrderDetailPage() {
             <button
               onClick={handleMarkReady}
               disabled={isUpdatingStatus}
-              className="flex items-center gap-2 rounded-full bg-[#A9CC3B] hover:bg-[#98B933] active:bg-[#87A62C] px-6 py-2.5 text-sm font-bold text-[#16241D] transition-colors cursor-pointer disabled:opacity-50"
+              className="flex-1 sm:flex-initial flex items-center justify-center gap-2 rounded-full bg-[#A9CC3B] hover:bg-[#98B933] active:bg-[#87A62C] px-5 sm:px-6 py-2.5 text-xs sm:text-sm font-bold text-[#16241D] transition-colors cursor-pointer disabled:opacity-50"
             >
               <Truck className="h-4 w-4" />
               Mark Ready for Pickup
@@ -418,7 +418,7 @@ export default function OrderDetailPage() {
             <button
               onClick={() => updateStatus(order.id, "ACCEPTED")}
               disabled={isUpdatingStatus}
-              className="flex items-center gap-2 rounded-full bg-[#A9CC3B] hover:bg-[#98B933] active:bg-[#87A62C] px-6 py-2.5 text-sm font-bold text-[#16241D] transition-colors cursor-pointer disabled:opacity-50"
+              className="flex-1 sm:flex-initial flex items-center justify-center gap-2 rounded-full bg-[#A9CC3B] hover:bg-[#98B933] active:bg-[#87A62C] px-5 sm:px-6 py-2.5 text-xs sm:text-sm font-bold text-[#16241D] transition-colors cursor-pointer disabled:opacity-50"
             >
               <CheckCircle2 className="h-4 w-4" />
               Accept Order

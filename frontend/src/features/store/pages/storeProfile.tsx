@@ -127,123 +127,119 @@ export default function StoreProfilePage() {
     .sort((a, b) => DAY_ORDER.indexOf(a.day) - DAY_ORDER.indexOf(b.day));
 
   return (
-    <div className="flex h-screen bg-[#F7F8F5]">
+    <div className="min-h-full bg-[#F7F8F5] px-4 py-4 sm:px-6 sm:py-6 lg:px-8">
+      {loading ? (
+        <div className="flex h-[60vh] flex-col items-center justify-center gap-2 text-[#6E7C74]">
+          <Loader2 className="h-6 w-6 animate-spin text-[#1F4D3D]" />
+          <p className="text-sm">Loading your profile…</p>
+        </div>
+      ) : error || !store ? (
+        <div className="flex h-[60vh] flex-col items-center justify-center gap-3 text-center">
+          <AlertCircle className="h-7 w-7 text-rose-500" />
+          <p className="text-sm text-[#6E7C74]">{error || "Something went wrong."}</p>
+          <button
+            onClick={fetchProfile}
+            className="rounded-full border border-[#E3E7E1] px-4 py-2 text-sm font-medium text-[#1F4D3D] hover:bg-white cursor-pointer"
+          >
+            Try again
+          </button>
+        </div>
+      ) : (
+        <div className="mx-auto max-w-6xl space-y-4 sm:space-y-6">
 
-      <div className="flex flex-1 flex-col overflow-hidden">
-
-        <main className="flex-1 overflow-y-auto px-8 py-6">
-          {loading ? (
-            <div className="flex h-[60vh] flex-col items-center justify-center gap-2 text-[#6E7C74]">
-              <Loader2 className="h-6 w-6 animate-spin text-[#1F4D3D]" />
-              <p className="text-sm">Loading your profile…</p>
-            </div>
-          ) : error || !store ? (
-            <div className="flex h-[60vh] flex-col items-center justify-center gap-3 text-center">
-              <AlertCircle className="h-7 w-7 text-rose-500" />
-              <p className="text-sm text-[#6E7C74]">{error || "Something went wrong."}</p>
-              <button
-                onClick={fetchProfile}
-                className="rounded-full border border-[#E3E7E1] px-4 py-2 text-sm font-medium text-[#1F4D3D] hover:bg-white cursor-pointer"
-              >
-                Try again
+          {/* ── Inline notifications ── */}
+          {actionError && (
+            <div className="flex items-center justify-between gap-2 rounded-xl bg-rose-50 px-4 py-3 text-sm text-rose-700 ring-1 ring-rose-600/15">
+              <span className="flex items-center gap-2">
+                <AlertCircle className="h-4 w-4 flex-shrink-0" /> {actionError}
+              </span>
+              <button onClick={() => setActionError(null)} className="text-rose-700/60 hover:text-rose-700">
+                ×
               </button>
             </div>
-          ) : (
-            <div className="mx-auto max-w-6xl space-y-6">
+          )}
+          {actionSuccess && (
+            <div className="flex items-center gap-2 rounded-xl bg-emerald-50 px-4 py-3 text-sm text-emerald-700 ring-1 ring-emerald-600/15">
+              <CheckCircle2 className="h-4 w-4 flex-shrink-0" /> {actionSuccess}
+            </div>
+          )}
 
-              {/* ── Inline notifications ── */}
-              {actionError && (
-                <div className="flex items-center justify-between gap-2 rounded-xl bg-rose-50 px-4 py-3 text-sm text-rose-700 ring-1 ring-rose-600/15">
-                  <span className="flex items-center gap-2">
-                    <AlertCircle className="h-4 w-4 flex-shrink-0" /> {actionError}
-                  </span>
-                  <button onClick={() => setActionError(null)} className="text-rose-700/60 hover:text-rose-700">
-                    ×
-                  </button>
-                </div>
+          {/* ── Hero: cover + logo + identity ── */}
+          <div className="overflow-hidden rounded-2xl border border-[#E3E7E1] bg-white">
+            <div className="relative h-32 sm:h-44 w-full bg-gradient-to-br from-[#E7EFEA] to-[#1F4D3D]/30">
+              {store.coverImageUrl && (
+                <img src={store.coverImageUrl} alt="Store cover" className="h-full w-full object-cover" />
               )}
-              {actionSuccess && (
-                <div className="flex items-center gap-2 rounded-xl bg-emerald-50 px-4 py-3 text-sm text-emerald-700 ring-1 ring-emerald-600/15">
-                  <CheckCircle2 className="h-4 w-4 flex-shrink-0" /> {actionSuccess}
-                </div>
-              )}
+              <input
+                ref={coverInputRef}
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={(e) => e.target.files?.[0] && uploadBranding("coverImage", e.target.files[0])}
+              />
+              <button
+                onClick={() => coverInputRef.current?.click()}
+                disabled={uploadingCover}
+                className="absolute right-3 top-3 sm:right-4 sm:top-4 inline-flex items-center gap-1.5 rounded-full bg-[#16241D]/75 px-3 py-1.5 sm:px-3.5 sm:py-2 text-[11px] sm:text-xs font-semibold text-white backdrop-blur transition-colors hover:bg-[#16241D] disabled:opacity-60 cursor-pointer"
+              >
+                {uploadingCover ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Camera className="h-3.5 w-3.5" />}
+                {uploadingCover ? "Uploading…" : "Change Cover"}
+              </button>
+            </div>
 
-              {/* ── Hero: cover + logo + identity ── */}
-              <div className="overflow-hidden rounded-2xl border border-[#E3E7E1] bg-white">
-                <div className="relative h-40 w-full bg-gradient-to-br from-[#E7EFEA] to-[#1F4D3D]/30">
-                  {store.coverImageUrl && (
-                    <img src={store.coverImageUrl} alt="Store cover" className="h-full w-full object-cover" />
+            <div className="flex flex-col sm:flex-row items-start sm:items-end gap-4 sm:gap-5 px-4 sm:px-6 pb-5 sm:pb-6 pt-0">
+              <div className="relative -mt-10 sm:-mt-12 flex-shrink-0">
+                <div className="flex h-20 w-20 sm:h-24 sm:w-24 items-center justify-center overflow-hidden rounded-full border-4 border-white bg-[#E7EFEA] text-xl sm:text-2xl font-bold text-[#1F4D3D] shadow-sm">
+                  {store.logoUrl ? (
+                    <img src={store.logoUrl} alt="Store logo" className="h-full w-full object-cover" />
+                  ) : (
+                    initialsFrom(store.storeName)
                   )}
-                  <input
-                    ref={coverInputRef}
-                    type="file"
-                    accept="image/*"
-                    className="hidden"
-                    onChange={(e) => e.target.files?.[0] && uploadBranding("coverImage", e.target.files[0])}
-                  />
-                  <button
-                    onClick={() => coverInputRef.current?.click()}
-                    disabled={uploadingCover}
-                    className="absolute right-4 top-4 inline-flex items-center gap-1.5 rounded-full bg-[#16241D]/75 px-3.5 py-2 text-xs font-semibold text-white backdrop-blur transition-colors hover:bg-[#16241D] disabled:opacity-60 cursor-pointer"
-                  >
-                    {uploadingCover ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Camera className="h-3.5 w-3.5" />}
-                    {uploadingCover ? "Uploading…" : "Change Cover"}
-                  </button>
                 </div>
+                <input
+                  ref={logoInputRef}
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={(e) => e.target.files?.[0] && uploadBranding("logo", e.target.files[0])}
+                />
+                <button
+                  onClick={() => logoInputRef.current?.click()}
+                  disabled={uploadingLogo}
+                  className="absolute -right-1 bottom-0 flex h-7 w-7 items-center justify-center rounded-full bg-[#1F4D3D] text-white shadow hover:bg-[#163D30] cursor-pointer disabled:opacity-60"
+                  title="Change logo"
+                >
+                  {uploadingLogo ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Camera className="h-3.5 w-3.5" />}
+                </button>
+              </div>
 
-                <div className="flex flex-wrap items-end gap-5 px-6 pb-6 pt-0">
-                  <div className="relative -mt-12 flex-shrink-0">
-                    <div className="flex h-24 w-24 items-center justify-center overflow-hidden rounded-full border-4 border-white bg-[#E7EFEA] text-2xl font-bold text-[#1F4D3D] shadow-sm">
-                      {store.logoUrl ? (
-                        <img src={store.logoUrl} alt="Store logo" className="h-full w-full object-cover" />
-                      ) : (
-                        initialsFrom(store.storeName)
-                      )}
-                    </div>
-                    <input
-                      ref={logoInputRef}
-                      type="file"
-                      accept="image/*"
-                      className="hidden"
-                      onChange={(e) => e.target.files?.[0] && uploadBranding("logo", e.target.files[0])}
-                    />
-                    <button
-                      onClick={() => logoInputRef.current?.click()}
-                      disabled={uploadingLogo}
-                      className="absolute -right-1 bottom-0 flex h-7 w-7 items-center justify-center rounded-full bg-[#1F4D3D] text-white shadow hover:bg-[#163D30] cursor-pointer disabled:opacity-60"
-                      title="Change logo"
-                    >
-                      {uploadingLogo ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Camera className="h-3.5 w-3.5" />}
-                    </button>
-                  </div>
-
-                  <div className="min-w-0 flex-1 pt-3">
-                    <div className="flex flex-wrap items-center gap-2.5">
-                      <h1 className="text-xl font-bold text-[#16241D]">{store.storeName}</h1>
-                      {(() => {
-                        const b = approvalBadge(store.approvalStatus);
-                        return (
-                          <span className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide ring-1 ${b.className}`}>
-                            <b.Icon className="h-3 w-3" /> {b.label}
-                          </span>
-                        );
-                      })()}
-                    </div>
-                    <p className="mt-1 text-sm text-[#6E7C74]">Owner: {store.ownerName}</p>
-                    <div className="mt-2 flex flex-wrap items-center gap-x-5 gap-y-1.5 text-sm text-[#6E7C74]">
-                      <span className="flex items-center gap-1.5"><Mail className="h-3.5 w-3.5 text-[#1F4D3D]" /> {store.email}</span>
-                      <span className="flex items-center gap-1.5"><Phone className="h-3.5 w-3.5 text-[#1F4D3D]" /> {store.phone}</span>
-                      <span className="flex items-center gap-1.5"><MapPin className="h-3.5 w-3.5 text-[#1F4D3D]" /> {store.address}</span>
-                    </div>
-                  </div>
-
-                  <div className="pt-3 text-right text-xs text-[#6E7C74]">
-                    <span className="flex items-center justify-end gap-1.5">
-                      <Calendar className="h-3.5 w-3.5 text-[#1F4D3D]" /> Joined {new Date(store.registeredOn).toLocaleDateString(undefined, { month: "short", year: "numeric" })}
-                    </span>
-                  </div>
+              <div className="min-w-0 flex-1 pt-1 sm:pt-3">
+                <div className="flex flex-wrap items-center gap-2 sm:gap-2.5">
+                  <h1 className="text-lg sm:text-xl font-bold text-[#16241D]">{store.storeName}</h1>
+                  {(() => {
+                    const b = approvalBadge(store.approvalStatus);
+                    return (
+                      <span className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide ring-1 ${b.className}`}>
+                        <b.Icon className="h-3 w-3" /> {b.label}
+                      </span>
+                    );
+                  })()}
+                </div>
+                <p className="mt-1 text-xs sm:text-sm text-[#6E7C74]">Owner: {store.ownerName}</p>
+                <div className="mt-2 flex flex-wrap items-center gap-x-4 sm:gap-x-5 gap-y-1.5 text-xs sm:text-sm text-[#6E7C74]">
+                  <span className="flex items-center gap-1.5"><Mail className="h-3.5 w-3.5 text-[#1F4D3D] flex-shrink-0" /> <span className="truncate">{store.email}</span></span>
+                  <span className="flex items-center gap-1.5"><Phone className="h-3.5 w-3.5 text-[#1F4D3D] flex-shrink-0" /> {store.phone}</span>
+                  <span className="flex items-center gap-1.5"><MapPin className="h-3.5 w-3.5 text-[#1F4D3D] flex-shrink-0" /> <span className="truncate">{store.address}</span></span>
                 </div>
               </div>
+
+              <div className="pt-2 sm:pt-3 text-left sm:text-right text-xs text-[#6E7C74] self-start sm:self-end">
+                <span className="flex items-center justify-start sm:justify-end gap-1.5">
+                  <Calendar className="h-3.5 w-3.5 text-[#1F4D3D] flex-shrink-0" /> Joined {new Date(store.registeredOn).toLocaleDateString(undefined, { month: "short", year: "numeric" })}
+                </span>
+              </div>
+            </div>
+          </div>
 
               {/* ── Main grid ── */}
               <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
@@ -360,8 +356,6 @@ export default function StoreProfilePage() {
               </div>
             </div>
           )}
-        </main>
-      </div>
     </div>
   );
 }

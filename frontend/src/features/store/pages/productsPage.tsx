@@ -427,9 +427,9 @@ export default function ProductsPage() {
 
   return (
     <>
-      <div className="px-8 py-6">
+      <div className="px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
         {/* Page heading + primary action */}
-        <div className="mb-5 flex items-center justify-between">
+        <div className="mb-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div>
             <h1 className="text-lg font-semibold text-[#16241D]">Products</h1>
             <p className="text-sm text-[#5F7166]">
@@ -438,22 +438,22 @@ export default function ProductsPage() {
           </div>
           <button
             onClick={() => navigate("/store/products/new")}
-            className="inline-flex items-center gap-2 rounded-full bg-[#145C43] hover:bg-[#114E39] px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition-all hover:-translate-y-0.5"
+            className="inline-flex items-center justify-center gap-2 rounded-full bg-[#145C43] hover:bg-[#114E39] px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition-all hover:-translate-y-0.5 w-full sm:w-auto"
           >
             <Plus size={16} /> Add product
           </button>
         </div>
 
         {/* KPI strip */}
-        <div className="mb-5 grid grid-cols-3 gap-3">
+        <div className="mb-5 grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-3">
           <KpiCard icon={CheckCircle2} label="Active (this page)" value={kpis.active} tint="#10B981" />
           <KpiCard icon={AlertTriangle} label="Low stock (this page)" value={kpis.low} tint="#D97706" />
           <KpiCard icon={Ban} label="Out of stock (this page)" value={kpis.out} tint="#DC2626" />
         </div>
 
         {/* Filter bar */}
-        <div className="mb-4 flex flex-wrap items-center gap-3 rounded-xl border border-[#E3E7E1] bg-white p-3.5">
-          <div className="relative flex-1 min-w-[220px] max-w-sm">
+        <div className="mb-4 flex flex-wrap items-center gap-2.5 sm:gap-3 rounded-xl border border-[#E3E7E1] bg-white p-3 sm:p-3.5">
+          <div className="relative w-full sm:flex-1 min-w-[200px] sm:max-w-sm">
             <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#9BAAA1]" />
             <input
               value={searchInput}
@@ -463,23 +463,25 @@ export default function ProductsPage() {
             />
           </div>
 
-          <SelectFilter
-            value={categoryFilter}
-            onChange={setCategoryFilter}
-            placeholder="All categories"
-            options={categories.map((c) => ({ value: c._id, label: c.categoryName }))}
-          />
+          <div className="flex flex-wrap items-center gap-2">
+            <SelectFilter
+              value={categoryFilter}
+              onChange={setCategoryFilter}
+              placeholder="All categories"
+              options={categories.map((c) => ({ value: c._id, label: c.categoryName }))}
+            />
 
-          <SelectFilter
-            value={statusFilter}
-            onChange={(v) => setStatusFilter(v as AvailabilityStatus | "")}
-            placeholder="All statuses"
-            options={[
-              { value: "AVAILABLE", label: "Available" },
-              { value: "OUT_OF_STOCK", label: "Out of stock" },
-              { value: "HIDDEN", label: "Hidden" },
-            ]}
-          />
+            <SelectFilter
+              value={statusFilter}
+              onChange={(v) => setStatusFilter(v as AvailabilityStatus | "")}
+              placeholder="All statuses"
+              options={[
+                { value: "AVAILABLE", label: "Available" },
+                { value: "OUT_OF_STOCK", label: "Out of stock" },
+                { value: "HIDDEN", label: "Hidden" },
+              ]}
+            />
+          </div>
 
           {hasFilters && (
             <button
@@ -499,26 +501,29 @@ export default function ProductsPage() {
         )}
 
         {/* Table */}
-        <div className="overflow-hidden rounded-xl border border-[#E3E7E1] bg-white">
+        <div className="overflow-x-auto rounded-xl border border-[#E3E7E1] bg-white">
           <table className="w-full text-left text-sm">
             <thead>
               <tr className="border-b border-[#E3E7E1] bg-[#F5F7F3]">
-                <th className="px-4 py-3 text-left">
+                <th className="px-4 py-3 text-left whitespace-nowrap">
                   <SortHeader label="Product" sortKey="productName" activeKey={sortKey} dir={sortDir} onSort={setSort} />
                 </th>
-                <th className="px-4 py-3 text-left text-[11px] font-semibold uppercase tracking-wide text-[#6E7C74]">
+                <th className="px-4 py-3 text-left text-[11px] font-semibold uppercase tracking-wide text-[#6E7C74] whitespace-nowrap">
                   Category
                 </th>
-                <th className="px-4 py-3 text-right">
+                <th className="px-4 py-3 text-right whitespace-nowrap">
                   <SortHeader label="Price" sortKey="price" activeKey={sortKey} dir={sortDir} onSort={setSort} align="right" />
                 </th>
-                <th className="px-4 py-3 text-center">
+                <th className="px-4 py-3 text-center whitespace-nowrap">
                   <SortHeader label="Stock" sortKey="stockQuantity" activeKey={sortKey} dir={sortDir} onSort={setSort} />
                 </th>
-                <th className="px-4 py-3 text-left text-[11px] font-semibold uppercase tracking-wide text-[#6E7C74]">
+                <th className="px-4 py-3 text-left text-[11px] font-semibold uppercase tracking-wide text-[#6E7C74] whitespace-nowrap">
                   Status
                 </th>
-                <th className="px-4 py-3 text-right text-[11px] font-semibold uppercase tracking-wide text-[#6E7C74]">
+                <th className="px-4 py-3 text-center text-[11px] font-semibold uppercase tracking-wide text-[#6E7C74] whitespace-nowrap">
+                  Availability
+                </th>
+                <th className="px-4 py-3 text-right text-[11px] font-semibold uppercase tracking-wide text-[#6E7C74] whitespace-nowrap">
                   Actions
                 </th>
               </tr>
@@ -625,7 +630,7 @@ export default function ProductsPage() {
 
         {/* Pagination */}
         {!loading && sorted.length > 0 && (
-          <div className="mt-4 flex items-center justify-between text-sm text-[#6E7C74]">
+          <div className="mt-4 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs sm:text-sm text-[#6E7C74]">
             <span>
               Showing <strong className="text-[#16241D]">{(page - 1) * limit + 1}</strong>–
               <strong className="text-[#16241D]">{Math.min(page * limit, total)}</strong> of{" "}
@@ -635,7 +640,7 @@ export default function ProductsPage() {
               <button
                 onClick={() => setPage(Math.max(1, page - 1))}
                 disabled={page <= 1}
-                className="flex h-8 w-8 items-center justify-center rounded-full border border-[#DCE3DC] hover:bg-white disabled:opacity-40"
+                className="flex h-8 w-8 items-center justify-center rounded-full border border-[#DCE3DC] hover:bg-white disabled:opacity-40 cursor-pointer"
               >
                 <ChevronLeft size={15} />
               </button>
@@ -643,7 +648,7 @@ export default function ProductsPage() {
               <button
                 onClick={() => setPage(Math.min(pages, page + 1))}
                 disabled={page >= pages}
-                className="flex h-8 w-8 items-center justify-center rounded-full border border-[#DCE3DC] hover:bg-white disabled:opacity-40"
+                className="flex h-8 w-8 items-center justify-center rounded-full border border-[#DCE3DC] hover:bg-white disabled:opacity-40 cursor-pointer"
               >
                 <ChevronRight size={15} />
               </button>

@@ -11,7 +11,9 @@ import {
   Settings,
   UserCircle,
   LogOut,
+  X,
 } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import { useLogout } from "../../auth/hooks/useLogout";
 
 export type SidebarNavKey =
@@ -42,9 +44,11 @@ const NAV_ITEMS: NavItem[] = [
 
 interface SidebarProps {
   storeName?: string;
+  isOpen?: boolean;
+  onClose?: () => void;
 }
 
-export default function Sidebar({ storeName = "QuickKart" }: SidebarProps) {
+export default function Sidebar({ storeName = "QuickKart", isOpen = false, onClose }: SidebarProps) {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const { logout, isLoggingOut } = useLogout();
@@ -53,12 +57,29 @@ export default function Sidebar({ storeName = "QuickKart" }: SidebarProps) {
     (item) => pathname === item.path || pathname.startsWith(item.path + "/")
   )?.key;
 
-  return (
-    <aside className="flex h-full w-64 flex-shrink-0 flex-col bg-white border-r border-[#E3E7E1] px-4 py-6">
-      {/* Brand */}
-      <div className="mb-8 px-2">
-        <h1 className="text-2xl font-bold tracking-tight text-[#145C43]">{storeName}</h1>
-        <p className="mt-0.5 text-xs font-semibold uppercase tracking-wider text-[#6E7C74]">Store Panel</p>
+  const handleNavClick = (path: string) => {
+    navigate(path);
+    onClose?.();
+  };
+
+  const navContent = (
+    <div className="flex h-full w-full flex-col bg-white px-4 py-6">
+      {/* Brand & close button */}
+      <div className="mb-8 flex items-center justify-between px-2">
+        <div>
+          <h1 className="text-2xl font-bold tracking-tight text-[#145C43]">{storeName}</h1>
+          <p className="mt-0.5 text-xs font-semibold uppercase tracking-wider text-[#6E7C74]">Store Panel</p>
+        </div>
+        {onClose && (
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label="Close menu"
+            className="flex md:hidden h-8 w-8 items-center justify-center rounded-lg text-[#6E7C74] hover:bg-slate-100 hover:text-[#16241D] cursor-pointer"
+          >
+            <X className="h-5 w-5" />
+          </button>
+        )}
       </div>
 
       {/* Primary nav */}
@@ -69,10 +90,10 @@ export default function Sidebar({ storeName = "QuickKart" }: SidebarProps) {
             <button
               key={key}
               type="button"
-              onClick={() => navigate(path)}
+              onClick={() => handleNavClick(path)}
               aria-current={isActive ? "page" : undefined}
               className={[
-                "flex w-full items-center gap-3 rounded-xl px-4 py-2.5 text-sm font-medium transition-colors",
+                "flex w-full items-center gap-3 rounded-xl px-4 py-2.5 text-sm font-medium transition-colors cursor-pointer",
                 isActive
                   ? "bg-[#145C43] text-white font-semibold shadow-sm"
                   : "text-[#5F7166] hover:bg-[#F0F7F4] hover:text-[#145C43]",
@@ -89,9 +110,9 @@ export default function Sidebar({ storeName = "QuickKart" }: SidebarProps) {
       <div className="space-y-1 border-t border-[#E3E7E1] pt-4">
         <button
           type="button"
-          onClick={() => navigate("/store/settings")}
+          onClick={() => handleNavClick("/store/settings")}
           className={[
-            "flex w-full items-center gap-3 rounded-xl px-4 py-2.5 text-sm font-medium transition-colors",
+            "flex w-full items-center gap-3 rounded-xl px-4 py-2.5 text-sm font-medium transition-colors cursor-pointer",
             pathname === "/store/settings"
               ? "bg-[#145C43] text-white font-semibold shadow-sm"
               : "text-[#5F7166] hover:bg-[#F0F7F4] hover:text-[#145C43]",
@@ -103,9 +124,9 @@ export default function Sidebar({ storeName = "QuickKart" }: SidebarProps) {
 
         <button
           type="button"
-          onClick={() => navigate("/store/profile")}
+          onClick={() => handleNavClick("/store/profile")}
           className={[
-            "flex w-full items-center gap-3 rounded-xl px-4 py-2.5 text-sm font-medium transition-colors",
+            "flex w-full items-center gap-3 rounded-xl px-4 py-2.5 text-sm font-medium transition-colors cursor-pointer",
             pathname === "/store/profile"
               ? "bg-[#145C43] text-white font-semibold shadow-sm"
               : "text-[#5F7166] hover:bg-[#F0F7F4] hover:text-[#145C43]",
@@ -117,14 +138,50 @@ export default function Sidebar({ storeName = "QuickKart" }: SidebarProps) {
 
         <button
           type="button"
-          onClick={logout}
+          onClick={() => {
+            onClose?.();
+            logout();
+          }}
           disabled={isLoggingOut}
-          className="flex w-full items-center gap-3 rounded-xl px-4 py-2.5 text-sm font-medium text-[#5F7166] transition-colors hover:bg-rose-50 hover:text-rose-600 disabled:opacity-50"
+          className="flex w-full items-center gap-3 rounded-xl px-4 py-2.5 text-sm font-medium text-[#5F7166] transition-colors hover:bg-rose-50 hover:text-rose-600 disabled:opacity-50 cursor-pointer"
         >
           <LogOut className="h-[18px] w-[18px]" />
           <span>{isLoggingOut ? "Logging out…" : "Logout"}</span>
         </button>
       </div>
-    </aside>
+    </div>
+  );
+
+  return (
+    <>
+      {/* Desktop permanent sidebar */}
+      <aside className="hidden md:flex h-full w-64 flex-shrink-0 flex-col border-r border-[#E3E7E1]">
+        {navContent}
+      </aside>
+
+      {/* Mobile drawer */}
+      <AnimatePresence>
+        {isOpen && (
+          <div className="fixed inset-0 z-50 flex md:hidden">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={onClose}
+              className="fixed inset-0 bg-black/40 backdrop-blur-xs"
+            />
+            <motion.div
+              initial={{ x: "-100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "-100%" }}
+              transition={{ type: "spring", damping: 25, stiffness: 280 }}
+              className="relative z-10 h-full w-72 max-w-[85vw] shadow-2xl"
+            >
+              {navContent}
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+    </>
   );
 }

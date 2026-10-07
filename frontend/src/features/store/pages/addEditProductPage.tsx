@@ -76,7 +76,7 @@ function ImageUploader({
       </div>
 
       {slots.length > 0 && (
-        <div className="mt-3 grid grid-cols-4 gap-2.5">
+        <div className="mt-3 grid grid-cols-2 sm:grid-cols-4 gap-2.5">
           {slots.map((slot, i) => (
             <div key={i} className="group relative aspect-square overflow-hidden rounded-xl border border-[#E3E7E1]">
               <img
@@ -307,7 +307,7 @@ export default function AddEditProductPage() {
   }
 
   return (
-    <div className="px-8 py-6 bg-[#F7F8F5]">
+    <div className="px-4 sm:px-6 lg:px-8 py-4 sm:py-6 bg-[#F7F8F5]">
       <button
         onClick={() => navigate("/store/products")}
         className="mb-4 inline-flex items-center gap-1.5 text-sm font-medium text-[#6E7C74] hover:text-[#16241D] cursor-pointer"
@@ -325,13 +325,13 @@ export default function AddEditProductPage() {
         </div>
       )}
 
-      <div className="grid grid-cols-[1fr_380px] gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-6">
         {/* Form card */}
-        <div className="rounded-2xl border border-[#E3E7E1] bg-white p-7 shadow-sm">
+        <div className="rounded-2xl border border-[#E3E7E1] bg-white p-4 sm:p-7 shadow-sm">
           <h2 className="mb-6 text-base font-semibold text-[#16241D]">Product details</h2>
 
-          <div className="grid grid-cols-2 gap-5">
-            <Field label="Product name" error={errors.productName} className="col-span-2">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
+            <Field label="Product name" error={errors.productName} className="sm:col-span-2">
               <input
                 value={form.productName}
                 onChange={(e) => update("productName", e.target.value)}
@@ -340,7 +340,7 @@ export default function AddEditProductPage() {
               />
             </Field>
 
-            <Field label="Description" className="col-span-2">
+            <Field label="Description" className="sm:col-span-2">
               <textarea
                 value={form.description}
                 onChange={(e) => update("description", e.target.value)}
@@ -411,24 +411,26 @@ export default function AddEditProductPage() {
               </div>
             </Field>
 
-            <Field label="Visibility" className="col-span-2">
-              <div className="flex items-center gap-3 rounded-xl border border-[#E3E7E1] px-4 py-3">
-                <button
-                  onClick={() =>
-                    update("availabilityStatus", form.availabilityStatus === "AVAILABLE" ? "HIDDEN" : "AVAILABLE")
-                  }
-                  className={`relative h-5 w-9 shrink-0 rounded-full transition-colors cursor-pointer ${
-                    form.availabilityStatus === "AVAILABLE" ? "bg-[#1F4D3D]" : "bg-[#F5F7F3] border border-[#E3E7E1]"
-                  }`}
-                >
-                  <motion.span
-                    className="absolute top-0.5 h-4 w-4 rounded-full bg-white shadow"
-                    animate={{ left: form.availabilityStatus === "AVAILABLE" ? 18 : 2 }}
-                    transition={{ type: "spring", stiffness: 500, damping: 32 }}
-                  />
-                </button>
-                <span className="text-sm font-semibold text-[#16241D]">Available for sale</span>
-                <span className="ml-auto text-xs text-[#6E7C74]">
+            <Field label="Visibility" className="sm:col-span-2">
+              <div className="flex flex-col sm:flex-row sm:items-center gap-3 rounded-xl border border-[#E3E7E1] px-4 py-3">
+                <div className="flex items-center gap-3">
+                  <button
+                    onClick={() =>
+                      update("availabilityStatus", form.availabilityStatus === "AVAILABLE" ? "HIDDEN" : "AVAILABLE")
+                    }
+                    className={`relative h-5 w-9 shrink-0 rounded-full transition-colors cursor-pointer ${
+                      form.availabilityStatus === "AVAILABLE" ? "bg-[#1F4D3D]" : "bg-[#F5F7F3] border border-[#E3E7E1]"
+                    }`}
+                  >
+                    <motion.span
+                      className="absolute top-0.5 h-4 w-4 rounded-full bg-white shadow"
+                      animate={{ left: form.availabilityStatus === "AVAILABLE" ? 18 : 2 }}
+                      transition={{ type: "spring", stiffness: 500, damping: 32 }}
+                    />
+                  </button>
+                  <span className="text-sm font-semibold text-[#16241D]">Available for sale</span>
+                </div>
+                <span className="text-xs text-[#6E7C74] sm:ml-auto">
                   Turn off to hide this product from customers without deleting it
                 </span>
               </div>
@@ -440,17 +442,17 @@ export default function AddEditProductPage() {
             <ImageUploader slots={imageSlots} onAdd={handleAddImages} onRemove={handleRemoveImage} />
           </div>
 
-          <div className="mt-8 flex items-center justify-end gap-3 border-t border-[#E3E7E1] pt-6">
+          <div className="mt-8 flex flex-col-reverse sm:flex-row sm:items-center justify-end gap-3 border-t border-[#E3E7E1] pt-6">
             <button
               onClick={() => navigate("/store/products")}
-              className="rounded-full border border-[#E3E7E1] px-5 py-2.5 text-sm font-semibold text-[#1F4D3D] hover:bg-[#F5F7F3] transition-colors cursor-pointer"
+              className="w-full sm:w-auto rounded-full border border-[#E3E7E1] px-5 py-2.5 text-sm font-semibold text-[#1F4D3D] hover:bg-[#F5F7F3] transition-colors cursor-pointer text-center"
             >
               Cancel
             </button>
             <button
               onClick={handleSave}
               disabled={saving}
-              className="inline-flex items-center gap-2 rounded-full bg-[#A9CC3B] hover:bg-[#98B933] active:bg-[#87A62C] px-6 py-2.5 text-sm font-bold text-[#16241D] shadow-sm transition-all hover:-translate-y-0.5 disabled:opacity-60 cursor-pointer"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full bg-[#A9CC3B] hover:bg-[#98B933] active:bg-[#87A62C] px-6 py-2.5 text-sm font-bold text-[#16241D] shadow-sm transition-all hover:-translate-y-0.5 disabled:opacity-60 cursor-pointer"
             >
               {saving ? <Loader2 size={15} className="animate-spin" /> : <Save size={15} />}
               {saving ? "Saving…" : isEditMode ? "Save changes" : "Save product"}

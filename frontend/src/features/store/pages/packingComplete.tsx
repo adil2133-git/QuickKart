@@ -109,46 +109,46 @@ export default function PackingCompletePage() {
       />
 
       {/* ── Completion card ────────────────────────────────────────────────────── */}
-      <div className="relative z-10 flex w-full max-w-lg flex-col items-center px-6">
+      <div className="relative z-10 flex w-full max-w-lg flex-col items-center px-4 sm:px-6 py-6 overflow-y-auto">
         {/* Badge chip at top */}
         {order && (
-          <div className="mb-6 flex items-center gap-2 rounded-full border border-[#E3E7E1] bg-white px-4 py-2 shadow-sm">
-            <span className="text-sm font-semibold text-[#16241D]">
+          <div className="mb-5 sm:mb-6 flex flex-wrap items-center justify-center gap-2 rounded-full border border-[#E3E7E1] bg-white px-3.5 sm:px-4 py-2 shadow-sm text-center">
+            <span className="text-xs sm:text-sm font-semibold text-[#16241D]">
               Order #{order.orderNumber}
             </span>
-            <span className="h-1 w-1 rounded-full bg-[#1F4D3D]" />
+            <span className="hidden sm:inline-block h-1 w-1 rounded-full bg-[#1F4D3D]" />
             <span className="rounded-full bg-[#E7EFEA] px-2 py-0.5 text-xs font-semibold text-[#1F4D3D]">
-              Packing Checklist Completed
+              Packing Completed
             </span>
           </div>
         )}
 
         {/* Check icon */}
-        <div className="flex h-20 w-20 items-center justify-center rounded-full bg-[#1F4D3D] shadow-lg">
-          <CheckCircle2 className="h-10 w-10 text-white" strokeWidth={2.5} />
+        <div className="flex h-16 w-16 sm:h-20 sm:w-20 items-center justify-center rounded-full bg-[#1F4D3D] shadow-lg">
+          <CheckCircle2 className="h-8 w-8 sm:h-10 sm:w-10 text-white" strokeWidth={2.5} />
         </div>
 
-        <h2 className="mt-5 text-2xl font-bold text-[#16241D]">Order Ready for Pickup</h2>
-        <p className="mt-2 max-w-sm text-center text-sm text-[#6E7C74]">
+        <h2 className="mt-4 sm:mt-5 text-xl sm:text-2xl font-bold text-[#16241D] text-center">Order Ready for Pickup</h2>
+        <p className="mt-2 max-w-sm text-center text-xs sm:text-sm text-[#6E7C74]">
           Excellent work! Order #{order?.orderNumber ?? "—"} has been meticulously packed and
           verified for quality.
         </p>
 
         {/* Confirmation details card */}
-        <div className="mt-6 w-full rounded-2xl border border-[#E3E7E1] bg-white p-6 shadow-sm">
+        <div className="mt-5 sm:mt-6 w-full rounded-2xl border border-[#E3E7E1] bg-white p-4 sm:p-6 shadow-sm">
           <div className="mb-3 flex items-center gap-2">
             <div className="flex h-7 w-7 items-center justify-center rounded-full bg-[#E7EFEA]">
               <span className="text-sm">ℹ️</span>
             </div>
             <span className="text-sm font-bold text-[#16241D]">Confirmation Details</span>
           </div>
-          <p className="text-sm leading-relaxed text-[#6E7C74]">
+          <p className="text-xs sm:text-sm leading-relaxed text-[#6E7C74]">
             Order #{order?.orderNumber ?? "—"} has been marked as ready. The customer and the
             courier service have been automatically notified via SMS and App alert.
           </p>
 
-          <div className="mt-4 grid grid-cols-2 gap-3">
-            <div className="rounded-xl bg-[#F5F7F3] p-4">
+          <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div className="rounded-xl bg-[#F5F7F3] p-3.5 sm:p-4">
               <p className="text-xs font-semibold uppercase tracking-widest text-[#6E7C74]">
                 Customer
               </p>
@@ -156,7 +156,7 @@ export default function PackingCompletePage() {
                 {order?.recipientName ?? "—"}
               </p>
             </div>
-            <div className="rounded-xl bg-[#F5F7F3] p-4">
+            <div className="rounded-xl bg-[#F5F7F3] p-3.5 sm:p-4">
               <p className="text-xs font-semibold uppercase tracking-widest text-[#6E7C74]">
                 Items Packed
               </p>
@@ -168,22 +168,22 @@ export default function PackingCompletePage() {
         </div>
 
         {/* CTA buttons */}
-        <div className="mt-5 flex items-center gap-3">
+        <div className="mt-5 flex flex-col sm:flex-row items-center gap-2.5 sm:gap-3 w-full sm:w-auto">
           <button
             onClick={() => navigate("/store/orders")}
-            className="rounded-full bg-[#1F4D3D] px-7 py-3 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[#163D30] cursor-pointer"
+            className="w-full sm:w-auto rounded-full bg-[#1F4D3D] px-6 sm:px-7 py-3 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[#163D30] cursor-pointer text-center"
           >
             Back to Orders
           </button>
-          <button className="flex items-center gap-2 rounded-full border border-[#E3E7E1] bg-white px-7 py-3 text-sm font-semibold text-[#1F4D3D] shadow-sm transition-colors hover:bg-[#F5F7F3] cursor-pointer">
+          <button className="w-full sm:w-auto flex items-center justify-center gap-2 rounded-full border border-[#E3E7E1] bg-white px-6 sm:px-7 py-3 text-sm font-semibold text-[#1F4D3D] shadow-sm transition-colors hover:bg-[#F5F7F3] cursor-pointer text-center">
             <Printer className="h-4 w-4" />
             Print Shipping Label
           </button>
         </div>
 
         {/* Pickup time */}
-        <div className="mt-5 flex items-center gap-2 rounded-full border border-[#E3E7E1] bg-white/80 px-5 py-2.5 text-sm text-[#6E7C74] shadow-sm backdrop-blur-sm">
-          <Clock className="h-4 w-4 text-[#1F4D3D]" />
+        <div className="mt-4 sm:mt-5 flex items-center gap-2 rounded-full border border-[#E3E7E1] bg-white/80 px-4 sm:px-5 py-2 sm:py-2.5 text-xs sm:text-sm text-[#6E7C74] shadow-sm backdrop-blur-sm text-center">
+          <Clock className="h-4 w-4 text-[#1F4D3D] shrink-0" />
           <span>Scheduled for pickup at 4:30 PM Today</span>
         </div>
       </div>

@@ -1,5 +1,5 @@
 // storeShell.tsx
-import React from "react";
+import React, { useState } from "react";
 import { useNotificationsSync } from "../../shared/hooks/useNotifications";
 import { useStoreOrderSocket } from "../hooks/useStoreOrderSocket";
 import Sidebar from "../components/storeSidebar";
@@ -10,6 +10,8 @@ export function StoreShell({
 }: {
   children: React.ReactNode;
 }) {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
   // Subscribes once (fetches existing notifications + listens for
   // socket "notification:new" events); Topbar reads from the shared
   // notification store directly, so no props need to be threaded here.
@@ -24,9 +26,13 @@ export function StoreShell({
 
   return (
     <div className="flex h-screen w-full overflow-hidden bg-white text-[#16241D]">
-      <Sidebar storeName="QuickKart" />
+      <Sidebar
+        storeName="QuickKart"
+        isOpen={sidebarOpen}
+        onClose={() => setSidebarOpen(false)}
+      />
       <div className="flex h-full flex-1 flex-col overflow-hidden">
-        <Topbar />
+        <Topbar onMenuClick={() => setSidebarOpen(true)} />
         <main className="flex-1 overflow-y-auto">{children}</main>
       </div>
     </div>

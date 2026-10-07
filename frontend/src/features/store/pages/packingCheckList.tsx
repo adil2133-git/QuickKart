@@ -62,14 +62,14 @@ export default function PackingChecklistPage() {
       )}
 
       {/* ── Progress bar card ──────────────────────────────────────────────────── */}
-      <div className="m-8 mb-0 rounded-2xl border border-[#E3E7E1] bg-white px-6 py-5">
+      <div className="m-4 sm:m-8 mb-0 rounded-2xl border border-[#E3E7E1] bg-white p-4 sm:px-6 sm:py-5">
         <div className="flex items-center justify-between">
           <div>
             <p className="text-sm font-semibold text-[#16241D]">Order Progress</p>
             <p className="mt-0.5 text-xs text-[#6E7C74]">Scanning items for customer shipment</p>
           </div>
           <div className="text-right">
-            <p className="text-2xl font-bold text-[#1F4D3D]">{progressPercent}%</p>
+            <p className="text-xl sm:text-2xl font-bold text-[#1F4D3D]">{progressPercent}%</p>
             <p className="text-xs font-semibold uppercase tracking-widest text-[#1F4D3D]">
               {packedCount}/{totalCount} Packed
             </p>
@@ -84,18 +84,18 @@ export default function PackingChecklistPage() {
       </div>
 
       {/* ── Items grid ─────────────────────────────────────────────────────────── */}
-      <div className="flex-1 overflow-y-auto p-8 pt-5">
+      <div className="flex-1 overflow-y-auto p-4 sm:p-8 pt-4 sm:pt-5">
         {packingItems.length === 0 ? (
           <div className="flex h-40 items-center justify-center text-sm text-[#6E7C74]">
             No items found for this order.
           </div>
         ) : (
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
             {packingItems.map((item) => (
               <button
                 key={item.productId}
                 onClick={() => togglePackingItem(item.productId)}
-                className={`relative overflow-hidden rounded-2xl border-2 text-left transition-all ${
+                className={`relative overflow-hidden rounded-2xl border-2 text-left transition-all cursor-pointer ${
                   item.isPacked
                     ? "border-[#1F4D3D]"
                     : "border-[#E3E7E1] hover:border-[#1F4D3D]/50"
@@ -156,9 +156,9 @@ export default function PackingChecklistPage() {
       </div>
 
       {/* ── Bottom action bar ─────────────────────────────────────────────────── */}
-      <div className="border-t border-[#E3E7E1] bg-white px-8 py-4">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3 text-sm text-[#6E7C74]">
+      <div className="border-t border-[#E3E7E1] bg-white px-4 sm:px-8 py-3.5 sm:py-4">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+          <div className="flex items-center gap-3 text-xs sm:text-sm text-[#6E7C74]">
             <div className="flex items-center gap-1.5">
               {/* Truck + person icon placeholder */}
               <span className="text-lg">🚚</span>
@@ -167,11 +167,11 @@ export default function PackingChecklistPage() {
             <span className="font-medium">Scheduled for pickup at 4:30 PM</span>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex flex-wrap items-center gap-2 sm:gap-3 w-full sm:w-auto">
             <button
               onClick={markAllPacked}
               disabled={allPacked || selectedOrder?.orderStatus === "CANCELLED"}
-              className="rounded-full border border-[#E3E7E1] px-6 py-2.5 text-sm font-semibold text-[#1F4D3D] transition-colors hover:bg-[#F5F7F3] disabled:opacity-40"
+              className="flex-1 sm:flex-initial rounded-full border border-[#E3E7E1] px-5 sm:px-6 py-2.5 text-xs sm:text-sm font-semibold text-[#1F4D3D] transition-colors hover:bg-[#F5F7F3] disabled:opacity-40 cursor-pointer text-center"
             >
               Mark All Packed
             </button>
@@ -179,7 +179,7 @@ export default function PackingChecklistPage() {
             <button
               onClick={handleReadyForPickup}
               disabled={!allPacked || isUpdatingStatus || selectedOrder?.orderStatus === "CANCELLED"}
-              className={`flex items-center gap-2 rounded-full px-6 py-2.5 text-sm font-bold transition-all ${
+              className={`flex-1 sm:flex-initial flex items-center justify-center gap-2 rounded-full px-5 sm:px-6 py-2.5 text-xs sm:text-sm font-bold transition-all cursor-pointer ${
                 allPacked
                   ? "bg-[#A9CC3B] hover:bg-[#98B933] active:bg-[#87A62C] text-[#16241D]"
                   : "cursor-not-allowed bg-slate-200 text-slate-400 opacity-60"

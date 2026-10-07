@@ -29,7 +29,7 @@ export default function DashboardPage() {
   };
 
   return (
-    <main className="flex-1 space-y-6 p-6">
+    <main className="flex-1 space-y-4 sm:space-y-6 p-4 sm:p-6">
       <StatsRow stats={summary.stats} />
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
