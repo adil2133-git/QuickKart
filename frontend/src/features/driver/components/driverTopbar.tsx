@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { Bell, UserCircle } from "lucide-react";
+import { Bell, UserCircle, Menu } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDriverDeliveryStore } from "../state/driverDeliveryState";
 import { useDriverDeliveryActions } from "../hooks/useDriverDelivery";
@@ -28,7 +28,11 @@ function timeAgo(iso: string) {
   return `${Math.floor(h / 24)}d ago`;
 }
 
-export default function DriverTopbar() {
+interface DriverTopbarProps {
+  onMenuClick?: () => void;
+}
+
+export default function DriverTopbar({ onMenuClick }: DriverTopbarProps = {}) {
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const title = titleFromPath(pathname);
@@ -65,8 +69,19 @@ export default function DriverTopbar() {
   };
 
   return (
-    <header className="flex h-16 flex-shrink-0 items-center justify-between border-b border-[#E3E7E1] bg-white px-6">
-      <h1 className="text-[15px] font-semibold text-[#16241D] tracking-tight">{title}</h1>
+    <header className="flex h-16 flex-shrink-0 items-center justify-between border-b border-[#E3E7E1] bg-white px-4 sm:px-6">
+      <div className="flex items-center gap-2.5">
+        {onMenuClick && (
+          <button
+            onClick={onMenuClick}
+            className="md:hidden p-1.5 -ml-1 rounded-lg text-[#16241D] hover:bg-[#F5F7F3]"
+            aria-label="Open sidebar menu"
+          >
+            <Menu size={20} />
+          </button>
+        )}
+        <h1 className="text-sm sm:text-[15px] font-semibold text-[#16241D] tracking-tight">{title}</h1>
+      </div>
 
       <div className="flex items-center gap-2">
         {isOnline && (

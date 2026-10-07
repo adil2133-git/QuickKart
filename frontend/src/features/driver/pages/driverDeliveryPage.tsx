@@ -46,10 +46,10 @@ export default function DriverDeliveriesPage() {
 
   return (
     <div className="max-w-[1400px] mx-auto">
-      <h1 className="mb-2 text-3xl font-bold text-[#16241D]">Delivery Management</h1>
+      <h1 className="mb-2 text-xl sm:text-3xl font-bold text-[#16241D]">Delivery Management</h1>
 
       {/* Tab bar */}
-      <div className="mb-6 flex gap-6 border-b border-[#E3E7E1]">
+      <div className="mb-6 flex gap-4 sm:gap-6 border-b border-[#E3E7E1] overflow-x-auto scrollbar-hide">
         {TAB_CONFIG.map(({ key, label }) => {
           const isActive = activeTab === key;
           const count = key === "NEW_REQUESTS" && requests.length > 0 ? ` (${requests.length})` : "";
@@ -59,7 +59,7 @@ export default function DriverDeliveriesPage() {
               type="button"
               onClick={() => setActiveTab(key)}
               className={[
-                "-mb-px border-b-2 pb-3 text-sm font-semibold transition-colors cursor-pointer",
+                "-mb-px border-b-2 pb-3 text-xs sm:text-sm font-semibold transition-colors cursor-pointer shrink-0 whitespace-nowrap",
                 isActive
                   ? "border-[#1F4D3D] text-[#1F4D3D]"
                   : "border-transparent text-[#6E7C74] hover:text-[#16241D]",

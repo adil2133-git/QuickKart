@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import DriverSidebar from "../components/driverSidebar";
 import DriverTopbar from "../components/driverTopbar";
@@ -14,6 +14,7 @@ export default function DriverShell() {
   const user = useAuthStore((s) => s.user);
   const rewardsSummary = useDriverRewardsStore((s) => s.summary);
   const { fetchRewardsSummary } = useDriverRewardsActions();
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useDriverLocationTracking();
   useDriverDeliverySocket();
@@ -31,10 +32,12 @@ export default function DriverShell() {
       <DriverSidebar
         driverName={user?.name ?? "Driver"}
         driverLevel={rewardsSummary?.currentLevelLabel ?? "Bronze"}
+        isOpen={sidebarOpen}
+        onClose={() => setSidebarOpen(false)}
       />
-      <div className="flex flex-1 flex-col overflow-hidden">
-        <DriverTopbar />
-        <main className="flex-1 overflow-y-auto p-6">
+      <div className="flex flex-1 flex-col overflow-hidden min-w-0">
+        <DriverTopbar onMenuClick={() => setSidebarOpen(true)} />
+        <main className="flex-1 overflow-y-auto p-4 sm:p-6">
           <Outlet />
         </main>
       </div>

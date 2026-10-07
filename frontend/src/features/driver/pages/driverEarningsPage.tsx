@@ -80,29 +80,29 @@ function KpiCards() {
   ];
 
   return (
-    <div className="grid grid-cols-4 gap-4">
+    <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
       {kpis.map((kpi) => (
         <motion.div
           key={kpi.label}
           variants={card}
-          className="rounded-2xl border border-[#E3E7E1] bg-white p-5"
+          className="rounded-2xl border border-[#E3E7E1] bg-white p-3.5 sm:p-5"
         >
           {isLoading && !summary ? (
             <div className="animate-pulse space-y-2">
-              <div className="h-4 w-24 rounded bg-[#F5F7F3]" />
-              <div className="h-7 w-20 rounded bg-[#F5F7F3]" />
-              <div className="h-3 w-28 rounded bg-[#F5F7F3]" />
+              <div className="h-4 w-20 sm:w-24 rounded bg-[#F5F7F3]" />
+              <div className="h-6 sm:h-7 w-16 sm:w-20 rounded bg-[#F5F7F3]" />
+              <div className="h-3 w-24 sm:w-28 rounded bg-[#F5F7F3]" />
             </div>
           ) : (
             <>
-              <div className="mb-3 flex items-center justify-between">
+              <div className="mb-2 sm:mb-3 flex items-center justify-between">
                 <p className="text-xs font-medium text-[#6E7C74]">{kpi.label}</p>
                 <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#E7EFEA]">
                   <kpi.icon className="h-3.5 w-3.5 text-[#1F4D3D]" />
                 </div>
               </div>
-              <p className="text-2xl font-bold text-[#16241D] leading-none">{kpi.value}</p>
-              <div className="mt-2 flex items-center gap-1 text-[11px] font-medium">
+              <p className="text-xl sm:text-2xl font-bold text-[#16241D] leading-none">{kpi.value}</p>
+              <div className="mt-2 flex flex-wrap items-center gap-1 text-[11px] font-medium">
                 {kpi.changePercent !== null ? (
                   <>
                     {kpi.changePercent >= 0 ? (
@@ -140,9 +140,9 @@ function DeliveryEarningsCard() {
 
   return (
     <motion.div variants={card} className="rounded-2xl border border-[#E3E7E1] bg-white overflow-hidden">
-      <div className="flex items-center justify-between px-6 pt-5 pb-4">
+      <div className="flex items-center justify-between px-4 sm:px-6 pt-4 sm:pt-5 pb-3 sm:pb-4">
         <div>
-          <p className="text-base font-bold text-[#16241D]">Delivery Earnings</p>
+          <p className="text-sm sm:text-base font-bold text-[#16241D]">Delivery Earnings</p>
           <p className="text-xs text-[#6E7C74]">Standard delivery fees this month</p>
         </div>
         <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#E7EFEA]">
@@ -150,18 +150,18 @@ function DeliveryEarningsCard() {
         </div>
       </div>
 
-      <div className="border-t border-[#E3E7E1] px-6 py-4">
+      <div className="border-t border-[#E3E7E1] px-4 sm:px-6 py-3 sm:py-4">
         <div className="flex items-center justify-between py-2">
-          <span className="text-sm text-[#6E7C74]">Delivery Fees ({summary.monthDeliveries} orders)</span>
-          <span className="text-sm font-semibold text-[#16241D]">{formatINR(summary.thisMonth)}</span>
+          <span className="text-xs sm:text-sm text-[#6E7C74]">Delivery Fees ({summary.monthDeliveries} orders)</span>
+          <span className="text-xs sm:text-sm font-semibold text-[#16241D]">{formatINR(summary.thisMonth)}</span>
         </div>
         <div className="flex items-center justify-between py-2">
-          <span className="text-sm text-[#6E7C74]">All-time Deliveries</span>
-          <span className="text-sm font-semibold text-[#16241D]">{summary.totalDeliveries}</span>
+          <span className="text-xs sm:text-sm text-[#6E7C74]">All-time Deliveries</span>
+          <span className="text-xs sm:text-sm font-semibold text-[#16241D]">{summary.totalDeliveries}</span>
         </div>
       </div>
 
-      <div className="px-6 pb-5">
+      <div className="px-4 sm:px-6 pb-4 sm:pb-5">
         <div className="mb-2 h-2 overflow-hidden rounded-full bg-[#F5F7F3]">
           <motion.div
             initial={{ width: 0 }}
@@ -186,9 +186,9 @@ function WalletCashCard() {
 
   return (
     <motion.div variants={card} className="rounded-2xl border border-[#E3E7E1] bg-white overflow-hidden">
-      <div className="flex items-center justify-between px-6 pt-5 pb-4">
+      <div className="flex items-center justify-between px-4 sm:px-6 pt-4 sm:pt-5 pb-3 sm:pb-4">
         <div>
-          <p className="text-base font-bold text-[#16241D]">Wallet & Cash</p>
+          <p className="text-sm sm:text-base font-bold text-[#16241D]">Wallet & Cash</p>
           <p className="text-xs text-[#6E7C74]">Balance and COD cash on hand</p>
         </div>
         <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-50">
@@ -196,20 +196,20 @@ function WalletCashCard() {
         </div>
       </div>
 
-      <div className="border-t border-[#E3E7E1] px-6 py-4">
+      <div className="border-t border-[#E3E7E1] px-4 sm:px-6 py-3 sm:py-4">
         <div className="flex items-center justify-between py-2">
-          <span className="text-sm text-[#6E7C74]">Wallet Balance</span>
-          <span className="text-sm font-semibold text-[#16241D]">{formatINR(summary.walletBalance)}</span>
+          <span className="text-xs sm:text-sm text-[#6E7C74]">Wallet Balance</span>
+          <span className="text-xs sm:text-sm font-semibold text-[#16241D]">{formatINR(summary.walletBalance)}</span>
         </div>
         <div className="flex items-center justify-between py-2">
-          <span className="text-sm text-[#6E7C74]">Cash Pending Settlement</span>
-          <span className="text-sm font-semibold text-amber-600">
+          <span className="text-xs sm:text-sm text-[#6E7C74]">Cash Pending Settlement</span>
+          <span className="text-xs sm:text-sm font-semibold text-amber-600">
             {formatINR(summary.cashPendingSettlement)}
           </span>
         </div>
       </div>
 
-      <div className="px-6 pb-5">
+      <div className="px-4 sm:px-6 pb-4 sm:pb-5">
         <button
           onClick={() => navigate("/driver/wallet")}
           className="flex w-full items-center justify-center gap-1.5 rounded-xl bg-[#1F4D3D] py-2.5 text-xs font-bold text-white hover:bg-[#163D30] transition-colors cursor-pointer"
@@ -228,10 +228,10 @@ function WeeklyTrendCard() {
   if (!summary) return null;
 
   return (
-    <motion.div variants={card} className="rounded-2xl border border-[#E3E7E1] bg-white p-6">
+    <motion.div variants={card} className="rounded-2xl border border-[#E3E7E1] bg-white p-4 sm:p-6">
       <p className="mb-1 text-base font-bold text-[#16241D]">Last 7 Days</p>
       <p className="mb-4 text-xs text-[#6E7C74]">Your daily delivery earnings this week</p>
-      <div className="h-40">
+      <div className="h-44 sm:h-52">
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart data={summary.last7Days}>
             <defs>
@@ -281,7 +281,7 @@ function RecentEarningsTable() {
 
   return (
     <motion.div variants={card} className="rounded-2xl border border-[#E3E7E1] bg-white overflow-hidden">
-      <div className="flex items-center justify-between px-6 pt-5 pb-4">
+      <div className="flex items-center justify-between px-4 sm:px-6 pt-4 sm:pt-5 pb-3 sm:pb-4">
         <p className="text-base font-bold text-[#16241D]">Recent Earnings</p>
         <button
           onClick={handleViewAll}
@@ -293,13 +293,13 @@ function RecentEarningsTable() {
       </div>
 
       {isLoading && recent.length === 0 ? (
-        <div className="space-y-3 px-6 pb-6">
+        <div className="space-y-3 px-4 sm:px-6 pb-6">
           {[0, 1, 2].map((i) => (
             <div key={i} className="h-12 animate-pulse rounded-xl bg-[#F5F7F3]" />
           ))}
         </div>
       ) : recent.length === 0 ? (
-        <div className="flex flex-col items-center justify-center gap-2 px-6 pb-10 pt-2 text-center">
+        <div className="flex flex-col items-center justify-center gap-2 px-4 sm:px-6 pb-10 pt-2 text-center">
           <Receipt className="h-8 w-8 text-[#9BAAA1]" />
           <p className="text-sm text-[#6E7C74]">No completed deliveries yet</p>
         </div>
@@ -308,19 +308,19 @@ function RecentEarningsTable() {
           <table className="w-full text-left">
             <thead>
               <tr className="border-t border-b border-[#E3E7E1] bg-[#F5F7F3]">
-                <th className="px-6 py-2.5 text-[10px] font-bold uppercase tracking-widest text-[#6E7C74]">
+                <th className="px-4 sm:px-6 py-2.5 text-[10px] font-bold uppercase tracking-widest text-[#6E7C74] whitespace-nowrap">
                   Date &amp; Time
                 </th>
-                <th className="px-6 py-2.5 text-[10px] font-bold uppercase tracking-widest text-[#6E7C74]">
+                <th className="px-4 sm:px-6 py-2.5 text-[10px] font-bold uppercase tracking-widest text-[#6E7C74] whitespace-nowrap">
                   Order ID
                 </th>
-                <th className="px-6 py-2.5 text-[10px] font-bold uppercase tracking-widest text-[#6E7C74]">
+                <th className="px-4 sm:px-6 py-2.5 text-[10px] font-bold uppercase tracking-widest text-[#6E7C74] whitespace-nowrap">
                   Type
                 </th>
-                <th className="px-6 py-2.5 text-[10px] font-bold uppercase tracking-widest text-[#6E7C74]">
+                <th className="px-4 sm:px-6 py-2.5 text-[10px] font-bold uppercase tracking-widest text-[#6E7C74] whitespace-nowrap">
                   Status
                 </th>
-                <th className="px-6 py-2.5 text-right text-[10px] font-bold uppercase tracking-widest text-[#6E7C74]">
+                <th className="px-4 sm:px-6 py-2.5 text-right text-[10px] font-bold uppercase tracking-widest text-[#6E7C74] whitespace-nowrap">
                   Amount
                 </th>
               </tr>
@@ -330,28 +330,28 @@ function RecentEarningsTable() {
                 const { date, time } = formatDateTime(d.completedAt);
                 return (
                   <tr key={d.orderId} className="border-b border-[#E3E7E1] last:border-b-0">
-                    <td className="px-6 py-3.5">
+                    <td className="px-4 sm:px-6 py-3.5 whitespace-nowrap">
                       <p className="text-sm font-semibold text-[#16241D]">{date}</p>
                       <p className="text-xs text-[#6E7C74]">{time}</p>
                     </td>
-                    <td className="px-6 py-3.5">
+                    <td className="px-4 sm:px-6 py-3.5 whitespace-nowrap">
                       <span className="rounded-md bg-[#E7EFEA] px-2 py-1 text-xs font-semibold text-[#1F4D3D]">
                         #{d.orderNumber}
                       </span>
                     </td>
-                    <td className="px-6 py-3.5">
+                    <td className="px-4 sm:px-6 py-3.5 whitespace-nowrap">
                       <span className="flex items-center gap-1.5 text-sm text-[#6E7C74]">
                         <Truck className="h-3.5 w-3.5 text-[#1F4D3D]" />
                         Delivery
                       </span>
                     </td>
-                    <td className="px-6 py-3.5">
+                    <td className="px-4 sm:px-6 py-3.5 whitespace-nowrap">
                       <span className="flex items-center gap-1 rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-semibold text-emerald-700 w-fit">
                         <CheckCircle2 className="h-3 w-3" />
                         Completed
                       </span>
                     </td>
-                    <td className="px-6 py-3.5 text-right text-sm font-bold text-[#16241D]">
+                    <td className="px-4 sm:px-6 py-3.5 text-right text-sm font-bold text-[#16241D] whitespace-nowrap">
                       {formatINR(d.earnings)}
                     </td>
                   </tr>
@@ -378,28 +378,28 @@ function WeeklyChallengeBanner() {
   return (
     <motion.div
       variants={card}
-      className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#1F4D3D] to-[#163D30] p-8"
+      className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#1F4D3D] to-[#163D30] p-5 sm:p-8"
     >
-      <div className="absolute -right-10 -top-10 h-48 w-48 rounded-full bg-white/5" />
-      <div className="absolute -bottom-16 right-24 h-40 w-40 rounded-full bg-white/5" />
+      <div className="absolute -right-10 -top-10 h-48 w-48 rounded-full bg-white/5 pointer-events-none" />
+      <div className="absolute -bottom-16 right-24 h-40 w-40 rounded-full bg-white/5 pointer-events-none" />
 
-      <div className="relative flex items-center justify-between gap-8">
+      <div className="relative flex flex-col md:flex-row md:items-center justify-between gap-6 md:gap-8">
         <div className="max-w-md">
           <span className="mb-3 inline-flex items-center gap-1.5 rounded-full bg-white/15 px-3 py-1 text-[11px] font-bold uppercase tracking-wide text-white">
             <Sparkles className="h-3 w-3" />
             Weekly Challenge
           </span>
-          <h3 className="text-2xl font-bold text-white leading-tight">
+          <h3 className="text-xl sm:text-2xl font-bold text-white leading-tight">
             {unlocked ? "🎉 Bonus unlocked!" : `Earn an extra ${formatINR(bonus)} this week!`}
           </h3>
-          <p className="mt-2 text-sm text-emerald-100">
+          <p className="mt-2 text-xs sm:text-sm text-emerald-100">
             {unlocked
               ? `You've completed ${current} deliveries this week — the bonus is yours.`
               : `Complete ${remaining} more deliveries this week to unlock a ${formatINR(bonus)} bonus.`}
           </p>
         </div>
 
-        <div className="w-56 flex-shrink-0 rounded-2xl bg-white/10 p-4 backdrop-blur-sm">
+        <div className="w-full md:w-56 flex-shrink-0 rounded-2xl bg-white/10 p-4 backdrop-blur-sm">
           <div className="mb-2 flex items-center justify-between text-xs font-semibold text-white">
             <span>Progress</span>
             <span>
@@ -434,7 +434,7 @@ export default function DriverEarningsPage() {
     <motion.div variants={container} initial="hidden" animate="show" className="space-y-4">
       <KpiCards />
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <DeliveryEarningsCard />
         <WalletCashCard />
       </div>

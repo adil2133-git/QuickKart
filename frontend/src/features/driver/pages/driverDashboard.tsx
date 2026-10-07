@@ -59,7 +59,7 @@ function HeroCard() {
     <motion.div
       variants={card}
       className={[
-        "relative overflow-hidden rounded-3xl p-6 transition-all duration-500",
+        "relative overflow-hidden rounded-2xl sm:rounded-3xl p-4 sm:p-6 transition-all duration-500",
         isOnline
           ? "bg-[#E7EFEA]/70 border border-[#1F4D3D]/25"
           : "bg-white border border-[#E3E7E1]",
@@ -70,7 +70,7 @@ function HeroCard() {
         isOnline ? "bg-[#1F4D3D]" : "bg-rose-300"
       }`} />
 
-      <div className="relative flex items-start justify-between">
+      <div className="relative flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
           <div className="mb-1.5 flex items-center gap-2">
             <motion.span
@@ -78,7 +78,7 @@ function HeroCard() {
               transition={{ repeat: Infinity, duration: 2 }}
               className={`h-2.5 w-2.5 rounded-full ${isOnline ? "bg-emerald-500" : "bg-rose-500"}`}
             />
-            <span className={`text-xs font-bold uppercase tracking-widest px-2.5 py-0.5 rounded-full border ${
+            <span className={`text-[11px] sm:text-xs font-bold uppercase tracking-widest px-2.5 py-0.5 rounded-full border ${
               isOnline
                 ? "bg-emerald-50 text-[#1F4D3D] border-emerald-200"
                 : "bg-rose-50 text-rose-700 border-rose-200"
@@ -86,7 +86,7 @@ function HeroCard() {
               {isOnline ? "Online" : "Offline"}
             </span>
           </div>
-          <h2 className={`text-xl font-bold ${isOnline ? "text-[#1F4D3D]" : "text-[#16241D]"}`}>
+          <h2 className={`text-lg sm:text-xl font-bold ${isOnline ? "text-[#1F4D3D]" : "text-[#16241D]"}`}>
             {isOnline ? "Receiving requests" : "You're offline"}
           </h2>
           {isOnline && shiftLabel && (
@@ -105,7 +105,7 @@ function HeroCard() {
           whileTap={{ scale: 0.96 }}
           onClick={handleToggle}
           className={[
-            "mt-1 rounded-2xl px-6 py-2.5 text-sm font-bold transition-all shadow-sm cursor-pointer",
+            "w-full sm:w-auto rounded-2xl px-6 py-2.5 text-xs sm:text-sm font-bold transition-all shadow-sm cursor-pointer text-center",
             isOnline
               ? "bg-rose-600 hover:bg-rose-700 active:bg-rose-800 text-white"
               : "bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white",
@@ -171,13 +171,13 @@ function KpiCards() {
   ];
 
   return (
-    <div className="grid grid-cols-4 gap-3">
+    <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
       {kpis.map((kpi, i) => (
         <motion.div
           key={kpi.label}
           variants={card}
           custom={i}
-          className="rounded-2xl border border-[#E3E7E1] bg-white p-4"
+          className="rounded-2xl border border-[#E3E7E1] bg-white p-3.5 sm:p-4"
         >
           {statsLoading && !stats ? (
             <div className="animate-pulse space-y-2">
@@ -193,8 +193,8 @@ function KpiCards() {
               <p className="text-[10px] font-semibold uppercase tracking-widest text-[#6E7C74]">
                 {kpi.label}
               </p>
-              <p className="mt-0.5 text-2xl font-bold text-[#16241D] leading-none">{kpi.value}</p>
-              <p className={`mt-1 text-[11px] font-medium ${kpi.subColor}`}>{kpi.sub}</p>
+              <p className="mt-0.5 text-xl sm:text-2xl font-bold text-[#16241D] leading-none">{kpi.value}</p>
+              <p className={`mt-1 text-[10px] sm:text-[11px] font-medium ${kpi.subColor}`}>{kpi.sub}</p>
             </>
           )}
         </motion.div>
@@ -489,8 +489,8 @@ export default function DriverDashboard() {
       <HeroCard />
       <KpiCards />
 
-      {/* 2-column grid */}
-      <div className="grid grid-cols-[1fr_280px] gap-4">
+      {/* Responsive grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-[1fr_280px] gap-4">
         {/* Left column */}
         <div className="space-y-4">
           <ActiveDeliveryCard />

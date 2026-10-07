@@ -69,19 +69,19 @@ function TierHeroCard() {
   return (
     <motion.div
       variants={card}
-      className="relative overflow-hidden rounded-3xl border border-[#E3E7E1] bg-white p-6"
+      className="relative overflow-hidden rounded-3xl border border-[#E3E7E1] bg-white p-4 sm:p-6"
     >
-      <div className={`absolute -right-10 -top-10 h-48 w-48 rounded-full bg-gradient-to-br ${meta.gradient} opacity-10`} />
+      <div className={`absolute -right-10 -top-10 h-48 w-48 rounded-full bg-gradient-to-br ${meta.gradient} opacity-10 pointer-events-none`} />
 
-      <div className="relative flex items-start justify-between gap-6">
+      <div className="relative flex flex-col sm:flex-row sm:items-start justify-between gap-5 sm:gap-6">
         <div>
           <div className="mb-3 flex items-center gap-3">
-            <div className={`flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br ${meta.gradient} shadow-sm`}>
-              <meta.icon className="h-7 w-7 text-white" />
+            <div className={`flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-2xl bg-gradient-to-br ${meta.gradient} shadow-sm shrink-0`}>
+              <meta.icon className="h-6 w-6 sm:h-7 sm:w-7 text-white" />
             </div>
             <div>
               <p className="text-xs font-bold uppercase tracking-widest text-[#6E7C74]">Current Tier</p>
-              <h2 className={`text-2xl font-bold ${meta.textColor}`}>{summary.currentLevelLabel} Partner</h2>
+              <h2 className={`text-xl sm:text-2xl font-bold ${meta.textColor}`}>{summary.currentLevelLabel} Partner</h2>
             </div>
           </div>
 
@@ -89,7 +89,7 @@ function TierHeroCard() {
             {summary.currentPerks.map((perk) => (
               <span
                 key={perk}
-                className="rounded-full bg-[#E7EFEA] px-3 py-1 text-xs font-semibold text-[#1F4D3D]"
+                className="rounded-full bg-[#E7EFEA] px-2.5 sm:px-3 py-1 text-xs font-semibold text-[#1F4D3D]"
               >
                 {perk}
               </span>
@@ -98,29 +98,29 @@ function TierHeroCard() {
         </div>
 
         {/* Quick stats */}
-        <div className="flex flex-shrink-0 gap-4 text-right">
+        <div className="flex flex-wrap sm:flex-nowrap sm:flex-shrink-0 gap-4 sm:gap-5 text-left sm:text-right border-t sm:border-t-0 pt-3 sm:pt-0 border-[#E3E7E1]">
           <div>
-            <div className="flex items-center justify-end gap-1 text-[#6E7C74]">
+            <div className="flex items-center sm:justify-end gap-1 text-[#6E7C74]">
               <Truck className="h-3 w-3 text-[#1F4D3D]" />
               <p className="text-[10px] font-semibold uppercase tracking-wide">Deliveries</p>
             </div>
-            <p className="mt-0.5 text-xl font-bold text-[#16241D]">{summary.totalDeliveries}</p>
+            <p className="mt-0.5 text-lg sm:text-xl font-bold text-[#16241D]">{summary.totalDeliveries}</p>
           </div>
           <div>
-            <div className="flex items-center justify-end gap-1 text-[#6E7C74]">
+            <div className="flex items-center sm:justify-end gap-1 text-[#6E7C74]">
               <Star className="h-3 w-3 text-amber-500 fill-amber-500" />
               <p className="text-[10px] font-semibold uppercase tracking-wide">Rating</p>
             </div>
-            <p className="mt-0.5 text-xl font-bold text-[#16241D]">
+            <p className="mt-0.5 text-lg sm:text-xl font-bold text-[#16241D]">
               {summary.averageRating > 0 ? summary.averageRating.toFixed(1) : "—"}
             </p>
           </div>
           <div>
-            <div className="flex items-center justify-end gap-1 text-[#6E7C74]">
+            <div className="flex items-center sm:justify-end gap-1 text-[#6E7C74]">
               <Calendar className="h-3 w-3 text-[#1F4D3D]" />
               <p className="text-[10px] font-semibold uppercase tracking-wide">Since</p>
             </div>
-            <p className="mt-0.5 text-xl font-bold text-[#16241D]">{formatDate(summary.memberSince)}</p>
+            <p className="mt-0.5 text-lg sm:text-xl font-bold text-[#16241D]">{formatDate(summary.memberSince)}</p>
           </div>
         </div>
       </div>
@@ -209,25 +209,25 @@ function MilestonesCard() {
   if (!summary) return null;
 
   return (
-    <motion.div variants={card} className="rounded-2xl border border-[#E3E7E1] bg-white p-6">
+    <motion.div variants={card} className="rounded-2xl border border-[#E3E7E1] bg-white p-4 sm:p-6">
       <p className="mb-1 text-base font-bold text-[#16241D]">Delivery Milestones</p>
       <p className="mb-5 text-xs text-[#6E7C74]">Badges you unlock as you complete more deliveries</p>
 
-      <div className="grid grid-cols-6 gap-3">
+      <div className="grid grid-cols-3 sm:grid-cols-6 gap-3 sm:gap-4">
         {summary.milestones.map((m) => (
           <div key={m.deliveries} className="flex flex-col items-center gap-2 text-center">
             <div
               className={[
-                "flex h-14 w-14 items-center justify-center rounded-full border-2",
+                "flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-full border-2",
                 m.achieved
                   ? "border-[#1F4D3D] bg-gradient-to-br from-[#1F4D3D] to-[#163D30]"
                   : "border-dashed border-[#E3E7E1] bg-[#F5F7F3]",
               ].join(" ")}
             >
               {m.achieved ? (
-                <Trophy className="h-6 w-6 text-white" />
+                <Trophy className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
               ) : (
-                <Lock className="h-5 w-5 text-[#9BAAA1]" />
+                <Lock className="h-4 w-4 sm:h-5 sm:w-5 text-[#9BAAA1]" />
               )}
             </div>
             <p className={`text-xs font-bold ${m.achieved ? "text-[#16241D]" : "text-[#9BAAA1]"}`}>
@@ -254,7 +254,7 @@ export default function DriverRewardsPage() {
     return (
       <div className="max-w-[1400px] mx-auto space-y-4">
         <div className="h-48 animate-pulse rounded-3xl bg-[#F5F7F3]" />
-        <div className="grid grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
           {[0, 1, 2, 3].map((i) => (
             <div key={i} className="h-56 animate-pulse rounded-2xl bg-[#F5F7F3]" />
           ))}
@@ -276,7 +276,7 @@ export default function DriverRewardsPage() {
 
       <div>
         <p className="mb-3 text-base font-bold text-[#16241D]">Tier Ladder</p>
-        <div className="grid grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
           {summary.ladder.map((tier) => (
             <TierLadderCard key={tier.key} tier={tier} />
           ))}

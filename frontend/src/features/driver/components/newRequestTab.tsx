@@ -19,7 +19,7 @@ function StatsCards() {
 
   if (statsLoading && !stats) {
     return (
-      <div className="mb-6 grid grid-cols-3 gap-4">
+      <div className="mb-6 grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
         {[1, 2, 3].map((i) => (
           <div
             key={i}
@@ -42,9 +42,9 @@ function StatsCards() {
   );
 
   return (
-    <div className="mb-6 grid grid-cols-3 gap-4">
+    <div className="mb-6 grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
       {/* Today's Earnings */}
-      <div className="rounded-2xl border border-[#E3E7E1] bg-white p-5 shadow-sm">
+      <div className="rounded-2xl border border-[#E3E7E1] bg-white p-4 sm:p-5 shadow-sm">
         <div className="mb-1 flex items-center justify-between">
           <p className="text-xs font-semibold uppercase tracking-wide text-[#6E7C74]">
             Today's Earnings
@@ -55,24 +55,24 @@ function StatsCards() {
             </span>
           )}
         </div>
-        <p className="text-3xl font-bold text-[#16241D]">
+        <p className="text-2xl sm:text-3xl font-bold text-[#16241D]">
           ₹{(stats.todayEarnings ?? 0).toFixed(2)}
         </p>
       </div>
 
       {/* Completed */}
-      <div className="rounded-2xl border border-[#E3E7E1] bg-white p-5 shadow-sm">
+      <div className="rounded-2xl border border-[#E3E7E1] bg-white p-4 sm:p-5 shadow-sm">
         <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-[#6E7C74]">
           Completed
         </p>
-        <p className="text-3xl font-bold text-[#16241D]">
+        <p className="text-2xl sm:text-3xl font-bold text-[#16241D]">
           {stats.completedCount ?? 0}{" "}
-          <span className="text-base font-normal text-[#6E7C74]">Deliveries</span>
+          <span className="text-sm sm:text-base font-normal text-[#6E7C74]">Deliveries</span>
         </p>
       </div>
 
       {/* Daily Target Bonus */}
-      <div className="rounded-2xl border border-[#E7EFEA] bg-[#E7EFEA]/40 p-5">
+      <div className="rounded-2xl border border-[#E7EFEA] bg-[#E7EFEA]/40 p-4 sm:p-5">
         <div className="mb-2 flex items-center justify-between">
           <p className="text-xs font-semibold text-[#1F4D3D]">Daily Target Bonus</p>
           <span className="text-xs font-bold text-[#1F4D3D]">

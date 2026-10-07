@@ -100,7 +100,7 @@ function TabBar() {
   const setActiveTab = useDriverWalletStore((s) => s.setActiveTab);
 
   return (
-    <div className="mb-6 flex gap-6 border-b border-[#E3E7E1]">
+    <div className="mb-6 flex gap-4 sm:gap-6 border-b border-[#E3E7E1] overflow-x-auto scrollbar-hide flex-nowrap">
       {TAB_CONFIG.map(({ key, label }) => {
         const isActive = activeTab === key;
         return (
@@ -109,7 +109,7 @@ function TabBar() {
             type="button"
             onClick={() => setActiveTab(key)}
             className={[
-              "-mb-px border-b-2 pb-3 text-sm font-semibold transition-colors cursor-pointer",
+              "-mb-px border-b-2 pb-3 text-sm font-semibold transition-colors cursor-pointer shrink-0 whitespace-nowrap",
               isActive
                 ? "border-[#1F4D3D] text-[#1F4D3D]"
                 : "border-transparent text-[#6E7C74] hover:text-[#16241D]",
@@ -202,9 +202,9 @@ function WalletBalanceTab() {
 
   if (isLoading && !summary) {
     return (
-      <div className="grid grid-cols-[1fr_280px] gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-[1fr_280px] gap-4">
         <div className="h-44 animate-pulse rounded-3xl bg-[#F5F7F3]" />
-        <div className="space-y-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4">
           <div className="h-20 animate-pulse rounded-2xl bg-[#F5F7F3]" />
           <div className="h-20 animate-pulse rounded-2xl bg-[#F5F7F3]" />
         </div>
@@ -216,32 +216,32 @@ function WalletBalanceTab() {
 
   return (
     <motion.div variants={container} initial="hidden" animate="show" className="space-y-4">
-      <div className="grid grid-cols-[1fr_280px] gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-[1fr_280px] gap-4">
         {/* Available balance hero */}
         <motion.div
           variants={card}
-          className="relative overflow-hidden rounded-3xl border border-[#E3E7E1] bg-gradient-to-br from-white to-[#F5F7F3] p-6"
+          className="relative overflow-hidden rounded-3xl border border-[#E3E7E1] bg-gradient-to-br from-white to-[#F5F7F3] p-4 sm:p-6"
         >
-          <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-[#E7EFEA] opacity-60" />
+          <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-[#E7EFEA] opacity-60 pointer-events-none" />
           <div className="relative">
             <p className="text-xs font-bold uppercase tracking-widest text-[#6E7C74]">
               Available for Withdrawal
             </p>
-            <p className="mt-2 text-4xl font-bold text-[#16241D]">
+            <p className="mt-2 text-3xl sm:text-4xl font-bold text-[#16241D]">
               {formatINR(summary.availableBalance)}
             </p>
 
-            <div className="mt-5 flex gap-2.5">
+            <div className="mt-4 sm:mt-5 flex flex-wrap gap-2.5">
               <button
                 onClick={() => setShowWithdraw(true)}
-                className="flex items-center gap-2 rounded-xl bg-[#A9CC3B] px-5 py-2.5 text-sm font-bold text-[#16241D] hover:bg-[#98B933] active:bg-[#87A62C] transition-colors cursor-pointer"
+                className="flex items-center gap-2 rounded-xl bg-[#A9CC3B] px-4 sm:px-5 py-2.5 text-xs sm:text-sm font-bold text-[#16241D] hover:bg-[#98B933] active:bg-[#87A62C] transition-colors cursor-pointer"
               >
                 <Landmark className="h-4 w-4" />
                 Withdraw Funds
               </button>
               <button
                 onClick={() => toast.info("Payout schedule details coming soon.")}
-                className="rounded-xl border border-[#E3E7E1] px-5 py-2.5 text-sm font-semibold text-[#145C43] hover:bg-[#F5F7F3] transition-colors cursor-pointer"
+                className="rounded-xl border border-[#E3E7E1] px-4 sm:px-5 py-2.5 text-xs sm:text-sm font-semibold text-[#145C43] hover:bg-[#F5F7F3] transition-colors cursor-pointer"
               >
                 View Payout Schedule
               </button>
@@ -250,13 +250,13 @@ function WalletBalanceTab() {
         </motion.div>
 
         {/* Side stats */}
-        <div className="space-y-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4">
           <motion.div variants={card} className="rounded-2xl border border-[#E3E7E1] bg-white p-4">
             <div className="flex items-center gap-2 text-[#6E7C74]">
               <CalendarClock className="h-3.5 w-3.5 text-[#1F4D3D]" />
               <p className="text-xs font-semibold">Next Scheduled Payout</p>
             </div>
-            <p className="mt-1.5 text-lg font-bold text-[#16241D]">
+            <p className="mt-1.5 text-base sm:text-lg font-bold text-[#16241D]">
               {formatDate(summary.nextPayoutDate)}
             </p>
           </motion.div>
@@ -266,7 +266,7 @@ function WalletBalanceTab() {
               <TrendingUp className="h-3.5 w-3.5 text-emerald-600" />
               <p className="text-xs font-semibold">Earned this Month</p>
             </div>
-            <p className="mt-1.5 text-lg font-bold text-emerald-600">
+            <p className="mt-1.5 text-base sm:text-lg font-bold text-emerald-600">
               +{formatINR(summary.earnedThisMonth)}
             </p>
           </motion.div>
@@ -275,8 +275,8 @@ function WalletBalanceTab() {
 
       {/* Recent transactions */}
       <motion.div variants={card} className="rounded-2xl border border-[#E3E7E1] bg-white overflow-hidden">
-        <div className="flex items-center justify-between px-6 pt-5 pb-4">
-          <p className="text-base font-bold text-[#16241D]">Recent Transactions</p>
+        <div className="flex items-center justify-between px-4 sm:px-6 pt-4 sm:pt-5 pb-3 sm:pb-4">
+          <p className="text-sm sm:text-base font-bold text-[#16241D]">Recent Transactions</p>
           <button
             onClick={() => toast.info("CSV export coming soon.")}
             className="flex items-center gap-1 text-xs font-semibold text-[#1F4D3D] hover:underline cursor-pointer"
@@ -287,7 +287,7 @@ function WalletBalanceTab() {
         </div>
 
         {summary.transactions.length === 0 ? (
-          <div className="flex flex-col items-center justify-center gap-2 px-6 pb-10 pt-2 text-center">
+          <div className="flex flex-col items-center justify-center gap-2 px-4 sm:px-6 pb-10 pt-2 text-center">
             <Coins className="h-8 w-8 text-[#9BAAA1]" />
             <p className="text-sm text-[#6E7C74]">No transactions yet</p>
           </div>
@@ -296,16 +296,16 @@ function WalletBalanceTab() {
             <table className="w-full text-left">
               <thead>
                 <tr className="border-t border-b border-[#E3E7E1] bg-[#F5F7F3]">
-                  <th className="px-6 py-2.5 text-[10px] font-bold uppercase tracking-widest text-[#6E7C74]">
+                  <th className="px-4 sm:px-6 py-2.5 text-[10px] font-bold uppercase tracking-widest text-[#6E7C74] whitespace-nowrap">
                     Details
                   </th>
-                  <th className="px-6 py-2.5 text-[10px] font-bold uppercase tracking-widest text-[#6E7C74]">
+                  <th className="px-4 sm:px-6 py-2.5 text-[10px] font-bold uppercase tracking-widest text-[#6E7C74] whitespace-nowrap">
                     Type
                   </th>
-                  <th className="px-6 py-2.5 text-[10px] font-bold uppercase tracking-widest text-[#6E7C74]">
+                  <th className="px-4 sm:px-6 py-2.5 text-[10px] font-bold uppercase tracking-widest text-[#6E7C74] whitespace-nowrap">
                     Date
                   </th>
-                  <th className="px-6 py-2.5 text-right text-[10px] font-bold uppercase tracking-widest text-[#6E7C74]">
+                  <th className="px-4 sm:px-6 py-2.5 text-right text-[10px] font-bold uppercase tracking-widest text-[#6E7C74] whitespace-nowrap">
                     Amount
                   </th>
                 </tr>
@@ -316,7 +316,7 @@ function WalletBalanceTab() {
                   const credit = isCredit(txn.type);
                   return (
                     <tr key={txn.id} className="border-b border-[#E3E7E1] last:border-b-0">
-                      <td className="px-6 py-3.5">
+                      <td className="px-4 sm:px-6 py-3 sm:py-3.5 whitespace-nowrap">
                         <div className="flex items-center gap-3">
                           <div className={`flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full ${meta.iconBg}`}>
                             <meta.icon className={`h-4 w-4 ${meta.iconColor}`} />
@@ -329,16 +329,16 @@ function WalletBalanceTab() {
                           </div>
                         </div>
                       </td>
-                      <td className="px-6 py-3.5">
+                      <td className="px-4 sm:px-6 py-3 sm:py-3.5 whitespace-nowrap">
                         <span className={`rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide ${meta.pillClass}`}>
                           {meta.label}
                         </span>
                       </td>
-                      <td className="px-6 py-3.5 text-sm text-[#6E7C74]">
+                      <td className="px-4 sm:px-6 py-3 sm:py-3.5 text-xs sm:text-sm text-[#6E7C74] whitespace-nowrap">
                         {formatDateTime(txn.createdAt)}
                       </td>
                       <td
-                        className={`px-6 py-3.5 text-right text-sm font-bold ${
+                        className={`px-4 sm:px-6 py-3 sm:py-3.5 text-right text-sm font-bold whitespace-nowrap ${
                           credit ? "text-emerald-600" : "text-rose-500"
                         }`}
                       >
@@ -407,7 +407,7 @@ function CodSettlementTab() {
   if (codLoading && !cod) {
     return (
       <div className="space-y-4">
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
           {[0, 1, 2].map((i) => (
             <div key={i} className="h-24 animate-pulse rounded-2xl bg-[#F5F7F3]" />
           ))}
@@ -422,30 +422,30 @@ function CodSettlementTab() {
   return (
     <motion.div variants={container} initial="hidden" animate="show" className="space-y-4">
       {/* Summary cards */}
-      <div className="grid grid-cols-3 gap-4">
-        <motion.div variants={card} className="flex items-center gap-3 rounded-2xl border border-[#E3E7E1] bg-white p-5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+        <motion.div variants={card} className="flex items-center gap-3 rounded-2xl border border-[#E3E7E1] bg-white p-4 sm:p-5">
           <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full bg-[#E7EFEA]">
             <Coins className="h-5 w-5 text-[#1F4D3D]" />
           </div>
           <div>
             <p className="text-xs font-semibold text-[#6E7C74]">Total Cash Collected</p>
-            <p className="text-xl font-bold text-[#16241D]">{formatINR(cod.totalCashCollected)}</p>
+            <p className="text-lg sm:text-xl font-bold text-[#16241D]">{formatINR(cod.totalCashCollected)}</p>
           </div>
         </motion.div>
 
-        <motion.div variants={card} className="flex items-center gap-3 rounded-2xl border border-[#E3E7E1] bg-white p-5">
+        <motion.div variants={card} className="flex items-center gap-3 rounded-2xl border border-[#E3E7E1] bg-white p-4 sm:p-5">
           <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full bg-amber-50">
             <Clock className="h-5 w-5 text-amber-600" />
           </div>
           <div>
             <p className="text-xs font-semibold text-[#6E7C74]">Pending Settlement</p>
-            <p className="text-xl font-bold text-[#16241D]">{formatINR(cod.pendingSettlement)}</p>
+            <p className="text-lg sm:text-xl font-bold text-[#16241D]">{formatINR(cod.pendingSettlement)}</p>
           </div>
         </motion.div>
 
         <motion.div
           variants={card}
-          className="flex items-center justify-between gap-3 rounded-2xl border border-[#E3E7E1] bg-white p-5"
+          className="flex items-center justify-between gap-3 rounded-2xl border border-[#E3E7E1] bg-white p-4 sm:p-5 sm:col-span-2 lg:col-span-1"
         >
           <div>
             <div className="mb-1 flex items-center gap-1.5">
@@ -456,27 +456,27 @@ function CodSettlementTab() {
                 </span>
               )}
             </div>
-            <p className="text-xl font-bold text-[#16241D]">{formatINR(cod.settlementDueAmount)}</p>
+            <p className="text-lg sm:text-xl font-bold text-[#16241D]">{formatINR(cod.settlementDueAmount)}</p>
           </div>
           <button
             onClick={handleSettle}
             disabled={isSettling || cod.settlementDueAmount <= 0}
-            className="flex-shrink-0 rounded-xl bg-[#1F4D3D] px-4 py-2.5 text-xs font-bold text-white hover:bg-[#163D30] transition-colors cursor-pointer disabled:opacity-40"
+            className="flex-shrink-0 rounded-xl bg-[#1F4D3D] px-3.5 sm:px-4 py-2 sm:py-2.5 text-xs font-bold text-white hover:bg-[#163D30] transition-colors cursor-pointer disabled:opacity-40"
           >
             {isSettling ? "Settling…" : "Settle Amount"}
           </button>
         </motion.div>
       </div>
 
-      <div className="grid grid-cols-[1fr_280px] gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-[1fr_280px] gap-4">
         {/* Recent activity table */}
         <motion.div variants={card} className="rounded-2xl border border-[#E3E7E1] bg-white overflow-hidden">
-          <div className="flex items-center justify-between px-6 pt-5 pb-4">
-            <p className="text-base font-bold text-[#16241D]">Recent Activity</p>
+          <div className="flex items-center justify-between px-4 sm:px-6 pt-4 sm:pt-5 pb-3 sm:pb-4">
+            <p className="text-sm sm:text-base font-bold text-[#16241D]">Recent Activity</p>
           </div>
 
           {cod.orders.length === 0 ? (
-            <div className="flex flex-col items-center justify-center gap-2 px-6 pb-10 pt-2 text-center">
+            <div className="flex flex-col items-center justify-center gap-2 px-4 sm:px-6 pb-10 pt-2 text-center">
               <Coins className="h-8 w-8 text-[#9BAAA1]" />
               <p className="text-sm text-[#6E7C74]">No COD orders yet</p>
             </div>
@@ -486,27 +486,27 @@ function CodSettlementTab() {
                 <table className="w-full text-left">
                   <thead>
                     <tr className="border-t border-b border-[#E3E7E1] bg-[#F5F7F3]">
-                      <th className="px-6 py-2.5 text-[10px] font-bold uppercase tracking-widest text-[#6E7C74]">Date</th>
-                      <th className="px-6 py-2.5 text-[10px] font-bold uppercase tracking-widest text-[#6E7C74]">Order ID</th>
-                      <th className="px-6 py-2.5 text-right text-[10px] font-bold uppercase tracking-widest text-[#6E7C74]">
+                      <th className="px-4 sm:px-6 py-2.5 text-[10px] font-bold uppercase tracking-widest text-[#6E7C74] whitespace-nowrap">Date</th>
+                      <th className="px-4 sm:px-6 py-2.5 text-[10px] font-bold uppercase tracking-widest text-[#6E7C74] whitespace-nowrap">Order ID</th>
+                      <th className="px-4 sm:px-6 py-2.5 text-right text-[10px] font-bold uppercase tracking-widest text-[#6E7C74] whitespace-nowrap">
                         Amount Collected
                       </th>
-                      <th className="px-6 py-2.5 text-[10px] font-bold uppercase tracking-widest text-[#6E7C74]">Status</th>
+                      <th className="px-4 sm:px-6 py-2.5 text-[10px] font-bold uppercase tracking-widest text-[#6E7C74] whitespace-nowrap">Status</th>
                     </tr>
                   </thead>
                   <tbody>
                     {cod.orders.map((o) => (
                       <tr key={o.orderId} className="border-b border-[#E3E7E1] last:border-b-0">
-                        <td className="px-6 py-3.5 text-sm font-medium text-[#16241D]">{formatDate(o.date)}</td>
-                        <td className="px-6 py-3.5">
+                        <td className="px-4 sm:px-6 py-3 sm:py-3.5 text-sm font-medium text-[#16241D] whitespace-nowrap">{formatDate(o.date)}</td>
+                        <td className="px-4 sm:px-6 py-3 sm:py-3.5 whitespace-nowrap">
                           <span className="rounded-md bg-[#E7EFEA] px-2 py-1 text-xs font-semibold text-[#1F4D3D]">
                             #{o.orderNumber}
                           </span>
                         </td>
-                        <td className="px-6 py-3.5 text-right text-sm font-bold text-[#16241D]">
+                        <td className="px-4 sm:px-6 py-3 sm:py-3.5 text-right text-sm font-bold text-[#16241D] whitespace-nowrap">
                           {formatINR(o.amountCollected)}
                         </td>
-                        <td className="px-6 py-3.5">
+                        <td className="px-4 sm:px-6 py-3 sm:py-3.5 whitespace-nowrap">
                           <CodStatusPill status={o.status} />
                         </td>
                       </tr>
@@ -515,7 +515,7 @@ function CodSettlementTab() {
                 </table>
               </div>
 
-              <div className="flex items-center justify-between px-6 py-4">
+              <div className="flex items-center justify-between px-4 sm:px-6 py-3 sm:py-4">
                 <p className="text-xs text-[#6E7C74]">
                   Showing {cod.orders.length} of {cod.total} transactions
                 </p>
@@ -523,14 +523,14 @@ function CodSettlementTab() {
                   <button
                     onClick={() => setPage((p) => Math.max(1, p - 1))}
                     disabled={page <= 1}
-                    className="rounded-lg border border-[#E3E7E1] px-3.5 py-1.5 text-xs font-semibold text-[#1F4D3D] hover:bg-[#F5F7F3] disabled:opacity-40 transition-colors cursor-pointer"
+                    className="rounded-lg border border-[#E3E7E1] px-3 sm:px-3.5 py-1.5 text-xs font-semibold text-[#1F4D3D] hover:bg-[#F5F7F3] disabled:opacity-40 transition-colors cursor-pointer"
                   >
                     Previous
                   </button>
                   <button
                     onClick={() => setPage((p) => Math.min(cod.pages, p + 1))}
                     disabled={page >= cod.pages}
-                    className="rounded-lg bg-[#E7EFEA] px-3.5 py-1.5 text-xs font-semibold text-[#1F4D3D] hover:bg-[#E3E7E1] disabled:opacity-40 transition-colors cursor-pointer"
+                    className="rounded-lg bg-[#E7EFEA] px-3 sm:px-3.5 py-1.5 text-xs font-semibold text-[#1F4D3D] hover:bg-[#E3E7E1] disabled:opacity-40 transition-colors cursor-pointer"
                   >
                     Next
                   </button>
@@ -544,9 +544,9 @@ function CodSettlementTab() {
         <div className="space-y-4">
           <motion.div
             variants={card}
-            className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#1F4D3D] to-[#163D30] p-5"
+            className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#1F4D3D] to-[#163D30] p-4 sm:p-5"
           >
-            <div className="absolute -bottom-8 -right-8 h-28 w-28 rounded-full bg-white/5" />
+            <div className="absolute -bottom-8 -right-8 h-28 w-28 rounded-full bg-white/5 pointer-events-none" />
             <div className="relative">
               <div className="mb-2 flex items-center gap-2">
                 <ShieldCheck className="h-4 w-4 text-emerald-200" />
@@ -565,7 +565,7 @@ function CodSettlementTab() {
             </div>
           </motion.div>
 
-          <motion.div variants={card} className="rounded-2xl border border-[#E3E7E1] bg-white p-5">
+          <motion.div variants={card} className="rounded-2xl border border-[#E3E7E1] bg-white p-4 sm:p-5">
             <p className="mb-3 text-sm font-bold text-[#16241D]">Payment Support</p>
             <div className="space-y-2">
               <button
@@ -611,7 +611,7 @@ export default function DriverWalletPage() {
           <Wallet className="h-4.5 w-4.5 text-[#1F4D3D]" />
         </div>
         <div>
-          <h1 className="text-2xl font-bold text-[#16241D] leading-tight">Payment Management</h1>
+          <h1 className="text-xl sm:text-2xl font-bold text-[#16241D] leading-tight">Payment Management</h1>
           <p className="text-xs text-[#6E7C74]">Manage your wallet balance and cash settlements</p>
         </div>
       </div>

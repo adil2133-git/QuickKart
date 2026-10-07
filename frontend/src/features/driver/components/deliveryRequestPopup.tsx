@@ -35,7 +35,7 @@ function RequestCard({
       animate={{ opacity: 1, y: 0, scale: 1 }}
       exit={{ opacity: 0, y: 40, scale: 0.95 }}
       transition={{ type: "spring", damping: 22, stiffness: 300 }}
-      className="w-80 rounded-2xl bg-white shadow-[0_8px_40px_rgba(0,0,0,0.18)] border border-[#E3E7E1] overflow-hidden"
+      className="w-full max-w-sm sm:w-80 rounded-2xl bg-white shadow-[0_8px_40px_rgba(0,0,0,0.18)] border border-[#E3E7E1] overflow-hidden"
     >
       {/* Timer bar */}
       <div className="h-1 bg-[#F5F7F3]">
@@ -155,10 +155,10 @@ export default function DeliveryRequestPopup() {
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 space-y-3 pointer-events-none">
+    <div className="fixed bottom-4 sm:bottom-6 right-4 sm:right-6 left-4 sm:left-auto z-50 flex flex-col items-end space-y-3 pointer-events-none">
       <AnimatePresence mode="popLayout">
         {latest && (
-          <div key={latest.requestId} className="pointer-events-auto">
+          <div key={latest.requestId} className="w-full sm:w-auto pointer-events-auto">
             <RequestCard
               request={latest}
               onAccept={() => handleAccept(latest.requestId)}

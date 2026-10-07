@@ -1,8 +1,8 @@
 import { useNavigate, useLocation } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   LayoutGrid, Truck, BadgeDollarSign, Wallet,
-  Trophy, LogOut, Headphones, Settings,
+  Trophy, LogOut, Headphones, Settings, X,
 } from "lucide-react";
 import { useLogout } from "../../auth/hooks/useLogout";
 
@@ -32,12 +32,16 @@ interface DriverSidebarProps {
   driverName?: string;
   driverLevel?: string;
   avatarUrl?: string | null;
+  isOpen?: boolean;
+  onClose?: () => void;
 }
 
 export default function DriverSidebar({
   driverName = "Driver",
   driverLevel = "BRONZE",
   avatarUrl = null,
+  isOpen = false,
+  onClose,
 }: DriverSidebarProps) {
   const navigate = useNavigate();
   const { pathname } = useLocation();
@@ -53,7 +57,10 @@ export default function DriverSidebar({
       <motion.button
         whileHover={{ x: 2 }}
         whileTap={{ scale: 0.98 }}
-        onClick={() => navigate(item.path)}
+        onClick={() => {
+          navigate(item.path);
+          onClose?.();
+        }}
         className={[
           "relative flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-[13px] font-medium transition-colors",
           isActive
@@ -67,12 +74,23 @@ export default function DriverSidebar({
     );
   };
 
-  return (
-    <aside className="flex h-full w-60 flex-shrink-0 flex-col bg-white border-r border-[#E3E7E1] px-3 py-5">
-      {/* Brand */}
-      <div className="mb-6 px-3">
-        <p className="text-base font-bold text-[#145C43] tracking-tight">QuickKart</p>
-        <p className="text-[11px] text-[#6E7C74] font-medium uppercase tracking-wider">Driver Portal</p>
+  const SidebarContent = () => (
+    <div className="flex h-full flex-col">
+      {/* Brand & close */}
+      <div className="mb-6 px-3 flex items-center justify-between">
+        <div>
+          <p className="text-base font-bold text-[#145C43] tracking-tight">QuickKart</p>
+          <p className="text-[11px] text-[#6E7C74] font-medium uppercase tracking-wider">Driver Portal</p>
+        </div>
+        {onClose && (
+          <button
+            onClick={onClose}
+            className="md:hidden p-1.5 rounded-lg text-[#6E7C74] hover:bg-[#F5F7F3]"
+            aria-label="Close menu"
+          >
+            <X size={18} />
+          </button>
+        )}
       </div>
 
       {/* Driver card */}
@@ -94,7 +112,7 @@ export default function DriverSidebar({
       </div>
 
       {/* Main nav */}
-      <nav className="flex-1 space-y-0.5">
+      <nav className="flex-1 space-y-0.5 overflow-y-auto">
         {NAV_ITEMS.map((item) => (
           <NavLink key={item.key} item={item} />
         ))}
@@ -108,7 +126,10 @@ export default function DriverSidebar({
         <motion.button
           whileHover={{ x: 2 }}
           whileTap={{ scale: 0.98 }}
-          onClick={logout}
+          onClick={() => {
+            logout();
+            onClose?.();
+          }}
           disabled={isLoggingOut}
           className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-[13px] font-medium text-rose-600 transition-colors hover:bg-rose-50 disabled:opacity-50"
         >
@@ -116,6 +137,39 @@ export default function DriverSidebar({
           {isLoggingOut ? "Logging out…" : "Logout"}
         </motion.button>
       </div>
-    </aside>
+    </div>
+  );
+
+  return (
+    <>
+      {/* Desktop sidebar */}
+      <aside className="hidden md:flex h-full w-60 flex-shrink-0 flex-col bg-white border-r border-[#E3E7E1] px-3 py-5">
+        <SidebarContent />
+      </aside>
+
+      {/* Mobile Drawer */}
+      <AnimatePresence>
+        {isOpen && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={onClose}
+              className="fixed inset-0 z-50 bg-black/40 backdrop-blur-xs md:hidden"
+            />
+            <motion.aside
+              initial={{ x: "-100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "-100%" }}
+              transition={{ duration: 0.25, ease: "easeOut" }}
+              className="fixed inset-y-0 left-0 z-50 w-64 bg-white p-4 shadow-2xl md:hidden"
+            >
+              <SidebarContent />
+            </motion.aside>
+          </>
+        )}
+      </AnimatePresence>
+    </>
   );
 }
