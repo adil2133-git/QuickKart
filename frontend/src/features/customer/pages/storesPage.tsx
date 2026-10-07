@@ -359,14 +359,14 @@ export default function StoresPage() {
                         </div>
 
                         {activeCoords && stores.length > 0 && (
-                            <div className="flex items-center gap-5 rounded-full border px-5 py-2.5 bg-white" style={{ borderColor: PALETTE.line }}>
+                            <div className="flex flex-wrap sm:flex-nowrap items-center gap-3 sm:gap-5 rounded-2xl sm:rounded-full border px-4 sm:px-5 py-2 sm:py-2.5 bg-white w-full sm:w-auto justify-between" style={{ borderColor: PALETTE.line }}>
                                 <SortDropdown
                                     value={sortKey}
                                     open={sortOpen}
                                     onToggle={() => setSortOpen(!sortOpen)}
                                     onChange={(k) => { setSortKey(k); setSortOpen(false); }}
                                 />
-                                <div className="w-px h-5" style={{ backgroundColor: PALETTE.line }} />
+                                <div className="hidden sm:block w-px h-5" style={{ backgroundColor: PALETTE.line }} />
                                 <OpenNowToggle checked={openNowOnly} onChange={setOpenNowOnly} />
                             </div>
                         )}
@@ -382,7 +382,7 @@ export default function StoresPage() {
                             onAction={openLocationModal}
                         />
                     ) : storesLoading || profileLoading ? (
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                             {Array.from({ length: 6 }).map((_, i) => <StoreCardSkeleton key={i} />)}
                         </div>
                     ) : storesError ? (
@@ -407,7 +407,7 @@ export default function StoresPage() {
                             onAction={() => setOpenNowOnly(false)}
                         />
                     ) : (
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                             {visibleStores.map((store) => (
                                 <StoreCard key={store._id} store={store} onOpen={goToStore} />
                             ))}

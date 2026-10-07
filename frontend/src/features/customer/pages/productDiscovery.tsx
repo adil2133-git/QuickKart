@@ -117,7 +117,7 @@ function AddToCartButton({ productId, disabled }: { productId: string; disabled?
       whileTap={{ scale: 0.92 }}
       disabled={disabled || isUpdating}
       onClick={(e) => { e.stopPropagation(); addToCart(productId, 1); }}
-      className="flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-xs font-bold transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+      className="flex items-center justify-center gap-1 sm:gap-1.5 px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-lg text-[11px] sm:text-xs font-bold transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex-shrink-0"
       style={{ backgroundColor: quantity > 0 ? C.tertiary : C.primary, color: C.onPrimary }}
     >
       {isUpdating ? (
@@ -146,7 +146,7 @@ function ProductCard({ product, viewMode, onOpen }: { product: ApiProduct; viewM
       whileHover={{ y: -3, boxShadow: "0 12px 32px rgba(20,92,67,0.14)" }}
       onClick={onOpen}
       className={`relative flex rounded-xl border overflow-hidden cursor-pointer bg-white ${
-        viewMode === "list" ? "flex-row items-center gap-4 p-3" : "flex-col"
+        viewMode === "list" ? "flex-row items-center gap-3 sm:gap-4 p-3" : "flex-col"
       }`}
       style={{ borderColor: C.outlineVar }}
     >
@@ -784,38 +784,40 @@ export default function ProductDiscoveryPage() {
           NavBar (with real location, cart count, and search) — no second
           header here. */}
 
-      <main className="mx-auto px-10 py-8" style={{ maxWidth:1200 }}>
+      <main className="mx-auto px-4 sm:px-6 lg:px-10 py-6 sm:py-8" style={{ maxWidth:1200 }}>
 
         {/* ── COMPACT HERO ────────────────────────────────────────────────── */}
         <motion.div
           initial={{ opacity:0, y:12 }}
           animate={{ opacity:1, y:0 }}
           transition={{ duration:0.4, ease:"easeOut" }}
-          className="mb-5 space-y-1.5"
+          className="mb-5 space-y-2"
         >
-          <h1 className="text-2xl font-bold" style={{ fontFamily:"'Playfair Display',serif", color: C.primary }}>
-            Product Discovery
+          <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+            <h1 className="text-xl sm:text-2xl font-bold" style={{ fontFamily:"'Playfair Display',serif", color: C.primary }}>
+              Product Discovery
+            </h1>
             <span
-              className="inline-flex items-center gap-1.5 ml-3 px-3 py-0.5 rounded-full text-xs font-semibold border"
+              className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-0.5 rounded-full text-xs font-semibold border"
               style={{ backgroundColor:`${C.tertiaryCont}18`, borderColor:`${C.tertiaryCont}60`, color: C.tertiary }}
             >
-              <Check size={12}/> {activeCoords ? "Live Nearby Stock" : "Set your location to see nearby stock"}
+              <Check size={12}/> {activeCoords ? "Live Nearby Stock" : "Set location for nearby stock"}
             </span>
-          </h1>
-          <p className="text-sm" style={{ color: C.onSurfaceVar }}>
+          </div>
+          <p className="text-xs sm:text-sm" style={{ color: C.onSurfaceVar }}>
             Search real products from stores near you, filter by category, rating, and distance.
           </p>
         </motion.div>
 
         {/* ── SEARCH BAR ─────────────────────────────────────────────────── */}
         <div className="mb-4">
-          <div className="flex items-center gap-2 rounded-xl px-4 py-3 border" style={{ backgroundColor: C.surface, borderColor: C.outlineVar }}>
+          <div className="flex items-center gap-2 rounded-xl px-3.5 sm:px-4 py-2.5 sm:py-3 border" style={{ backgroundColor: C.surface, borderColor: C.outlineVar }}>
             <Search size={16} color={C.outline}/>
             <input
               value={search}
               onChange={e => setSearch(e.target.value)}
               placeholder="Search products..."
-              className="flex-1 bg-transparent outline-none text-sm"
+              className="flex-1 bg-transparent outline-none text-xs sm:text-sm"
               style={{ color: C.onSurface }}
             />
             {search && (
@@ -827,13 +829,13 @@ export default function ProductDiscoveryPage() {
         </div>
 
         {/* ── QUICK FILTERS ───────────────────────────────────────────────── */}
-        <div className="sticky top-0 z-30 -mx-10 px-10 py-3" style={{ backgroundColor:`${C.bg}EE`, backdropFilter:"blur(16px)" }}>
+        <div className="sticky top-0 z-30 -mx-4 px-4 sm:-mx-6 sm:px-6 lg:-mx-10 lg:px-10 py-3" style={{ backgroundColor:`${C.bg}EE`, backdropFilter:"blur(16px)" }}>
           <motion.div
             initial={{ opacity:0, y:6 }}
             animate={{ opacity:1, y:0 }}
             transition={{ delay:0.05, duration:0.35 }}
           >
-            <div className="flex items-center gap-2.5 overflow-x-auto scrollbar-hide pb-2">
+            <div className="flex items-center gap-2 sm:gap-2.5 overflow-x-auto scrollbar-hide pb-2">
               <QuickPill icon={<Clock size={14} />} label="Open Now" active={openNow} onClick={() => setOpenNow(o => !o)} />
               <QuickPill
                 icon={<Navigation size={14} />}
@@ -892,16 +894,16 @@ export default function ProductDiscoveryPage() {
         </div>
 
         {/* ── PRODUCT LIST HEADER with Sort & View Toggle ────────────────── */}
-        <div className="flex items-center justify-between mt-4 mb-6">
+        <div className="flex flex-wrap items-center justify-between gap-3 mt-4 mb-6">
           <div>
-            <h2 className="text-lg font-bold" style={{ fontFamily:"'Playfair Display',serif", color: C.primary }}>
+            <h2 className="text-base sm:text-lg font-bold" style={{ fontFamily:"'Playfair Display',serif", color: C.primary }}>
               Products
-              <span className="ml-2 text-sm font-normal" style={{ color: C.onSurfaceVar }}>
+              <span className="ml-2 text-xs sm:text-sm font-normal" style={{ color: C.onSurfaceVar }}>
                 ({totalProducts})
               </span>
             </h2>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
             <SortDropdown sortBy={sortBy} setSortBy={setSortBy} />
             <div className="flex rounded-xl border overflow-hidden flex-shrink-0" style={{ borderColor: C.outlineVar }}>
               {(["grid","list"] as ViewMode[]).map(m => (
@@ -910,7 +912,7 @@ export default function ProductDiscoveryPage() {
                   onClick={() => setViewMode(m)}
                   aria-pressed={viewMode === m}
                   aria-label={m === "grid" ? "Grid view" : "List view"}
-                  className="px-3.5 py-2 transition-colors duration-150 flex items-center"
+                  className="px-3 sm:px-3.5 py-2 transition-colors duration-150 flex items-center"
                   style={{ backgroundColor: viewMode===m ? C.primary : C.surface, color: viewMode===m ? "#FFFFFF" : C.outline }}
                 >
                   {m==="grid" ? <Grid3X3 size={15}/> : <List size={15}/>}
@@ -925,12 +927,12 @@ export default function ProductDiscoveryPage() {
         {/* ── PRODUCT GRID / LIST ──────────────────────────────────────────── */}
         <div className="mt-8">
           {loadingProducts ? (
-            <div className={viewMode === "grid" ? "grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-5" : "flex flex-col gap-3"}>
+            <div className={viewMode === "grid" ? "grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3.5 sm:gap-5" : "flex flex-col gap-3"}>
               {Array.from({ length: 8 }).map((_, i) => <ProductCardSkeleton key={i} viewMode={viewMode} />)}
             </div>
           ) : products.length > 0 ? (
             <>
-              <div className={viewMode === "grid" ? "grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-5" : "flex flex-col gap-3"}>
+              <div className={viewMode === "grid" ? "grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3.5 sm:gap-5" : "flex flex-col gap-3"}>
                 <AnimatePresence>
                   {products.map(p => (
                     <ProductCard key={p._id} product={p} viewMode={viewMode} onOpen={() => goToProduct(p)} />
@@ -955,7 +957,7 @@ export default function ProductDiscoveryPage() {
           ) : (
             <motion.div
               initial={{ opacity:0 }} animate={{ opacity:1 }}
-              className="flex flex-col items-center justify-center py-24 text-center"
+              className="flex flex-col items-center justify-center py-20 text-center px-4"
             >
               <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-4" style={{ backgroundColor: C.surfaceCtx }}>
                 <Search size={22} color={C.outline}/>
@@ -984,34 +986,31 @@ export default function ProductDiscoveryPage() {
             Discover More Locally
           </h3>
 
-          <div
-            className="grid gap-5"
-            style={{ gridTemplateColumns:"repeat(12,1fr)", height:400 }}
-          >
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-5">
             <motion.div
               initial={{ opacity:0, x:-20 }}
               whileInView={{ opacity:1, x:0 }}
               viewport={{ once:true }}
               transition={{ duration:0.5 }}
-              className="relative rounded-2xl overflow-hidden cursor-pointer flex flex-col justify-center bg-white border"
-              style={{ gridColumn:"span 8", borderColor: C.outlineVar, padding: 48 }}
+              className="relative rounded-2xl overflow-hidden cursor-pointer flex flex-col justify-center bg-white border md:col-span-8 p-6 sm:p-10 lg:p-12 min-h-[300px]"
+              style={{ borderColor: C.outlineVar }}
             >
-              <div className="max-w-sm">
+              <div className="max-w-md">
                 <span
                   className="inline-block px-2.5 py-1 rounded-lg text-[10px] font-black uppercase tracking-wider mb-3"
                   style={{ backgroundColor: C.secondaryCont, color: C.primary }}
                 >
                   Flash Deal
                 </span>
-                <h4 className="text-2xl font-bold mb-2" style={{ fontFamily:"'Playfair Display',serif", color: C.onSurface }}>
+                <h4 className="text-xl sm:text-2xl font-bold mb-2" style={{ fontFamily:"'Playfair Display',serif", color: C.onSurface }}>
                   Artisanal Organic Week
                 </h4>
-                <p className="text-sm leading-relaxed mb-5" style={{ color: C.onSurfaceVar }}>
+                <p className="text-xs sm:text-sm leading-relaxed mb-5" style={{ color: C.onSurfaceVar }}>
                   Get up to 40% off on verified organic farm products from local partner stores.
                 </p>
                 <motion.button
                   whileHover={{ scale:1.04 }} whileTap={{ scale:0.96 }}
-                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-bold"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold"
                   style={{ backgroundColor: C.primary, color:"#FFFFFF" }}
                 >
                   Shop the Collection <ArrowRight size={13}/>
@@ -1024,29 +1023,29 @@ export default function ProductDiscoveryPage() {
               whileInView={{ opacity:1, x:0 }}
               viewport={{ once:true }}
               transition={{ duration:0.5, delay:0.1 }}
-              className="relative rounded-2xl flex flex-col items-center justify-center text-center p-8 bg-white border"
-              style={{ gridColumn:"span 4", borderColor: C.outlineVar }}
+              className="relative rounded-2xl flex flex-col items-center justify-center text-center p-6 sm:p-8 bg-white border md:col-span-4 min-h-[260px]"
+              style={{ borderColor: C.outlineVar }}
             >
               <motion.div
                 whileHover={{ scale:1.08, rotate:5 }}
                 transition={{ duration:0.3 }}
-                className="w-20 h-20 rounded-full flex items-center justify-center mb-5"
+                className="w-16 h-16 sm:w-20 sm:h-20 rounded-full flex items-center justify-center mb-4 sm:mb-5"
                 style={{ backgroundColor: C.secondaryCont }}
               >
-                <BadgePercent size={36} color={C.primary}/>
+                <BadgePercent size={32} className="sm:w-9 sm:h-9" color={C.primary}/>
               </motion.div>
 
-              <h4 className="text-lg font-bold mb-2" style={{ fontFamily:"'Playfair Display',serif", color: C.onSurface }}>
+              <h4 className="text-base sm:text-lg font-bold mb-2" style={{ fontFamily:"'Playfair Display',serif", color: C.onSurface }}>
                 Market Rewards
               </h4>
-              <p className="text-sm leading-relaxed mb-5" style={{ color: C.onSurfaceVar }}>
+              <p className="text-xs sm:text-sm leading-relaxed mb-4 sm:mb-5" style={{ color: C.onSurfaceVar }}>
                 Earn points for every purchase from local merchants.
               </p>
               <motion.a
                 href="#"
                 whileHover={{ letterSpacing:"0.04em" }}
                 transition={{ duration:0.2 }}
-                className="text-sm font-black underline decoration-2 underline-offset-4"
+                className="text-xs sm:text-sm font-black underline decoration-2 underline-offset-4"
                 style={{ color: C.primary }}
               >
                 Learn More

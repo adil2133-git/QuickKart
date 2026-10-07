@@ -414,20 +414,20 @@ export function OrderTrackingContent({
       ) : (
         <div className="space-y-6">
           {/* Map + sidebar row */}
-          <div className="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-6" style={{ height: 600 }}>
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-6 lg:h-[600px]">
             {/* Map */}
-            <div className="h-full rounded-2xl overflow-hidden shadow-lg bg-white">
+            <div className="h-[320px] sm:h-[400px] lg:h-full rounded-2xl overflow-hidden shadow-lg bg-white">
               <LiveMap driverPos={driverPos} destinationPos={destinationPos} storePos={storePos} etaMinutes={eta} />
             </div>
 
             {/* Sidebar */}
-            <div className="overflow-y-auto pr-1 space-y-4">
+            <div className="lg:overflow-y-auto lg:pr-1 space-y-4">
               {/* Estimated Arrival card */}
               <motion.div
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.4 }}
-                className="rounded-2xl p-6"
+                className="rounded-2xl p-4 sm:p-6"
                 style={{ backgroundColor: "#145C43" }}
               >
                 <div className="flex items-center justify-between mb-4">
@@ -468,61 +468,61 @@ export function OrderTrackingContent({
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.4, delay: 0.1 }}
-                className="rounded-2xl p-5 bg-white border border-gray-100 shadow-sm"
+                className="rounded-2xl p-4 sm:p-5 bg-white border border-gray-100 shadow-sm"
               >
-                <div className="flex items-center gap-4 mb-4">
+                <div className="flex items-center gap-3 sm:gap-4 mb-4">
                   <div className="relative">
                     <div
-                      className="w-16 h-16 rounded-full flex items-center justify-center text-2xl font-semibold"
+                      className="w-14 h-14 sm:w-16 sm:h-16 rounded-full flex items-center justify-center text-xl sm:text-2xl font-semibold"
                       style={{ backgroundColor: "#E8EFEC", color: "#145C43" }}
                     >
                       {driverInitial}
                     </div>
-                    <div className="absolute -bottom-0.5 -right-0.5 w-5 h-5 rounded-full border-2 border-white bg-green-500" />
+                    <div className="absolute -bottom-0.5 -right-0.5 w-4 h-4 sm:w-5 sm:h-5 rounded-full border-2 border-white bg-green-500" />
                   </div>
 
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2">
-                      <span className="font-semibold text-lg text-gray-900 truncate">{delivery!.driver.name}</span>
+                      <span className="font-semibold text-base sm:text-lg text-gray-900 truncate">{delivery!.driver.name}</span>
                       <div className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-amber-50 border border-amber-100">
-                        <Star size={14} fill="#F59E0B" color="#F59E0B" />
+                        <Star size={13} fill="#F59E0B" color="#F59E0B" />
                         <span className="text-xs font-medium text-amber-700">4.9</span>
                       </div>
                     </div>
-                    <div className="flex items-center gap-3 text-sm text-gray-500 mt-1">
-                      <span className="flex items-center gap-1.5">
-                        <Bike size={14} />
+                    <div className="flex items-center gap-2 sm:gap-3 text-xs sm:text-sm text-gray-500 mt-1">
+                      <span className="flex items-center gap-1.5 truncate">
+                        <Bike size={14} className="shrink-0" />
                         {delivery!.driver.vehicleType || "Scooter"}
                       </span>
-                      <span className="w-1 h-1 rounded-full bg-gray-300" />
-                      <span className="font-mono text-xs">{delivery!.driver.vehicleNumber || "—"}</span>
+                      <span className="w-1 h-1 rounded-full bg-gray-300 shrink-0" />
+                      <span className="font-mono text-xs truncate">{delivery!.driver.vehicleNumber || "—"}</span>
                     </div>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-2.5 sm:gap-3">
                   {delivery!.driver.phone ? (
                     <a
                       href={`tel:${delivery!.driver.phone}`}
-                      className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl bg-green-50 text-green-700 font-medium text-sm hover:bg-green-100 transition-colors border border-green-100"
+                      className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl bg-green-50 text-green-700 font-medium text-xs sm:text-sm hover:bg-green-100 transition-colors border border-green-100"
                     >
-                      <Phone size={16} />
+                      <Phone size={15} />
                       Call
                     </a>
                   ) : (
                     <button
                       disabled
-                      className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl bg-gray-50 text-gray-400 font-medium text-sm border border-gray-100 cursor-not-allowed"
+                      className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl bg-gray-50 text-gray-400 font-medium text-xs sm:text-sm border border-gray-100 cursor-not-allowed"
                     >
-                      <Phone size={16} />
+                      <Phone size={15} />
                       Call
                     </button>
                   )}
                   <button
-                    className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-white font-medium text-sm transition-colors"
+                    className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-white font-medium text-xs sm:text-sm transition-colors"
                     style={{ backgroundColor: "#145C43" }}
                   >
-                    <MessageCircle size={16} />
+                    <MessageCircle size={15} />
                     Chat
                   </button>
                 </div>
@@ -533,7 +533,7 @@ export function OrderTrackingContent({
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.4, delay: 0.2 }}
-                className="rounded-2xl p-5 bg-white border border-gray-100 shadow-sm"
+                className="rounded-2xl p-4 sm:p-5 bg-white border border-gray-100 shadow-sm"
               >
                 <div className="flex items-center gap-2 mb-4">
                   <Clock size={16} color="#6E7C74" />
@@ -547,20 +547,20 @@ export function OrderTrackingContent({
                     const isActive = i === currentStepIdx;
                     const isLast = i === TIMELINE_STEPS.length - 1;
                     return (
-                      <div key={step.label} className="flex gap-4">
+                      <div key={step.label} className="flex gap-3 sm:gap-4">
                         <div className="flex flex-col items-center flex-shrink-0">
                           <motion.div
                             initial={isActive ? { scale: 0.8 } : false}
                             animate={isActive ? { scale: 1 } : false}
                             transition={{ duration: 0.3, delay: 0.1 }}
-                            className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 relative ${
+                            className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center flex-shrink-0 relative ${
                               isDone || isActive ? "bg-green-600 text-white" : "bg-gray-100 text-gray-400"
                             }`}
                           >
                             {isDone ? (
-                              <Check size={16} strokeWidth={3} />
+                              <Check size={14} strokeWidth={3} />
                             ) : isActive ? (
-                              <div className="w-3 h-3 rounded-full bg-white animate-pulse" />
+                              <div className="w-2.5 h-2.5 rounded-full bg-white animate-pulse" />
                             ) : (
                               <div className="w-2 h-2 rounded-full bg-gray-300" />
                             )}
@@ -568,23 +568,23 @@ export function OrderTrackingContent({
                           {!isLast && (
                             <div
                               className="w-0.5 flex-1"
-                              style={{ minHeight: 32, backgroundColor: isDone ? "#16A34A" : "#E5E7EB" }}
+                              style={{ minHeight: 28, backgroundColor: isDone ? "#16A34A" : "#E5E7EB" }}
                             />
                           )}
                         </div>
-                        <div className={`pb-5 ${isLast ? "pb-0" : ""}`}>
-                          <span className={`text-sm font-medium block ${isDone || isActive ? "text-gray-900" : "text-gray-400"}`}>
+                        <div className={`pb-4 sm:pb-5 ${isLast ? "pb-0" : ""}`}>
+                          <span className={`text-xs sm:text-sm font-medium block ${isDone || isActive ? "text-gray-900" : "text-gray-400"}`}>
                             {step.label}
                           </span>
                           {isActive && step.label === "On the Way" && eta != null && (
-                            <span className="text-xs text-green-600 mt-0.5 block">Arriving in {eta} mins</span>
+                            <span className="text-[11px] sm:text-xs text-green-600 mt-0.5 block">Arriving in {eta} mins</span>
                           )}
                           {isActive && step.label !== "On the Way" && (
-                            <span className="text-xs text-green-600 mt-0.5 block">In progress…</span>
+                            <span className="text-[11px] sm:text-xs text-green-600 mt-0.5 block">In progress…</span>
                           )}
-                          {isDone && <span className="text-xs text-gray-400 mt-0.5 block">Completed</span>}
+                          {isDone && <span className="text-[11px] sm:text-xs text-gray-400 mt-0.5 block">Completed</span>}
                           {!isDone && !isActive && step.label === "Delivered" && expectedByLabel && (
-                            <span className="text-xs text-gray-400 mt-0.5 block">Expected by {expectedByLabel}</span>
+                            <span className="text-[11px] sm:text-xs text-gray-400 mt-0.5 block">Expected by {expectedByLabel}</span>
                           )}
                         </div>
                       </div>
@@ -596,19 +596,19 @@ export function OrderTrackingContent({
           </div>
 
           {/* Delivering To + Order Summary row */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
             <motion.div
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 0.4, delay: 0.25 }}
-              className="rounded-2xl p-6 bg-white border border-gray-100 shadow-sm"
+              className="rounded-2xl p-4 sm:p-6 bg-white border border-gray-100 shadow-sm"
             >
-              <div className="flex items-center gap-2 mb-4">
+              <div className="flex items-center gap-2 mb-3 sm:mb-4">
                 <MapPin size={16} color="#145C43" />
-                <span className="text-base font-semibold text-gray-900">Delivering To</span>
+                <span className="text-sm sm:text-base font-semibold text-gray-900">Delivering To</span>
               </div>
-              <p className="font-semibold text-gray-900">{detail?.recipientName || "—"}</p>
-              <p className="text-sm text-gray-500 leading-relaxed mt-1">
+              <p className="font-semibold text-sm sm:text-base text-gray-900">{detail?.recipientName || "—"}</p>
+              <p className="text-xs sm:text-sm text-gray-500 leading-relaxed mt-1">
                 {detail?.deliveryAddress || delivery!.deliveryAddress}
               </p>
               {distanceKm != null && (
@@ -631,20 +631,20 @@ export function OrderTrackingContent({
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 0.4, delay: 0.3 }}
-              className="rounded-2xl p-6 bg-white border border-gray-100 shadow-sm"
+              className="rounded-2xl p-4 sm:p-6 bg-white border border-gray-100 shadow-sm"
             >
-              <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center justify-between mb-3 sm:mb-4">
                 <div className="flex items-center gap-2">
                   <ClipboardList size={16} color="#145C43" />
-                  <span className="text-base font-semibold text-gray-900">Order Summary</span>
+                  <span className="text-sm sm:text-base font-semibold text-gray-900">Order Summary</span>
                 </div>
                 {detail?.paymentStatus === "PAID" && (
-                  <span className="text-xs font-semibold px-3 py-1 rounded-full bg-green-50 text-green-700">Paid</span>
+                  <span className="text-xs font-semibold px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full bg-green-50 text-green-700">Paid</span>
                 )}
               </div>
               <p className="text-xs text-gray-400 font-mono mb-3">ID: #{detail?.orderNumber || delivery?.orderNumber}</p>
-              <div className="flex items-start justify-between gap-4 text-sm mb-4">
-                <span className="text-gray-600">
+              <div className="flex items-start justify-between gap-4 text-xs sm:text-sm mb-4">
+                <span className="text-gray-600 line-clamp-2">
                   {detail?.products?.length
                     ? detail.products.map((p) => `${p.productName} ×${p.quantity}`).join(", ")
                     : "Loading items…"}
@@ -653,15 +653,15 @@ export function OrderTrackingContent({
                   {detail ? `₹${detail.totalAmount}` : ""}
                 </span>
               </div>
-              <button className="w-full border border-gray-200 rounded-xl py-2.5 text-sm font-semibold text-gray-700 hover:bg-gray-50 transition-colors">
+              <button className="w-full border border-gray-200 rounded-xl py-2.5 text-xs sm:text-sm font-semibold text-gray-700 hover:bg-gray-50 transition-colors">
                 View Digital Invoice
               </button>
             </motion.div>
           </div>
 
           {/* Support / cancel links */}
-          <div className="flex items-center justify-center gap-8 pt-2 pb-4">
-            <button className="flex items-center gap-2 text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors">
+          <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-8 pt-2 pb-4">
+            <button className="flex items-center gap-2 text-xs sm:text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors">
               <Headphones size={16} />
               Contact Support
             </button>
@@ -669,7 +669,7 @@ export function OrderTrackingContent({
               <button
                 onClick={handleCancel}
                 disabled={isCancelling}
-                className="flex items-center gap-2 text-sm font-semibold text-red-600 hover:text-red-700 transition-colors disabled:opacity-50"
+                className="flex items-center gap-2 text-xs sm:text-sm font-semibold text-red-600 hover:text-red-700 transition-colors disabled:opacity-50"
               >
                 <XCircle size={16} />
                 {isCancelling ? "Cancelling…" : "Cancel Order"}
@@ -690,7 +690,7 @@ export default function OrderTrackingPage() {
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: "#F7F8F5" }}>
-      <div className="max-w-[1600px] mx-auto px-8 py-6">
+      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
         <OrderTrackingContent orderId={orderId!} onBack={() => navigate("/customer/profile?tab=orders")} />
       </div>
     </div>

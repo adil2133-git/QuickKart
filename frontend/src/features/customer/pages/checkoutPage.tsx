@@ -142,18 +142,18 @@ function DeliveryInstructions() {
   const { deliveryInstructions, setDeliveryInstructions } = useDeliveryInstructions();
 
   return (
-    <section className="bg-white rounded-2xl border border-[#E3E7E1] p-6">
-      <div className="flex items-center gap-3 mb-5">
+    <section className="bg-white rounded-2xl border border-[#E3E7E1] p-4 sm:p-6">
+      <div className="flex items-center gap-3 mb-4 sm:mb-5">
         <StepBadge n={2} />
-        <h2 className="text-lg font-semibold text-[#16241D]">Delivery Instructions</h2>
+        <h2 className="text-base sm:text-lg font-semibold text-[#16241D]">Delivery Instructions</h2>
       </div>
-      <p className="text-sm text-[#6E7C74] mb-3">Special requests for the delivery partner</p>
+      <p className="text-xs sm:text-sm text-[#6E7C74] mb-3">Special requests for the delivery partner</p>
       <textarea
         value={deliveryInstructions}
         onChange={(e) => setDeliveryInstructions(e.target.value)}
         rows={3}
         placeholder="e.g. Leave at the gate, Call upon arrival, Ring the bell twice…"
-        className="w-full border border-[#DCE3DC] rounded-xl px-4 py-3 text-sm text-[#16241D] placeholder-[#9BAAA1] resize-none focus:outline-none focus:ring-2 focus:ring-[#145C43]/30 focus:border-[#145C43] transition-colors bg-[#F5F7F3]"
+        className="w-full border border-[#DCE3DC] rounded-xl px-3.5 sm:px-4 py-2.5 sm:py-3 text-xs sm:text-sm text-[#16241D] placeholder-[#9BAAA1] resize-none focus:outline-none focus:ring-2 focus:ring-[#145C43]/30 focus:border-[#145C43] transition-colors bg-[#F5F7F3]"
       />
     </section>
   );
@@ -167,14 +167,14 @@ function PaymentMethod() {
   const { paymentMethod, setPaymentMethod, walletBalance, useWallet, setUseWallet } = usePayment();
 
   return (
-    <section className="bg-white rounded-2xl border border-[#E3E7E1] p-6">
-      <div className="flex items-center gap-3 mb-5">
+    <section className="bg-white rounded-2xl border border-[#E3E7E1] p-4 sm:p-6">
+      <div className="flex items-center gap-3 mb-4 sm:mb-5">
         <StepBadge n={3} />
-        <h2 className="text-lg font-semibold text-[#16241D]">Payment Method</h2>
+        <h2 className="text-base sm:text-lg font-semibold text-[#16241D]">Payment Method</h2>
       </div>
       <div className="space-y-3">
         <label
-          className={`flex items-center gap-4 border rounded-xl px-4 py-4 cursor-pointer transition-colors ${
+          className={`flex items-center gap-3 sm:gap-4 border rounded-xl p-3.5 sm:p-4 cursor-pointer transition-colors ${
             paymentMethod === "ONLINE" ? "border-[#145C43] bg-[#ECF2F0]" : "border-[#DCE3DC] bg-white hover:bg-[#F5F7F3]"
           }`}
         >
@@ -186,22 +186,22 @@ function PaymentMethod() {
             onChange={() => setPaymentMethod("ONLINE")}
             className="accent-[#145C43] w-4 h-4"
           />
-          <div className="flex-1">
-            <p className="text-sm font-semibold text-[#16241D]">Online Payment</p>
-            <p className="text-xs text-[#6E7C74]">UPI, Cards, Net Banking &mdash; via Razorpay</p>
+          <div className="flex-1 min-w-0">
+            <p className="text-xs sm:text-sm font-semibold text-[#16241D]">Online Payment</p>
+            <p className="text-[11px] sm:text-xs text-[#6E7C74] truncate">UPI, Cards, Net Banking &mdash; via Razorpay</p>
           </div>
-          <span className="text-lg">💳</span>
+          <span className="text-base sm:text-lg shrink-0">💳</span>
         </label>
 
         {paymentMethod === "ONLINE" && walletBalance > 0 && (
-          <label className="flex items-center gap-3 pl-4 pr-4 py-3 rounded-xl border border-dashed border-[#B9D6C9] bg-[#F5FAF7] cursor-pointer">
+          <label className="flex items-center gap-3 px-3.5 sm:px-4 py-3 rounded-xl border border-dashed border-[#B9D6C9] bg-[#F5FAF7] cursor-pointer">
             <input
               type="checkbox"
               checked={useWallet}
               onChange={(e) => setUseWallet(e.target.checked)}
-              className="accent-[#145C43] w-4 h-4"
+              className="accent-[#145C43] w-4 h-4 shrink-0"
             />
-            <span className="text-sm text-[#16241D] flex-1">
+            <span className="text-xs sm:text-sm text-[#16241D] flex-1">
               Use wallet balance{" "}
               <span className="font-semibold text-[#145C43]">
                 (₹{walletBalance.toFixed(2)} available)
@@ -211,7 +211,7 @@ function PaymentMethod() {
         )}
 
         <label
-          className={`flex items-center gap-4 border rounded-xl px-4 py-4 cursor-pointer transition-colors ${
+          className={`flex items-center gap-3 sm:gap-4 border rounded-xl p-3.5 sm:p-4 cursor-pointer transition-colors ${
             paymentMethod === "COD" ? "border-[#145C43] bg-[#ECF2F0]" : "border-[#DCE3DC] bg-white hover:bg-[#F5F7F3]"
           }`}
         >
@@ -223,11 +223,11 @@ function PaymentMethod() {
             onChange={() => setPaymentMethod("COD")}
             className="accent-[#145C43] w-4 h-4"
           />
-          <div className="flex-1">
-            <p className="text-sm font-semibold text-[#16241D]">Cash on Delivery (COD)</p>
-            <p className="text-xs text-[#6E7C74]">Pay when you receive the items</p>
+          <div className="flex-1 min-w-0">
+            <p className="text-xs sm:text-sm font-semibold text-[#16241D]">Cash on Delivery (COD)</p>
+            <p className="text-[11px] sm:text-xs text-[#6E7C74]">Pay when you receive the items</p>
           </div>
-          <span className="text-lg">💵</span>
+          <span className="text-base sm:text-lg shrink-0">💵</span>
         </label>
       </div>
     </section>
@@ -257,12 +257,12 @@ function OrderSummary() {
 
   return (
     <aside className="space-y-4 lg:sticky lg:top-6 min-w-0">
-      <div className="bg-white rounded-2xl border border-[#E3E7E1] p-6">
-        <h2 className="text-lg font-semibold text-[#16241D] mb-5">Order Summary</h2>
+      <div className="bg-white rounded-2xl border border-[#E3E7E1] p-4 sm:p-6">
+        <h2 className="text-base sm:text-lg font-semibold text-[#16241D] mb-4 sm:mb-5">Order Summary</h2>
 
         <div className="flex items-center gap-2 mb-4">
           <ShoppingBag size={14} className="text-[#6E7C74]" />
-          <span className="text-sm italic text-[#6E7C74]">
+          <span className="text-xs sm:text-sm italic text-[#6E7C74] truncate">
             {cartItems[0]?.productId.storeId?.storeName ?? "Your cart"}
           </span>
         </div>
@@ -270,10 +270,10 @@ function OrderSummary() {
         {isEmpty ? (
           <p className="text-sm text-[#6E7C74] py-6 text-center">Your cart is empty.</p>
         ) : (
-          <div className="space-y-4 mb-5">
+          <div className="space-y-3 sm:space-y-4 mb-4 sm:mb-5">
             {cartItems.map((item) => (
               <div key={item.productId._id} className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-lg bg-[#E8EFEC] flex items-center justify-center text-2xl shrink-0 overflow-hidden">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg bg-[#E8EFEC] flex items-center justify-center text-xl sm:text-2xl shrink-0 overflow-hidden">
                   {item.productId.images?.[0] ? (
                     <img
                       src={item.productId.images[0]}
@@ -285,14 +285,14 @@ function OrderSummary() {
                   )}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-[#16241D] leading-tight">
+                  <p className="text-xs sm:text-sm font-medium text-[#16241D] leading-tight truncate">
                     {item.productId.productName}
                   </p>
-                  <p className="text-xs text-[#6E7C74]">
+                  <p className="text-[11px] sm:text-xs text-[#6E7C74]">
                     {item.productId.unit ? `${item.productId.unit} · ` : ""}Qty: {item.quantity}
                   </p>
                 </div>
-                <p className="text-sm font-medium text-[#16241D] shrink-0">
+                <p className="text-xs sm:text-sm font-medium text-[#16241D] shrink-0">
                   ₹{(item.productId.price * item.quantity).toFixed(2)}
                 </p>
               </div>
@@ -301,11 +301,11 @@ function OrderSummary() {
         )}
 
         <div className="border-t border-[#E3E7E1] pt-4 space-y-2">
-          <div className="flex justify-between text-sm text-[#153A2C]">
+          <div className="flex justify-between text-xs sm:text-sm text-[#153A2C]">
             <span>Product Total</span>
             <span>₹{totals.productTotal.toFixed(2)}</span>
           </div>
-          <div className="flex justify-between text-sm text-[#153A2C]">
+          <div className="flex justify-between text-xs sm:text-sm text-[#153A2C]">
             <span>Delivery Charge</span>
             {totals.freeDeliveryApplied ? (
               <span className="font-semibold text-green-600">FREE</span>
@@ -313,18 +313,18 @@ function OrderSummary() {
               <span className="font-semibold">₹{totals.deliveryCharge.toFixed(2)}</span>
             )}
           </div>
-          <div className="flex justify-between text-sm text-[#153A2C]">
+          <div className="flex justify-between text-xs sm:text-sm text-[#153A2C]">
             <span>Packaging Fee</span>
             <span>₹{totals.packagingFee.toFixed(2)}</span>
           </div>
           {couponApplied && (
-            <div className="flex justify-between text-sm text-green-600 font-medium">
+            <div className="flex justify-between text-xs sm:text-sm text-green-600 font-medium">
               <span>Coupon Discount</span>
               <span>−₹{totals.couponDiscount.toFixed(2)}</span>
             </div>
           )}
           {totals.walletAmountToApply > 0 && (
-            <div className="flex justify-between text-sm text-[#145C43] font-medium">
+            <div className="flex justify-between text-xs sm:text-sm text-[#145C43] font-medium">
               <span>Wallet Applied</span>
               <span>−₹{totals.walletAmountToApply.toFixed(2)}</span>
             </div>
@@ -332,10 +332,10 @@ function OrderSummary() {
         </div>
 
         <div className="border-t border-[#E3E7E1] mt-4 pt-4 flex justify-between items-center">
-          <span className="font-semibold text-[#16241D]">
+          <span className="text-sm sm:text-base font-semibold text-[#16241D]">
             {totals.walletAmountToApply > 0 ? "Amount to Pay" : "Grand Total"}
           </span>
-          <span className="text-lg font-bold text-[#145C43]">
+          <span className="text-base sm:text-lg font-bold text-[#145C43]">
             ₹{(paymentMethod === "ONLINE" ? totals.amountToPay : totals.grandTotal).toFixed(2)}
           </span>
         </div>
@@ -374,7 +374,7 @@ function OrderSummary() {
       </div>
 
       {/* Coupon — local-only placeholder until real coupon validation exists server-side */}
-      <div className="bg-white rounded-2xl border border-[#E3E7E1] p-5">
+      <div className="bg-white rounded-2xl border border-[#E3E7E1] p-4 sm:p-5">
         <div className="flex items-center gap-2 mb-3">
           <Tag size={14} className="text-[#145C43]" />
           <span className="text-sm font-semibold text-[#16241D]">Offers &amp; Coupons</span>
@@ -386,12 +386,12 @@ function OrderSummary() {
             onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
             placeholder="Enter code"
             disabled={couponApplied}
-            className="flex-1 border border-[#DCE3DC] rounded-lg px-3 py-2 text-sm text-[#16241D] placeholder-[#9BAAA1] focus:outline-none focus:ring-2 focus:ring-[#145C43]/30 focus:border-[#145C43] disabled:bg-[#F5F7F3] disabled:text-[#6E7C74] transition-colors"
+            className="flex-1 border border-[#DCE3DC] rounded-lg px-3 py-2 text-xs sm:text-sm text-[#16241D] placeholder-[#9BAAA1] focus:outline-none focus:ring-2 focus:ring-[#145C43]/30 focus:border-[#145C43] disabled:bg-[#F5F7F3] disabled:text-[#6E7C74] transition-colors"
           />
           <button
             onClick={applyCoupon}
             disabled={couponApplied || !couponCode.trim()}
-            className="px-4 py-2 text-sm font-semibold text-[#145C43] border border-[#145C43] rounded-lg hover:bg-[#145C43] hover:text-white disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+            className="px-3.5 sm:px-4 py-2 text-xs sm:text-sm font-semibold text-[#145C43] border border-[#145C43] rounded-lg hover:bg-[#145C43] hover:text-white disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
           >
             {couponApplied ? "Applied" : "Apply"}
           </button>
@@ -430,7 +430,7 @@ export default function CheckoutPage() {
       </header>
 
       {/* Main */}
-      <main className="max-w-6xl mx-auto px-4 sm:px-6 py-8">
+      <main className="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
         {isLoadingSummary ? (
           <div className="flex items-center justify-center py-24 text-[#6E7C74] gap-2">
             <Loader2 size={18} className="animate-spin" />
@@ -453,10 +453,10 @@ export default function CheckoutPage() {
                 address string) force the track wider than the viewport,
                 pushing the Order Summary column off-screen to the right. */}
             <div className="space-y-5 min-w-0">
-              <section className="bg-white rounded-2xl border border-[#E3E7E1] p-6">
-                <div className="flex items-center gap-3 mb-5">
+              <section className="bg-white rounded-2xl border border-[#E3E7E1] p-4 sm:p-6">
+                <div className="flex items-center gap-3 mb-4 sm:mb-5">
                   <StepBadge n={1} />
-                  <h2 className="text-lg font-semibold text-[#16241D]">Select Delivery Address</h2>
+                  <h2 className="text-base sm:text-lg font-semibold text-[#16241D]">Select Delivery Address</h2>
                 </div>
                 <AddressDropdown />
               </section>

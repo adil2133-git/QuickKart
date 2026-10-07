@@ -102,11 +102,11 @@ const CartItemRow: React.FC<{
 
   return (
     <div
-      className={`bg-white rounded-2xl p-4 sm:p-5 border border-[#E3E7E1] flex gap-4 transition-opacity ${isThisUpdating ? "opacity-60 pointer-events-none" : ""
+      className={`bg-white rounded-2xl p-3 sm:p-5 border border-[#E3E7E1] flex gap-3 sm:gap-4 transition-opacity ${isThisUpdating ? "opacity-60 pointer-events-none" : ""
         }`}
     >
       {/* Product image */}
-      <div className="w-20 h-20 rounded-xl overflow-hidden flex-shrink-0 bg-[#F5F7F3]">
+      <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden flex-shrink-0 bg-[#F5F7F3]">
         <img
           src={img}
           alt={product.productName}
@@ -116,26 +116,26 @@ const CartItemRow: React.FC<{
 
       {/* Info */}
       <div className="flex-1 min-w-0">
-        <p className="text-sm font-semibold text-[#16241D] leading-snug truncate">
+        <p className="text-xs sm:text-sm font-semibold text-[#16241D] leading-snug truncate">
           {product.productName}
         </p>
         {product.unit && (
-          <p className="text-xs text-[#9BAAA1] mt-0.5">per {product.unit}</p>
+          <p className="text-[11px] sm:text-xs text-[#9BAAA1] mt-0.5">per {product.unit}</p>
         )}
-        <p className="text-base font-bold text-[#145C43] mt-2">
+        <p className="text-sm sm:text-base font-bold text-[#145C43] mt-1 sm:mt-2">
           ₹{(item.price * item.quantity).toLocaleString("en-IN")}
         </p>
-        <p className="text-xs text-[#9BAAA1]">
+        <p className="text-[11px] sm:text-xs text-[#9BAAA1]">
           ₹{item.price.toLocaleString("en-IN")} each
         </p>
       </div>
 
       {/* Qty + remove */}
-      <div className="flex flex-col items-end justify-between gap-2 flex-shrink-0">
+      <div className="flex flex-col items-end justify-between gap-1.5 sm:gap-2 flex-shrink-0">
         <button
           onClick={() => removeItem(product._id)}
           aria-label="Remove item"
-          className="text-[#9BAAA1] hover:text-rose-500 transition-colors"
+          className="text-[#9BAAA1] hover:text-rose-500 transition-colors p-1"
         >
           {isThisUpdating ? (
             <Loader2 className="w-4 h-4 animate-spin" />
@@ -149,25 +149,25 @@ const CartItemRow: React.FC<{
           <button
             onClick={handleDecrement}
             aria-label="Decrease quantity"
-            className="w-8 h-8 flex items-center justify-center text-[#145C43] hover:bg-[#F5F7F3] transition-colors"
+            className="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center text-[#145C43] hover:bg-[#F5F7F3] transition-colors"
           >
-            <Minus className="w-3.5 h-3.5" />
+            <Minus className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
           </button>
-          <span className="w-8 h-8 flex items-center justify-center text-sm font-semibold text-[#16241D] border-x border-[#DCE3DC]">
+          <span className="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center text-xs sm:text-sm font-semibold text-[#16241D] border-x border-[#DCE3DC]">
             {item.quantity}
           </span>
           <button
             onClick={handleIncrement}
             aria-label="Increase quantity"
             disabled={item.quantity >= product.stockQuantity}
-            className="w-8 h-8 flex items-center justify-center text-[#145C43] hover:bg-[#F5F7F3] disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+            className="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center text-[#145C43] hover:bg-[#F5F7F3] disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
           >
-            <Plus className="w-3.5 h-3.5" />
+            <Plus className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
           </button>
         </div>
 
         {product.stockQuantity <= 5 && (
-          <span className="text-[10px] text-rose-500 font-medium">
+          <span className="text-[9px] sm:text-[10px] text-rose-500 font-medium">
             {product.stockQuantity} left
           </span>
         )}
@@ -187,15 +187,15 @@ const OrderSummary: React.FC<{
   const total = subtotal + (subtotal > 0 ? DELIVERY_CHARGE : 0);
 
   return (
-    <div className="bg-white rounded-2xl border border-[#E3E7E1] p-6 space-y-5 sticky top-6">
+    <div className="bg-white rounded-2xl border border-[#E3E7E1] p-4 sm:p-6 space-y-4 sm:space-y-5 sticky top-6">
       <h2
-        className="text-xl font-bold text-[#16241D]"
+        className="text-lg sm:text-xl font-bold text-[#16241D]"
         style={{ fontFamily: "'Inter', sans-serif" }}
       >
         Order Summary
       </h2>
 
-      <div className="space-y-3 text-sm">
+      <div className="space-y-2.5 sm:space-y-3 text-sm">
         <div className="flex justify-between text-[#153A2C]">
           <span>Subtotal</span>
           <span className="font-medium">₹{(subtotal ?? 0).toLocaleString("en-IN")}</span>
@@ -216,13 +216,13 @@ const OrderSummary: React.FC<{
 
       <div className="flex justify-between items-center">
         <span
-          className="text-base font-bold text-[#16241D]"
+          className="text-sm sm:text-base font-bold text-[#16241D]"
           style={{ fontFamily: "'Inter', sans-serif" }}
         >
           Total
         </span>
         <span
-          className="text-xl font-bold text-[#16241D]"
+          className="text-lg sm:text-xl font-bold text-[#16241D]"
           style={{ fontFamily: "'Inter', sans-serif" }}
         >
           ₹{total.toLocaleString("en-IN")}
@@ -253,8 +253,8 @@ const OrderSummary: React.FC<{
       </button>
 
       {/* Trust badge */}
-      <div className="flex items-start gap-3 p-3 rounded-xl bg-[#F5F7F3] border border-[#E3E7E1]">
-        <ShieldCheck className="w-5 h-5 text-[#145C43] flex-shrink-0 mt-0.5" />
+      <div className="flex items-start gap-2.5 sm:gap-3 p-3 rounded-xl bg-[#F5F7F3] border border-[#E3E7E1]">
+        <ShieldCheck className="w-4 h-4 sm:w-5 sm:h-5 text-[#145C43] flex-shrink-0 mt-0.5" />
         <p className="text-xs text-[#6E7C74] leading-relaxed">
           Items in your cart are handled with care and come from verified
           neighbourhood artisans.

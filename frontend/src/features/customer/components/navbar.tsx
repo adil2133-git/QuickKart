@@ -18,6 +18,7 @@ import {
     Leaf,
     Loader2,
     Wallet,
+    Package,
     type LucideIcon,
 } from "lucide-react";
 import api from "../../../api/axios";
@@ -721,27 +722,51 @@ function MobileMenu({ onClose }: { onClose: () => void }) {
                 <SearchBar />
                 <LocationPicker />
 
-                <Link
-                    to="/customer/profile"
-                    onClick={onClose}
-                    className="flex items-center gap-2 rounded-xl px-3 py-2.5 text-[14px] font-medium transition-colors hover:bg-[#ECF2F0]"
-                    style={{ fontFamily: FONT_UI, color: "#16241D" }}
-                >
-                    <User size={16} /> Profile
-                </Link>
-
                 <nav className="flex flex-col gap-1 border-t pt-3" style={{ borderColor: "#E3E7E1" }}>
-                    {NAV_LINKS.map((link) => (
-                        <Link
-                            key={link.to}
-                            to={link.to}
-                            onClick={onClose}
-                            className="rounded-xl px-3 py-2.5 text-[14px] font-medium transition-colors hover:bg-[#ECF2F0]"
-                            style={{ fontFamily: FONT_UI, color: "#16241D" }}
-                        >
-                            {link.label}
-                        </Link>
-                    ))}
+                    <Link
+                        to="/customer/home"
+                        onClick={onClose}
+                        className="flex items-center gap-2.5 rounded-xl px-3 py-2.5 text-[14px] font-medium transition-colors hover:bg-[#ECF2F0]"
+                        style={{ fontFamily: FONT_UI, color: "#16241D" }}
+                    >
+                        <Home size={16} color="#145C43" /> Home
+                    </Link>
+
+                    <Link
+                        to="/customer/stores"
+                        onClick={onClose}
+                        className="flex items-center gap-2.5 rounded-xl px-3 py-2.5 text-[14px] font-medium transition-colors hover:bg-[#ECF2F0]"
+                        style={{ fontFamily: FONT_UI, color: "#16241D" }}
+                    >
+                        <Briefcase size={16} color="#145C43" /> Stores
+                    </Link>
+
+                    <Link
+                        to="/customer/orders"
+                        onClick={onClose}
+                        className="flex items-center gap-2.5 rounded-xl px-3 py-2.5 text-[14px] font-medium transition-colors hover:bg-[#ECF2F0]"
+                        style={{ fontFamily: FONT_UI, color: "#16241D" }}
+                    >
+                        <Package size={16} color="#145C43" /> My Orders
+                    </Link>
+
+                    <Link
+                        to="/customer/wallet"
+                        onClick={onClose}
+                        className="flex items-center gap-2.5 rounded-xl px-3 py-2.5 text-[14px] font-medium transition-colors hover:bg-[#ECF2F0]"
+                        style={{ fontFamily: FONT_UI, color: "#16241D" }}
+                    >
+                        <Wallet size={16} color="#145C43" /> My Wallet
+                    </Link>
+
+                    <Link
+                        to="/customer/profile"
+                        onClick={onClose}
+                        className="flex items-center gap-2.5 rounded-xl px-3 py-2.5 text-[14px] font-medium transition-colors hover:bg-[#ECF2F0]"
+                        style={{ fontFamily: FONT_UI, color: "#16241D" }}
+                    >
+                        <User size={16} color="#145C43" /> My Profile
+                    </Link>
                 </nav>
             </motion.div>
         </motion.div>

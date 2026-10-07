@@ -291,7 +291,7 @@ export default function LocationPickerModal({ onSaved, onClose }: LocationPicker
 
     return (
         <div
-            className="fixed inset-0 z-[100] flex items-center justify-center p-4"
+            className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-4"
             style={{ backgroundColor: "rgba(29,27,22,0.55)", backdropFilter: "blur(4px)" }}
             onClick={() => onClose?.()}
         >
@@ -312,19 +312,19 @@ export default function LocationPickerModal({ onSaved, onClose }: LocationPicker
             >
                 {/* ── Header ── */}
                 <div
-                    className="px-6 pt-6 pb-4 border-b"
+                    className="px-4 sm:px-6 pt-5 sm:pt-6 pb-3 sm:pb-4 border-b"
                     style={{ borderColor: "#E3E7E1" }}
                 >
                     <div className="flex items-start gap-3">
                         <div
-                            className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl"
+                            className="flex h-9 w-9 sm:h-10 sm:w-10 flex-shrink-0 items-center justify-center rounded-xl"
                             style={{ backgroundColor: "#145C43" }}
                         >
                             <MapPin size={18} color="#FFFFFF" />
                         </div>
                         <div className="min-w-0 flex-1">
                             <h2
-                                className="font-bold text-lg leading-tight"
+                                className="font-bold text-base sm:text-lg leading-tight"
                                 style={{ color: "#16241D" }}
                             >
                                 Where should we deliver?
@@ -346,7 +346,7 @@ export default function LocationPickerModal({ onSaved, onClose }: LocationPicker
                     </div>
                 </div>
 
-                <div className="px-6 py-5 space-y-4">
+                <div className="px-4 sm:px-6 py-4 sm:py-5 space-y-3.5 sm:space-y-4">
 
                     {/* ── GPS button ── */}
                     <motion.button
@@ -421,7 +421,7 @@ export default function LocationPickerModal({ onSaved, onClose }: LocationPicker
                             borderColor: isConfirmed ? "#145C43" : pending ? "#A9CC3B" : "#DCE3DC",
                         }}
                     >
-                        <div ref={mapContainerRef} style={{ height: 240, width: "100%" }} />
+                        <div ref={mapContainerRef} className="h-44 sm:h-56 w-full" />
                     </div>
 
                     {/* ── Pin status panel ── */}

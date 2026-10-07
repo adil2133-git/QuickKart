@@ -340,9 +340,9 @@ function StorePageContent({ storeId }: { storeId: string }) {
         <main className="max-w-[1200px] mx-auto w-full px-4 md:px-10 pb-20">
 
           {/* ── Hero ── */}
-          <header className="relative mt-8 group">
-            <div className="h-[400px] w-full rounded-3xl overflow-hidden relative shadow-lg">
-              <div className="absolute inset-0 z-10" style={{ background: "linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 60%)" }} />
+          <header className="relative mt-4 sm:mt-8 group">
+            <div className="h-56 sm:h-72 md:h-[360px] w-full rounded-2xl sm:rounded-3xl overflow-hidden relative shadow-lg">
+              <div className="absolute inset-0 z-10" style={{ background: "linear-gradient(to top, rgba(0,0,0,0.65) 0%, transparent 60%)" }} />
               {storeLoading ? (
                 <ShimmerBlock className="w-full h-full rounded-none" />
               ) : (
@@ -354,8 +354,8 @@ function StorePageContent({ storeId }: { storeId: string }) {
               )}
             </div>
 
-            <div className="absolute -bottom-20 left-8 md:left-12 z-20 flex items-end gap-6 w-full">
-              <div className="w-36 h-36 rounded-full border-8 shadow-xl overflow-hidden flex-shrink-0" style={{ borderColor: PALETTE.bg, backgroundColor: "#fff" }}>
+            <div className="relative -mt-16 sm:-mt-20 px-4 sm:px-8 z-20 flex flex-col md:flex-row md:items-end gap-4 sm:gap-6">
+              <div className="w-28 h-28 sm:w-36 sm:h-36 rounded-full border-4 sm:border-8 shadow-xl overflow-hidden flex-shrink-0 bg-white" style={{ borderColor: PALETTE.bg }}>
                 {storeLoading ? (
                   <ShimmerBlock className="w-full h-full rounded-none" />
                 ) : (
@@ -363,7 +363,7 @@ function StorePageContent({ storeId }: { storeId: string }) {
                 )}
               </div>
 
-              <div className="pb-4 flex-grow flex flex-col md:flex-row md:items-end justify-between pr-10">
+              <div className="flex-grow flex flex-col md:flex-row md:items-end justify-between gap-4">
                 <div>
                   {storeLoading ? (
                     <>
@@ -376,10 +376,10 @@ function StorePageContent({ storeId }: { storeId: string }) {
                     </div>
                   ) : (
                     <>
-                      <h1 style={{ fontFamily: "'Inter', sans-serif", fontSize: 32, fontWeight: 700, letterSpacing: "-0.02em", color: PALETTE.ink }} className="mb-2">
+                      <h1 style={{ fontFamily: "'Inter', sans-serif", fontWeight: 700, letterSpacing: "-0.02em", color: PALETTE.ink }} className="text-2xl sm:text-3xl mb-1.5">
                         {store?.storeName}
                       </h1>
-                      <div className="flex flex-wrap items-center gap-3">
+                      <div className="flex flex-wrap items-center gap-2 sm:gap-3">
                         <div className="flex items-center gap-1" style={{ color: PALETTE.brown }}>
                           <Star size={14} fill={PALETTE.brown} strokeWidth={0} />
                           <span className="text-xs font-bold">{(store?.averageRating ?? 0).toFixed(1)}</span>
@@ -404,19 +404,19 @@ function StorePageContent({ storeId }: { storeId: string }) {
                   )}
                 </div>
 
-                <div className="mt-6 md:mt-0 flex gap-3">
+                <div className="flex flex-wrap items-center gap-2.5 sm:gap-3">
                   <button
                     onClick={toggleFollowed}
-                    className="px-6 py-2.5 rounded-full border text-sm font-medium transition-all active:scale-95"
+                    className="px-5 sm:px-6 py-2.5 rounded-full border text-xs sm:text-sm font-medium transition-all active:scale-95 cursor-pointer"
                     style={{ borderColor: PALETTE.brown, color: followed ? "#fff" : PALETTE.brown, backgroundColor: followed ? PALETTE.brown : "transparent" }}
                   >
                     {followed ? "Following" : "Follow Store"}
                   </button>
-                  <button className="px-6 py-2.5 rounded-full text-sm font-medium transition-all active:scale-95" style={{ backgroundColor: "#ede7de", color: PALETTE.ink }}>
+                  <button className="px-5 sm:px-6 py-2.5 rounded-full text-xs sm:text-sm font-medium transition-all active:scale-95 cursor-pointer" style={{ backgroundColor: "#ede7de", color: PALETTE.ink }}>
                     Contact
                   </button>
-                  <button className="w-11 h-11 flex items-center justify-center rounded-full border transition-all active:scale-95" style={{ borderColor: PALETTE.line, color: PALETTE.muted }}>
-                    <Share2 size={18} />
+                  <button className="w-10 h-10 sm:w-11 sm:h-11 flex items-center justify-center rounded-full border transition-all active:scale-95 cursor-pointer" style={{ borderColor: PALETTE.line, color: PALETTE.muted }}>
+                    <Share2 size={16} />
                   </button>
                 </div>
               </div>
@@ -424,7 +424,7 @@ function StorePageContent({ storeId }: { storeId: string }) {
           </header>
 
           {/* ── KPI Cards ── */}
-          <section className="mt-28 grid grid-cols-2 md:grid-cols-4 gap-4">
+          <section className="mt-12 sm:mt-16 grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
             {[
               { value: store?.totalOrders ? `${store.totalOrders}+` : "—", label: "Orders" },
               { value: bestsellers.length || "—", label: "Best Sellers" },
@@ -547,7 +547,7 @@ function StorePageContent({ storeId }: { storeId: string }) {
                 <p className="text-sm">{productsError}</p>
               </div>
             ) : (
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3.5 sm:gap-6">
                 {productsLoading
                   ? Array.from({ length: 8 }).map((_, i) => <ProductCardSkeleton key={i} />)
                   : /* ── FIX: pass storeId prop ── */

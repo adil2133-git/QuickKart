@@ -117,10 +117,10 @@ function OrderCard({
   });
 
   return (
-    <div className="bg-white rounded-2xl border border-[#E3E7E1] p-6 flex flex-col">
+    <div className="bg-white rounded-2xl border border-[#E3E7E1] p-4 sm:p-6 flex flex-col">
       <div className="flex items-start justify-between gap-3 mb-4">
         <div>
-          <h3 className="text-lg font-semibold text-[#16241D]" style={{ fontFamily: "Georgia, serif" }}>
+          <h3 className="text-base sm:text-lg font-semibold text-[#16241D]" style={{ fontFamily: "Georgia, serif" }}>
             {order.storeName}
           </h3>
           <p className="text-xs text-[#6E7C74] mt-1 font-mono">
@@ -131,7 +131,7 @@ function OrderCard({
       </div>
 
       <div className="flex items-center gap-3 mb-5">
-        <div className="relative w-16 h-16 rounded-xl overflow-hidden bg-[#F5F7F3] shrink-0 flex items-center justify-center">
+        <div className="relative w-14 h-14 sm:w-16 sm:h-16 rounded-xl overflow-hidden bg-[#F5F7F3] shrink-0 flex items-center justify-center">
           {order.previewItems[0]?.image ? (
             <img
               src={order.previewItems[0].image}
@@ -139,17 +139,17 @@ function OrderCard({
               className="w-full h-full object-cover"
             />
           ) : (
-            <span className="text-2xl">🛒</span>
+            <span className="text-xl sm:text-2xl">🛒</span>
           )}
           {extraCount > 0 && (
             <div className="absolute inset-0 bg-black/45 flex items-center justify-center">
-              <span className="text-white text-sm font-semibold">+{extraCount}</span>
+              <span className="text-white text-xs sm:text-sm font-semibold">+{extraCount}</span>
             </div>
           )}
         </div>
-        <div>
-          <p className="text-base text-[#16241D]">{order.itemSummary}</p>
-          <p className="text-sm text-[#6E7C74]">{order.itemCount} items total</p>
+        <div className="min-w-0">
+          <p className="text-sm sm:text-base text-[#16241D] truncate">{order.itemSummary}</p>
+          <p className="text-xs sm:text-sm text-[#6E7C74]">{order.itemCount} items total</p>
         </div>
       </div>
 
@@ -162,7 +162,7 @@ function OrderCard({
       {!isPast && order.driverSearchFailed && (
         <div className="mb-5 flex items-start gap-2 rounded-xl border border-amber-200 bg-amber-50 px-3.5 py-3">
           <AlertTriangle size={16} className="mt-0.5 flex-shrink-0 text-amber-600" />
-          <p className="text-sm text-amber-800">
+          <p className="text-xs sm:text-sm text-amber-800">
             We're having trouble finding a driver for this order. The store has
             been notified and will follow up shortly.
           </p>
@@ -171,20 +171,20 @@ function OrderCard({
 
       {confirming ? (
         <div className="border-t border-[#E3E7E1] pt-4 mt-auto">
-          <div className="flex items-center justify-between gap-3 bg-[#FBEAE6] border border-[#F0C9BE] rounded-xl px-4 py-3">
-            <p className="text-sm text-[#8A3B2A]">Cancel this order? This can't be undone.</p>
-            <div className="flex items-center gap-2 shrink-0">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 bg-[#FBEAE6] border border-[#F0C9BE] rounded-xl p-3 sm:px-4 sm:py-3">
+            <p className="text-xs sm:text-sm text-[#8A3B2A]">Cancel this order? This can't be undone.</p>
+            <div className="flex items-center gap-2 shrink-0 w-full sm:w-auto justify-end">
               <button
                 onClick={() => setConfirming(false)}
                 disabled={isCancelling}
-                className="text-sm font-semibold text-[#145C43] hover:underline disabled:opacity-50"
+                className="text-xs sm:text-sm font-semibold text-[#145C43] hover:underline disabled:opacity-50"
               >
                 Keep it
               </button>
               <button
                 onClick={handleConfirmCancel}
                 disabled={isCancelling}
-                className="bg-[#C0392B] hover:bg-[#A5321F] text-white text-sm font-semibold rounded-lg px-3.5 py-2 transition-colors disabled:opacity-50"
+                className="bg-[#C0392B] hover:bg-[#A5321F] text-white text-xs sm:text-sm font-semibold rounded-lg px-3 sm:px-3.5 py-1.5 sm:py-2 transition-colors disabled:opacity-50"
               >
                 {isCancelling ? "Cancelling…" : "Yes, cancel"}
               </button>
@@ -192,16 +192,16 @@ function OrderCard({
           </div>
         </div>
       ) : (
-        <div className="border-t border-[#E3E7E1] pt-4 mt-auto flex items-center justify-between">
-          <span className="text-xl font-bold text-[#16241D]" style={{ fontFamily: "Georgia, serif" }}>
+        <div className="border-t border-[#E3E7E1] pt-4 mt-auto flex flex-wrap items-center justify-between gap-3">
+          <span className="text-lg sm:text-xl font-bold text-[#16241D]" style={{ fontFamily: "Georgia, serif" }}>
             ₹{order.totalAmount.toFixed(2)}
           </span>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3 sm:gap-4">
             {canCancel && (
               <button
                 onClick={() => setConfirming(true)}
-                className="flex items-center gap-1 text-sm font-semibold text-[#9C4A3A] hover:underline"
+                className="flex items-center gap-1 text-xs sm:text-sm font-semibold text-[#9C4A3A] hover:underline"
               >
                 <X size={14} />
                 Cancel Order
@@ -209,13 +209,13 @@ function OrderCard({
             )}
 
             {isPast ? (
-              <button className="text-sm font-semibold text-[#145C43] hover:underline">
+              <button className="text-xs sm:text-sm font-semibold text-[#145C43] hover:underline">
                 View Details
               </button>
             ) : showCallRider ? (
               <button
                 onClick={handleTrack}
-                className="flex items-center gap-2 bg-[#145C43] hover:bg-[#114E39] text-white rounded-xl px-5 py-2.5 text-sm font-semibold transition-colors"
+                className="flex items-center gap-1.5 sm:gap-2 bg-[#145C43] hover:bg-[#114E39] text-white rounded-xl px-4 sm:px-5 py-2 sm:py-2.5 text-xs sm:text-sm font-semibold transition-colors"
               >
                 <Phone size={14} />
                 Call Rider
@@ -223,7 +223,7 @@ function OrderCard({
             ) : (
               <button
                 onClick={handleTrack}
-                className="text-sm font-semibold text-[#145C43] hover:underline"
+                className="text-xs sm:text-sm font-semibold text-[#145C43] hover:underline"
               >
                 Track Order
               </button>
@@ -248,10 +248,10 @@ export function OrdersContent({
 
   return (
     <>
-      <div className="flex items-center gap-8 border-b border-[#E3E7E1] mb-8">
+      <div className="flex items-center gap-6 sm:gap-8 border-b border-[#E3E7E1] mb-6 sm:mb-8">
         <button
           onClick={() => setActiveTab("active")}
-          className={`pb-3 text-lg font-semibold relative -mb-px ${
+          className={`pb-3 text-base sm:text-lg font-semibold relative -mb-px ${
             activeTab === "active" ? "text-[#16241D]" : "text-[#9BAAA1]"
           }`}
           style={{ fontFamily: "Georgia, serif" }}
@@ -263,7 +263,7 @@ export function OrdersContent({
         </button>
         <button
           onClick={() => setActiveTab("past")}
-          className={`pb-3 text-lg font-semibold relative -mb-px ${
+          className={`pb-3 text-base sm:text-lg font-semibold relative -mb-px ${
             activeTab === "past" ? "text-[#16241D]" : "text-[#9BAAA1]"
           }`}
           style={{ fontFamily: "Georgia, serif" }}
@@ -286,7 +286,7 @@ export function OrdersContent({
           </p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
           {orders.map((order) => (
             <OrderCard key={order.id} order={order} onTrackOrder={onTrackOrder} />
           ))}
@@ -302,21 +302,21 @@ export default function MyOrdersPage() {
   return (
     <div className="min-h-screen bg-[#F7F8F5]" style={{ fontFamily: "'Inter', sans-serif" }}>
 
-      <main className="max-w-6xl mx-auto px-6 py-10">
+      <main className="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-10">
         <Link
           to="/customer/profile?tab=orders"
-          className="mb-5 inline-flex items-center gap-2 text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors"
+          className="mb-4 sm:mb-5 inline-flex items-center gap-2 text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors"
         >
           <ArrowLeft size={16} />
           Back to Profile
         </Link>
         <h1
-          className="text-4xl font-bold text-[#16241D] mb-2"
+          className="text-2xl sm:text-4xl font-bold text-[#16241D] mb-2"
           style={{ fontFamily: "Georgia, serif" }}
         >
           My Orders
         </h1>
-        <p className="text-[#6E7C74] mb-8">Track and manage your recent marketplace purchases</p>
+        <p className="text-xs sm:text-sm text-[#6E7C74] mb-6 sm:mb-8">Track and manage your recent marketplace purchases</p>
 
         <OrdersContent />
       </main>

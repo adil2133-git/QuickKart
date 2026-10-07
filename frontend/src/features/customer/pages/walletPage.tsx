@@ -151,7 +151,7 @@ export function WalletContent() {
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4 }}
-                className="relative overflow-hidden rounded-2xl p-7 text-white"
+                className="relative overflow-hidden rounded-2xl p-5 sm:p-7 text-white"
                 style={{ backgroundColor: "#145C43" }}
             >
                 <div className="flex items-center justify-between">
@@ -164,9 +164,9 @@ export function WalletContent() {
                         Refund credit
                     </span>
                 </div>
-                <div className="mt-4 text-5xl font-bold leading-none">
+                <div className="mt-4 text-3xl sm:text-5xl font-bold leading-none">
                     {loading ? (
-                        <span className="inline-block h-10 w-40 animate-pulse rounded" style={{ backgroundColor: "rgba(255,255,255,0.25)" }} />
+                        <span className="inline-block h-8 sm:h-10 w-36 sm:w-40 animate-pulse rounded" style={{ backgroundColor: "rgba(255,255,255,0.25)" }} />
                     ) : (
                         <>₹{balance.toFixed(2)}</>
                     )}
@@ -318,7 +318,7 @@ export function WalletContent() {
 export default function WalletPage() {
     return (
         <div className="min-h-screen" style={{ backgroundColor: "#F7F8F5", fontFamily: "'Inter', sans-serif" }}>
-            <main className="mx-auto px-6 py-10 sm:px-10" style={{ maxWidth: 880 }}>
+            <main className="mx-auto px-4 sm:px-10 py-6 sm:py-10" style={{ maxWidth: 880 }}>
                 <Link
                     to="/customer/profile?tab=wallet"
                     className="mb-5 inline-flex items-center gap-2 text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors"

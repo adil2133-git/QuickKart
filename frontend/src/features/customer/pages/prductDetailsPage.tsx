@@ -244,11 +244,11 @@ const QuantitySelector: React.FC = () => {
 };
 
 const InfoPill: React.FC<{ icon: React.ReactNode; label: string }> = ({ icon, label }) => (
-  <div className="flex items-center gap-2.5">
-    <span className="w-8 h-8 rounded-full bg-[#E8EFEC] flex items-center justify-center text-[#145C43] flex-shrink-0">
+  <div className="flex items-center gap-2 sm:gap-2.5">
+    <span className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#E8EFEC] flex items-center justify-center text-[#145C43] flex-shrink-0">
       {icon}
     </span>
-    <span className="text-sm text-[#153A2C] font-medium">{label}</span>
+    <span className="text-xs sm:text-sm text-[#153A2C] font-medium">{label}</span>
   </div>
 );
 
@@ -260,11 +260,11 @@ const StoreCard: React.FC<{ store: StoreInfo; onViewStore?: (id: string) => void
 }) => (
   <div
     onClick={() => onViewStore?.(store._id)}
-    className="flex items-center justify-between p-4 rounded-2xl border border-[#E3E7E1] bg-[#FFFFFF] hover:border-[#145C43]/50 transition-colors cursor-pointer group"
+    className="flex items-center justify-between gap-3 p-3.5 sm:p-4 rounded-2xl border border-[#E3E7E1] bg-[#FFFFFF] hover:border-[#145C43]/50 transition-colors cursor-pointer group"
   >
-    <div className="flex items-center gap-3">
-      <div className="w-11 h-11 rounded-xl bg-[#145C43] flex items-center justify-center">
-        <span className="text-white font-bold text-sm">
+    <div className="flex items-center gap-3 min-w-0">
+      <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-[#145C43] flex items-center justify-center flex-shrink-0">
+        <span className="text-white font-bold text-xs sm:text-sm">
           {store.storeName
             .split(" ")
             .map((w) => w[0])
@@ -272,17 +272,17 @@ const StoreCard: React.FC<{ store: StoreInfo; onViewStore?: (id: string) => void
             .join("")}
         </span>
       </div>
-      <div>
-        <p className="font-semibold text-[#16241D] text-sm">{store.storeName}</p>
+      <div className="min-w-0">
+        <p className="font-semibold text-[#16241D] text-xs sm:text-sm truncate">{store.storeName}</p>
         {store.distance && (
-          <div className="flex items-center gap-1 text-xs text-[#6E7C74] mt-0.5">
-            <MapPin className="w-3 h-3" />
-            {store.distance}
+          <div className="flex items-center gap-1 text-[11px] sm:text-xs text-[#6E7C74] mt-0.5">
+            <MapPin className="w-3 h-3 flex-shrink-0" />
+            <span className="truncate">{store.distance}</span>
           </div>
         )}
       </div>
     </div>
-    <div className="flex items-center gap-1 text-xs font-medium text-[#145C43] group-hover:gap-2 transition-all">
+    <div className="flex items-center gap-1 text-xs font-medium text-[#145C43] group-hover:gap-2 transition-all flex-shrink-0">
       View Store
       <ChevronRight className="w-3.5 h-3.5" />
     </div>
@@ -396,7 +396,7 @@ const ProductDetailPage: React.FC = () => {
 
           <ImageGallery images={product.images} productName={product.productName} />
 
-          <div className="flex flex-col gap-5 bg-white rounded-2xl border border-[#E3E7E1] p-6">
+          <div className="flex flex-col gap-5 bg-white rounded-2xl border border-[#E3E7E1] p-4 sm:p-6">
 
             {/* Badges */}
             {(product.isBestseller || product.categoryId?.categoryName) && (
@@ -412,17 +412,17 @@ const ProductDetailPage: React.FC = () => {
 
             {/* Name */}
             <div>
-              <h1 className="text-2xl sm:text-3xl font-bold text-[#16241D] leading-tight tracking-tight">
+              <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-[#16241D] leading-tight tracking-tight">
                 {product.productName}
               </h1>
               {product.unit && (
-                <p className="text-sm text-[#9BAAA1] mt-1">per {product.unit}</p>
+                <p className="text-xs sm:text-sm text-[#9BAAA1] mt-1">per {product.unit}</p>
               )}
             </div>
 
             {/* Price + availability */}
             <div className="flex items-center gap-3">
-              <span className="text-3xl font-bold text-[#16241D]">
+              <span className="text-2xl sm:text-3xl font-bold text-[#16241D]">
                 ₹{(product.price ?? 0).toLocaleString("en-IN")}
               </span>
               <span
@@ -441,7 +441,7 @@ const ProductDetailPage: React.FC = () => {
 
             {/* Description — shown directly, no tab click needed */}
             {product.description && (
-              <p className="text-sm text-[#6E7C74] leading-relaxed">
+              <p className="text-xs sm:text-sm text-[#6E7C74] leading-relaxed">
                 {product.description}
               </p>
             )}
@@ -459,7 +459,7 @@ const ProductDetailPage: React.FC = () => {
                   )}
                 </div>
 
-                <div className="flex gap-3">
+                <div className="flex flex-col sm:flex-row gap-2.5 sm:gap-3">
                   <button
                     onClick={handleAddToCart}
                     className="flex-1 flex items-center justify-center gap-2 h-12 rounded-xl font-semibold text-sm bg-[#145C43] text-white hover:bg-[#114E39] transition-all"
@@ -473,16 +473,18 @@ const ProductDetailPage: React.FC = () => {
                     )}
                   </button>
 
-                  <button className="flex-1 flex items-center justify-center gap-2 h-12 rounded-xl font-bold text-sm bg-[#A9CC3B] hover:bg-[#98B933] active:bg-[#87A62C] text-[#16241D] transition-all">
-                    <Zap className="w-4 h-4" /> Buy Now
-                  </button>
+                  <div className="flex gap-2.5 sm:gap-3 flex-1">
+                    <button className="flex-1 flex items-center justify-center gap-2 h-12 rounded-xl font-bold text-sm bg-[#A9CC3B] hover:bg-[#98B933] active:bg-[#87A62C] text-[#16241D] transition-all">
+                      <Zap className="w-4 h-4" /> Buy Now
+                    </button>
 
-                  <button
-                    aria-label="Share product"
-                    className="w-12 h-12 rounded-xl border border-[#DCE3DC] flex items-center justify-center text-[#6E7C74] hover:bg-[#F5F7F3] transition-colors flex-shrink-0"
-                  >
-                    <Share2 className="w-4 h-4" />
-                  </button>
+                    <button
+                      aria-label="Share product"
+                      className="w-12 h-12 rounded-xl border border-[#DCE3DC] flex items-center justify-center text-[#6E7C74] hover:bg-[#F5F7F3] transition-colors flex-shrink-0"
+                    >
+                      <Share2 className="w-4 h-4" />
+                    </button>
+                  </div>
                 </div>
               </div>
             )}
@@ -496,7 +498,7 @@ const ProductDetailPage: React.FC = () => {
             <div className="h-px bg-[#E3E7E1]" />
 
             {/* Trust pills */}
-            <div className="grid grid-cols-3 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               <InfoPill icon={<Truck className="w-4 h-4" />} label="Fast Delivery" />
               <InfoPill icon={<Shield className="w-4 h-4" />} label="Secure Pay" />
               <InfoPill icon={<RotateCcw className="w-4 h-4" />} label="Easy Returns" />

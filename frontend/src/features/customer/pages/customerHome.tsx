@@ -554,17 +554,17 @@ const { ref: recentRowRef, canScrollRight: recentCanScrollRight } = useHorizonta
             {/* Live delivery tracking — floating card / minimized side tab */}
             <DeliveryTrackingWidget />
 
-            <main className="mx-auto px-10 py-12 flex flex-col gap-14" style={{ maxWidth: 1200 }}>
+            <main className="mx-auto px-4 sm:px-8 lg:px-10 py-8 sm:py-12 flex flex-col gap-10 sm:gap-14" style={{ maxWidth: 1200 }}>
 
                 {/* ── HERO BANNER ── */}
                 <motion.section
                     initial={{ opacity: 0, y: 12 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5 }}
-                    className="relative rounded-2xl bg-white border flex items-center gap-10 overflow-hidden"
-                    style={{ borderColor: "#E3E7E1", padding: 56 }}
+                    className="relative rounded-2xl bg-white border flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 lg:gap-10 overflow-hidden p-6 sm:p-10 lg:p-12"
+                    style={{ borderColor: "#E3E7E1" }}
                 >
-                    <div className="flex flex-col gap-4 flex-1" style={{ maxWidth: 420 }}>
+                    <div className="flex flex-col gap-4 flex-1 w-full lg:max-w-[440px]">
                         <motion.div initial={{ opacity: 0, x: -16 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2, duration: 0.5 }}
                             className="flex w-fit items-center gap-1.5 rounded-full px-3 py-1"
                             style={{ backgroundColor: "#E8EFEC" }}>
@@ -573,8 +573,8 @@ const { ref: recentRowRef, canScrollRight: recentCanScrollRight } = useHorizonta
                         </motion.div>
 
                         <motion.h1 initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3, duration: 0.55 }}
-                            className="font-bold leading-tight m-0"
-                            style={{ fontFamily: "'Inter', sans-serif", fontSize: 34, color: "#16241D", lineHeight: "42px" }}>
+                            className="font-bold leading-tight m-0 text-2xl sm:text-3xl lg:text-[34px]"
+                            style={{ fontFamily: "'Inter', sans-serif", color: "#16241D" }}>
                             {activeAddress
                                 ? <>Delivering to <br /><span style={{ color: "#145C43" }}>{activeAddress.label}</span></>
                                 : <>Freshness Delivered<br />To Your Doorstep</>
@@ -582,22 +582,21 @@ const { ref: recentRowRef, canScrollRight: recentCanScrollRight } = useHorizonta
                         </motion.h1>
 
                         <motion.p initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4, duration: 0.5 }}
-                            className="text-sm m-0" style={{ lineHeight: "22px", color: "#6E7C74", maxWidth: 384 }}>
+                            className="text-xs sm:text-sm m-0 leading-relaxed text-[#6E7C74] max-w-sm">
                             {activeAddress
                                 ? activeAddress.address
                                 : "Experience the warmth of your local neighbourhood market from the comfort of your home."
                             }
                         </motion.p>
 
-                        {/* Single, unambiguous CTA + offer line (previously the button label and the
-                            "*Limited time" disclaimer beneath it described two different offers). */}
+                        {/* Single, unambiguous CTA + offer line */}
                         <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5, duration: 0.5 }}
-                            className="flex items-center gap-4 pt-2">
+                            className="flex flex-wrap items-center gap-3 pt-2">
                             <motion.button
                                 whileHover={{ scale: 1.02 }}
                                 whileTap={{ scale: 0.98 }}
-                                className="text-white rounded-xl font-semibold cursor-pointer border-none"
-                                style={{ backgroundColor: "#145C43", padding: "14px 28px", fontFamily: "'Inter', sans-serif", fontSize: 15 }}
+                                className="text-white rounded-xl font-semibold cursor-pointer border-none px-6 py-3 sm:px-7 sm:py-3.5 text-sm sm:text-base w-full sm:w-auto"
+                                style={{ backgroundColor: "#145C43", fontFamily: "'Inter', sans-serif" }}
                                 onClick={() => !activeAddress && openLocationModal()}
                             >
                                 {activeAddress ? "Start Shopping" : "Set delivery location"}
@@ -607,14 +606,14 @@ const { ref: recentRowRef, canScrollRight: recentCanScrollRight } = useHorizonta
                             )}
                         </motion.div>
 
-                        {/* Rotating reassurance badge — previously lived as a pill in the navbar */}
+                        {/* Rotating reassurance badge */}
                         <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6, duration: 0.5 }}
                             className="pt-1">
                             <HeroRotatingBadge />
                         </motion.div>
                     </div>
 
-                    {/* ── Hero image slot — placeholder until a real image is added ── */}
+                    {/* ── Hero image slot ── */}
                     <div
                         className="hidden lg:flex flex-shrink-0 items-center justify-center rounded-xl"
                         style={{
@@ -627,30 +626,26 @@ const { ref: recentRowRef, canScrollRight: recentCanScrollRight } = useHorizonta
                         <div className="flex flex-col items-center gap-2 px-6 text-center">
                             <ImagePlus size={28} color="#9BAAA1" />
                             <span className="text-xs font-medium" style={{ color: "#9BAAA1", fontFamily: "'Inter', sans-serif" }}>
-                                Hero image goes here
+                                Fresh Local Produce
                             </span>
                             <span className="text-[11px]" style={{ color: "#B7C2BC", fontFamily: "'Inter', sans-serif" }}>
-                                Swap this box for an &lt;img&gt; once you have one
+                                Direct from neighbourhood partners
                             </span>
                         </div>
                     </div>
                 </motion.section>
 
-                {/* ── ORDER IT AGAIN — moved directly under the hero, grouped with
-                       Recently Viewed, so a returning customer sees what the app
-                       already knows about them before any cold-start discovery
-                       sections. Compact 4-across cards so more items are scannable
-                       at a glance. ── */}
+                {/* ── ORDER IT AGAIN ── */}
                 {(loadingRecentOrders || recentlyOrdered.length > 0) && (
                     <section>
                         <SectionHeader title="Order It Again" action="View Order History" />
                         {loadingRecentOrders ? (
-                            <div className="grid grid-cols-4 gap-5">
+                            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-5">
                                 {Array.from({ length: 4 }).map((_, i) => <OrderAgainCardSkeleton key={i} />)}
                             </div>
                         ) : (
                             <motion.div variants={staggerContainer} initial="hidden" whileInView="show"
-                                viewport={{ once: true, margin: "-40px" }} className="grid grid-cols-4 gap-5">
+                                viewport={{ once: true, margin: "-40px" }} className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-5">
                                 {recentlyOrdered.slice(0, 4).map((item) => {
                                     const catName = item.categoryId?.categoryName;
                                     const storeId = item.storeId?._id;
@@ -768,11 +763,11 @@ const { ref: recentRowRef, canScrollRight: recentCanScrollRight } = useHorizonta
                 <section>
                     <SectionHeader title="Browse by Category" action="View All Categories" />
                     {loadingCategories ? (
-                        <div className="flex justify-between gap-4">
+                        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3 sm:gap-4 justify-items-center">
                             {Array.from({ length: 6 }).map((_, i) => (
-                                <div key={i} className="flex flex-col items-center gap-4">
-                                    <Skeleton className="w-32 h-32 rounded-full" />
-                                    <Skeleton className="h-4 w-16" />
+                                <div key={i} className="flex flex-col items-center gap-2 sm:gap-4">
+                                    <Skeleton className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 rounded-full" />
+                                    <Skeleton className="h-3 sm:h-4 w-14 sm:w-16" />
                                 </div>
                             ))}
                         </div>
@@ -780,20 +775,20 @@ const { ref: recentRowRef, canScrollRight: recentCanScrollRight } = useHorizonta
                         <p className="text-sm text-center py-8" style={{ color: "#6E7C74" }}>No categories yet.</p>
                     ) : (
                         <motion.div variants={staggerContainer} initial="hidden" whileInView="show"
-                            viewport={{ once: true, margin: "-40px" }} className="flex justify-between flex-wrap gap-4">
+                            viewport={{ once: true, margin: "-40px" }} className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3 sm:gap-4 justify-items-center">
                             {categories.slice(0, 6).map((cat, i) => (
                                 <motion.button key={cat._id} variants={fadeUp} custom={i}
                                     whileHover={{ y: -6 }} whileTap={{ scale: 0.94 }}
-                                    className="flex flex-col items-center gap-4 cursor-pointer border-none bg-transparent">
+                                    className="flex flex-col items-center gap-2 sm:gap-3 cursor-pointer border-none bg-transparent">
                                     <motion.div whileHover={{ boxShadow: "0px 8px 24px rgba(31,77,61,0.30)", borderColor: "#145C43" }}
-                                        className="w-32 h-32 rounded-full flex items-center justify-center overflow-hidden transition-shadow"
+                                        className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 rounded-full flex items-center justify-center overflow-hidden transition-shadow"
                                         style={{ backgroundColor: "#F5F7F3", border: "2px solid #E3E7E1", boxShadow: "0px 2px 12px rgba(31,77,61,0.14)" }}>
                                         {cat.image
                                             ? <img src={cat.image} alt={cat.name} className="w-full h-full object-cover" />
-                                            : <span className="text-5xl select-none">{categoryEmoji(cat.name)}</span>
+                                            : <span className="text-3xl sm:text-4xl md:text-5xl select-none">{categoryEmoji(cat.name)}</span>
                                         }
                                     </motion.div>
-                                    <span className="font-semibold text-sm" style={{ fontFamily: "'Inter', sans-serif", color: "#16241D" }}>{cat.name}</span>
+                                    <span className="font-semibold text-xs sm:text-sm text-center truncate max-w-[90px] sm:max-w-none" style={{ fontFamily: "'Inter', sans-serif", color: "#16241D" }}>{cat.name}</span>
                                 </motion.button>
                             ))}
                         </motion.div>
@@ -804,14 +799,14 @@ const { ref: recentRowRef, canScrollRight: recentCanScrollRight } = useHorizonta
                 <section>
                     <SectionHeader title="Popular in the Neighborhood" action="View All" />
                     {loadingPopular ? (
-                        <div className="grid grid-cols-4 gap-6">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
                             {Array.from({ length: 4 }).map((_, i) => <ProductCardSkeleton key={i} />)}
                         </div>
                     ) : popularProducts.length === 0 ? (
                         <p className="text-sm text-center py-8" style={{ color: "#6E7C74" }}>No products available yet.</p>
                     ) : (
                         <motion.div variants={staggerContainer} initial="hidden" whileInView="show"
-                            viewport={{ once: true, margin: "-40px" }} className="grid grid-cols-4 gap-6">
+                            viewport={{ once: true, margin: "-40px" }} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
                             {popularProducts.slice(0, 4).map((p) => {
                                 const catName = p.categoryId?.name;
                                 return (
@@ -819,7 +814,7 @@ const { ref: recentRowRef, canScrollRight: recentCanScrollRight } = useHorizonta
                                         <Card className="flex flex-col h-full">
                                             <div className="p-[17px] pb-0">
                                                 <motion.div whileHover={{ scale: 1.03 }} transition={{ duration: 0.3 }}
-                                                    className="h-48 rounded-lg flex items-center justify-center text-6xl overflow-hidden"
+                                                    className="h-44 sm:h-48 rounded-lg flex items-center justify-center text-5xl sm:text-6xl overflow-hidden"
                                                     style={{ backgroundColor: productBg(catName) }}>
                                                     {p.images?.[0]
                                                         ? <img src={p.images[0]} alt={p.name} className="w-full h-full object-cover" />
@@ -877,7 +872,7 @@ const { ref: recentRowRef, canScrollRight: recentCanScrollRight } = useHorizonta
                             </motion.button>
                         </motion.div>
                     ) : loadingNearby ? (
-                        <div className="grid grid-cols-2 gap-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                             <StoreSkeleton /><StoreSkeleton />
                         </div>
                     ) : nearbyStores.length === 0 ? (
@@ -887,22 +882,18 @@ const { ref: recentRowRef, canScrollRight: recentCanScrollRight } = useHorizonta
                         </div>
                     ) : (
                         <motion.div variants={staggerContainer} initial="hidden" whileInView="show"
-                            viewport={{ once: true, margin: "-40px" }} className="grid grid-cols-2 gap-6">
+                            viewport={{ once: true, margin: "-40px" }} className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                             {nearbyStores.slice(0, 4).map((s, i) => {
-                                // Optional fields — not on the StoreProfileSummary type as originally
-                                // shared, so read defensively. Populate `tags` (e.g. category names the
-                                // store carries) and `reviewCount` on the backend/type to light these up;
-                                // they simply won't render if absent.
                                 const tags = (s as unknown as { tags?: string[] }).tags;
                                 const reviewCount = (s as unknown as { reviewCount?: number }).reviewCount;
 
                                 return (
                                 <motion.div key={s._id} variants={fadeUp} custom={i}>
                                     <Card>
-                                        <div className="flex items-center gap-4 p-4">
+                                        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 p-4">
                                             <div
                                                 onClick={() => goToStore(s._id)}
-                                                className="relative flex-shrink-0 w-36 h-36 rounded-xl flex items-center justify-center overflow-hidden cursor-pointer"
+                                                className="relative flex-shrink-0 w-full sm:w-36 h-36 rounded-xl flex items-center justify-center overflow-hidden cursor-pointer"
                                                 style={{ backgroundColor: storeCardColor(s.storeName) }}>
 
                                                 {s.logoUrl
@@ -913,7 +904,7 @@ const { ref: recentRowRef, canScrollRight: recentCanScrollRight } = useHorizonta
                                                 <StoreStatusBadge status={s.status} index={i} />
                                             </div>
 
-                                            <div className="flex-1 min-w-0">
+                                            <div className="flex-1 min-w-0 w-full">
                                                 <div
                                                     onClick={() => goToStore(s._id)}
                                                     className="cursor-pointer"
@@ -968,14 +959,14 @@ const { ref: recentRowRef, canScrollRight: recentCanScrollRight } = useHorizonta
                 <section className="pb-12">
                     <SectionHeader title="Trending Today" action="Explore More" />
                     {loadingTrending ? (
-                        <div className="grid grid-cols-4 gap-6">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
                             {Array.from({ length: 4 }).map((_, i) => <ProductCardSkeleton key={i} />)}
                         </div>
                     ) : trendingProducts.length === 0 ? (
                         <p className="text-sm text-center py-8" style={{ color: "#6E7C74" }}>No products yet.</p>
                     ) : (
                         <motion.div variants={staggerContainer} initial="hidden" whileInView="show"
-                            viewport={{ once: true, margin: "-40px" }} className="grid grid-cols-4 gap-6">
+                            viewport={{ once: true, margin: "-40px" }} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
                             {trendingProducts.slice(0, 4).map((item) => {
                                 const catName = item.categoryId?.name;
                                 return (
@@ -983,7 +974,7 @@ const { ref: recentRowRef, canScrollRight: recentCanScrollRight } = useHorizonta
                                         <Card className="flex flex-col h-full">
                                             <div className="p-[17px] pb-0">
                                                 <motion.div whileHover={{ scale: 1.03 }} transition={{ duration: 0.3 }}
-                                                    className="h-48 rounded-lg flex items-center justify-center text-6xl overflow-hidden"
+                                                    className="h-44 sm:h-48 rounded-lg flex items-center justify-center text-5xl sm:text-6xl overflow-hidden"
                                                     style={{ backgroundColor: productBg(catName) }}>
                                                     {item.images?.[0]
                                                         ? <img src={item.images[0]} alt={item.name} className="w-full h-full object-cover" />
@@ -1011,13 +1002,13 @@ const { ref: recentRowRef, canScrollRight: recentCanScrollRight } = useHorizonta
             </main>
 
             {/* ── Footer ── */}
-            <footer className="border-t py-8 px-10" style={{ borderColor: "#E3E7E1", backgroundColor: "#F7F8F5" }}>
-                <div className="mx-auto flex items-center justify-between" style={{ maxWidth: 1200 }}>
+            <footer className="border-t py-8 px-4 sm:px-10" style={{ borderColor: "#E3E7E1", backgroundColor: "#F7F8F5" }}>
+                <div className="mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left" style={{ maxWidth: 1200 }}>
                     <div>
                         <span className="text-lg italic font-bold" style={{ fontFamily: "'Inter', sans-serif", color: "#145C43" }}>QuickKart</span>
                         <p className="text-xs mt-1" style={{ color: "#6E7C74" }}>© 2026 QuickKart Neighbourhood Market. All rights reserved.</p>
                     </div>
-                    <div className="flex gap-6">
+                    <div className="flex flex-wrap justify-center gap-4 sm:gap-6">
                         {["About Us", "Contact", "Privacy Policy", "Terms of Service"].map((link) => (
                             <motion.a key={link} whileHover={{ color: "#145C43" }} href="#"
                                 className="text-xs transition-colors" style={{ color: "#6E7C74", fontFamily: "'Inter', sans-serif" }}>
