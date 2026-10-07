@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { AnimatePresence, motion } from "framer-motion";
 import {
     LayoutDashboard,
     Users,
@@ -11,22 +12,24 @@ import {
     ChevronDown,
     UserCircle2,
     LogOut,
+    X,
     type LucideIcon,
 } from "lucide-react";
 
 import { useLogout } from "../../auth/hooks/useLogout";
+import { useAdminNavStore } from "../state/adminNavState";
 
 interface NavLeaf {
     label: string;
     id: string;
-    route: string; // Added route directly to leaf
+    route: string;
 }
 
 interface NavItem {
     label: string;
     id: string;
     icon: LucideIcon;
-    route?: string; // Added optional route for parent items
+    route?: string;
     children?: NavLeaf[];
 }
 
@@ -88,31 +91,26 @@ const NAV_ITEMS: NavItem[] = [
     { label: "Settings", id: "settings", icon: Settings, route: "/admin/settings" },
 ];
 
-// Helper to find parent of a child id
 function findParentId(childId: string): string | null {
     for (const item of NAV_ITEMS) {
-        if (item.children?.some(c => c.id === childId)) {
+        if (item.children?.some((c) => c.id === childId)) {
             return item.id;
         }
     }
     return null;
 }
 
-// Helper to check if a route matches or is a child route
 function isRouteActive(currentPath: string, itemRoute: string): boolean {
     return currentPath === itemRoute || currentPath.startsWith(itemRoute + "/");
 }
 
-export default function Sidebar() {
+function SidebarNavContent({ onClose }: { onClose?: () => void }) {
     const navigate = useNavigate();
     const location = useLocation();
     const currentPath = location.pathname;
-
     const { logout, isLoggingOut } = useLogout();
 
-    // Find which nav item is active
     const findActiveItem = () => {
-        // First check if any leaf is active
         for (const item of NAV_ITEMS) {
             if (item.children) {
                 for (const child of item.children) {
@@ -121,7 +119,6 @@ export default function Sidebar() {
                     }
                 }
             }
-            // Check if parent itself is active
             if (item.route && isRouteActive(currentPath, item.route)) {
                 return { parentId: null, childId: item.id };
             }
@@ -137,45 +134,55 @@ export default function Sidebar() {
 
     const handleGroupClick = (item: NavItem) => {
         if (!item.children) {
-            // Leaf item without children
             if (item.route) {
                 navigate(item.route);
+                onClose?.();
             }
             return;
         }
 
-        // If clicking on the parent itself
         if (openGroup === item.id) {
-            // If already open, close it
             setOpenGroup(null);
         } else {
-            // Open the group and navigate to its route
             setOpenGroup(item.id);
             if (item.route) {
                 navigate(item.route);
+                onClose?.();
             }
         }
     };
 
     const handleChildClick = (child: NavLeaf) => {
-        // Navigate to child route
         navigate(child.route);
-        // Ensure parent stays open
-        const parentId = findParentId(child.id);
-        if (parentId) {
-            setOpenGroup(parentId);
+        onClose?.();
+        const pId = findParentId(child.id);
+        if (pId) {
+            setOpenGroup(pId);
         }
     };
 
     return (
-        <aside className="flex h-screen w-[264px] flex-col justify-between border-r border-[#E3E7E1] bg-white">
-            {/* Top: Logo */}
+        <div className="flex h-full flex-col justify-between overflow-y-auto">
             <div>
-                <div className="px-4 py-5">
-                    <p className="font-serif text-[17px] font-bold tracking-tight text-[#145C43]">
-                        QuickKart
-                    </p>
-                    <p className="text-[11px] text-[#6E7C74] uppercase tracking-wider font-semibold">Admin Panel</p>
+                {/* Top: Logo and close button */}
+                <div className="flex items-center justify-between px-4 py-5">
+                    <div>
+                        <p className="font-serif text-[17px] font-bold tracking-tight text-[#145C43]">
+                            QuickKart
+                        </p>
+                        <p className="text-[11px] font-semibold uppercase tracking-wider text-[#6E7C74]">
+                            Admin Panel
+                        </p>
+                    </div>
+                    {onClose && (
+                        <button
+                            onClick={onClose}
+                            className="rounded-lg p-1.5 text-[#6E7C74] hover:bg-[#F0F7F4] hover:text-[#145C43] lg:hidden"
+                            aria-label="Close menu"
+                        >
+                            <X size={18} />
+                        </button>
+                    )}
                 </div>
 
                 {/* Nav */}
@@ -184,10 +191,9 @@ export default function Sidebar() {
                         const Icon = item.icon;
                         const hasChildren = !!item.children;
                         const isGroupOpen = activeOpenGroup === item.id;
-                        
-                        // Check if this item or any of its children is active
-                        const isActive = activeId === item.id || 
-                                       (item.children?.some(c => c.id === activeId) ?? false);
+                        const isActive =
+                            activeId === item.id ||
+                            (item.children?.some((c) => c.id === activeId) ?? false);
 
                         return (
                             <div key={item.id} className="relative">
@@ -195,7 +201,7 @@ export default function Sidebar() {
                                     onClick={() => handleGroupClick(item)}
                                     className={`group flex w-full items-center justify-between rounded-xl px-3 py-2.5 text-[13.5px] font-medium transition-colors ${
                                         isActive
-                                            ? "bg-[#145C43] text-white font-semibold shadow-sm"
+                                            ? "bg-[#145C43] font-semibold text-white shadow-sm"
                                             : "text-[#5F7166] hover:bg-[#F0F7F4] hover:text-[#145C43]"
                                     }`}
                                 >
@@ -222,7 +228,6 @@ export default function Sidebar() {
                                     )}
                                 </button>
 
-                                {/* Accordion submenu */}
                                 {hasChildren && (
                                     <div
                                         className={`grid overflow-hidden transition-all duration-200 ease-in-out ${
@@ -260,14 +265,20 @@ export default function Sidebar() {
             {/* Bottom: Admin profile / logout */}
             <div className="flex flex-col gap-1 border-t border-[#E3E7E1] px-3 py-4">
                 <button
-                    onClick={() => navigate("/admin/profile")}
+                    onClick={() => {
+                        navigate("/admin/profile");
+                        onClose?.();
+                    }}
                     className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-[13.5px] font-medium text-[#6E7C74] transition-colors hover:bg-[#F5F7F3] hover:text-[#16241D]"
                 >
                     <UserCircle2 size={18} />
                     <span>Admin Profile</span>
                 </button>
                 <button
-                    onClick={logout}
+                    onClick={() => {
+                        logout();
+                        onClose?.();
+                    }}
                     disabled={isLoggingOut}
                     className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-[13.5px] font-medium text-[#6E7C74] transition-colors hover:bg-[#F5F7F3] hover:text-[#16241D]"
                 >
@@ -275,6 +286,44 @@ export default function Sidebar() {
                     <span>{isLoggingOut ? "Logging out…" : "Logout"}</span>
                 </button>
             </div>
-        </aside>
+        </div>
+    );
+}
+
+export default function Sidebar() {
+    const { sidebarOpen, closeSidebar } = useAdminNavStore();
+
+    return (
+        <>
+            {/* Desktop persistent sidebar */}
+            <aside className="hidden h-screen w-[264px] shrink-0 flex-col justify-between border-r border-[#E3E7E1] bg-white lg:flex">
+                <SidebarNavContent />
+            </aside>
+
+            {/* Mobile / Tablet overlay drawer */}
+            <AnimatePresence>
+                {sidebarOpen && (
+                    <div className="fixed inset-0 z-50 lg:hidden">
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            transition={{ duration: 0.2 }}
+                            onClick={closeSidebar}
+                            className="fixed inset-0 bg-black/40 backdrop-blur-xs"
+                        />
+                        <motion.aside
+                            initial={{ x: -280 }}
+                            animate={{ x: 0 }}
+                            exit={{ x: -280 }}
+                            transition={{ type: "spring", damping: 25, stiffness: 220 }}
+                            className="relative z-10 flex h-full w-[264px] max-w-[85vw] flex-col justify-between border-r border-[#E3E7E1] bg-white shadow-2xl"
+                        >
+                            <SidebarNavContent onClose={closeSidebar} />
+                        </motion.aside>
+                    </div>
+                )}
+            </AnimatePresence>
+        </>
     );
 }

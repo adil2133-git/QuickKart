@@ -194,11 +194,11 @@ export default function DriverApplicationReview() {
             <div className="flex h-screen flex-1 flex-col overflow-hidden">
                 <TopBar pageTitle="Review Driver Application" showSearch={false} />
 
-                <main className="flex-1 overflow-y-auto overflow-x-hidden px-7 py-6">
-                    <div className="flex flex-col gap-6">
+                <main className="flex-1 overflow-y-auto overflow-x-hidden px-4 sm:px-7 py-4 sm:py-6">
+                    <div className="flex flex-col gap-4 sm:gap-6">
                         <button
                             onClick={() => navigate("/admin/approvals/drivers")}
-                            className="flex items-center gap-2 text-[13px] font-medium text-[#6E7C74] hover:text-[#16241D]"
+                            className="flex w-fit items-center gap-2 text-[13px] font-medium text-[#6E7C74] hover:text-[#16241D] cursor-pointer"
                         >
                             <ArrowLeft size={16} /> Back to Driver Applications
                         </button>
@@ -216,23 +216,23 @@ export default function DriverApplicationReview() {
                             {/* Left column */}
                             <div className="flex flex-col gap-6 lg:col-span-2">
                                 {/* Header card */}
-                                <div className="flex flex-col gap-6 rounded-2xl border border-[#E3E7E1] bg-white p-6">
-                                    <div className="flex items-start justify-between gap-4">
-                                        <div className="flex items-start gap-4">
+                                <div className="flex flex-col gap-5 sm:gap-6 rounded-2xl border border-[#E3E7E1] bg-white p-4 sm:p-6">
+                                    <div className="flex flex-col sm:flex-row items-start justify-between gap-4">
+                                        <div className="flex items-start gap-3 sm:gap-4 min-w-0">
                                             <DriverAvatar name={driver.name} />
-                                            <div>
-                                                <h2 className="text-[18px] font-bold text-[#16241D]">{driver.name}</h2>
-                                                <p className="text-[13px] text-[#6E7C74]">
+                                            <div className="min-w-0">
+                                                <h2 className="truncate text-base sm:text-[18px] font-bold text-[#16241D]">{driver.name}</h2>
+                                                <p className="truncate text-[12.5px] sm:text-[13px] text-[#6E7C74]">
                                                     {driver.driverCode} · Submitted {formatDateLabel(driver.createdAt)}
                                                 </p>
                                             </div>
                                         </div>
-                                        <span className={`whitespace-nowrap rounded-full px-3 py-1 text-[12px] font-medium ${badge.className}`}>
+                                        <span className={`shrink-0 whitespace-nowrap rounded-full px-3 py-1 text-[12px] font-medium ${badge.className}`}>
                                             {badge.label}
                                         </span>
                                     </div>
 
-                                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                                    <div className="grid grid-cols-1 gap-3 sm:gap-4 sm:grid-cols-2">
                                         <InfoRow icon={Mail} label="Email" value={driver.email} />
                                         <InfoRow icon={Phone} label="Phone" value={driver.phone} />
                                         <InfoRow icon={Bike} label="Vehicle Info" value={`${driver.vehicleType} (${driver.vehicleNumber})`} />

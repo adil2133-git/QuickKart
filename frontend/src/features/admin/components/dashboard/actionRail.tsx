@@ -195,7 +195,7 @@ export default function ActionRail() {
   }, [fetchActionRail]);
 
   return (
-    <aside className="flex w-[340px] shrink-0 flex-col gap-7 rounded-2xl bg-white border border-[#E3E7E1] p-5">
+    <aside className="flex w-full xl:w-[340px] shrink-0 flex-col gap-5 sm:gap-7 rounded-2xl bg-white border border-[#E3E7E1] p-4 sm:p-5">
       {actionRailError ? (
         <p className="text-[13px] text-[#BA1A1A]">{actionRailError}</p>
       ) : actionRailLoading && attentionItems.length === 0 ? (

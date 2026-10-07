@@ -135,41 +135,41 @@ function DriverCard({ driver, onReview }: { driver: DriverApplication; onReview:
         progress.percent === 100 ? "bg-[#145C43]" : progress.percent >= 50 ? "bg-[#B47800]" : "bg-[#BA1A1A]";
 
     return (
-        <div className="flex flex-col gap-5 rounded-2xl border border-[#E3E7E1] bg-white p-6">
+        <div className="flex flex-col gap-4 sm:gap-5 rounded-2xl border border-[#E3E7E1] bg-white p-4 sm:p-6">
             <div className="flex items-start justify-between gap-4">
-                <div className="flex items-start gap-3">
+                <div className="flex items-start gap-3 min-w-0">
                     <DriverAvatar name={driver.name} />
-                    <div>
-                        <p className="text-[15px] font-semibold text-[#16241D]">{driver.name}</p>
-                        <p className="text-[12.5px] text-[#6E7C74]">
+                    <div className="min-w-0">
+                        <p className="truncate text-[15px] font-semibold text-[#16241D]">{driver.name}</p>
+                        <p className="truncate text-[12.5px] text-[#6E7C74]">
                             {driver.driverCode} · {formatDateLabel(driver.createdAt)}
                         </p>
                     </div>
                 </div>
-                <span className={`whitespace-nowrap rounded-full px-3 py-1 text-[11.5px] font-medium ${badge.className}`}>
+                <span className={`shrink-0 whitespace-nowrap rounded-full px-3 py-1 text-[11.5px] font-medium ${badge.className}`}>
                     {badge.label}
                 </span>
             </div>
 
             <div className="flex flex-wrap items-center gap-x-5 gap-y-1 text-[12.5px] text-[#6E7C74]">
-                <span className="flex items-center gap-1.5">
-                    <Mail size={13} className="text-[#9BAAA1]" />
-                    {driver.email}
+                <span className="flex items-center gap-1.5 min-w-0">
+                    <Mail size={13} className="text-[#9BAAA1] shrink-0" />
+                    <span className="truncate">{driver.email}</span>
                 </span>
-                <span className="flex items-center gap-1.5">
-                    <Phone size={13} className="text-[#9BAAA1]" />
-                    {driver.phone}
+                <span className="flex items-center gap-1.5 min-w-0">
+                    <Phone size={13} className="text-[#9BAAA1] shrink-0" />
+                    <span className="truncate">{driver.phone}</span>
                 </span>
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                 <div className="rounded-xl bg-[#F5F7F3] p-3.5">
                     <p className="mb-1.5 flex items-center gap-1.5 text-[10.5px] font-medium uppercase tracking-wide text-[#9BAAA1]">
                         <Bike size={12} />
                         Vehicle Info
                     </p>
-                    <p className="text-[13px] font-medium text-[#16241D]">{driver.vehicleType}</p>
-                    <p className="text-[12px] text-[#6E7C74]">{driver.vehicleNumber}</p>
+                    <p className="text-[13px] font-medium text-[#16241D] truncate">{driver.vehicleType}</p>
+                    <p className="text-[12px] text-[#6E7C74] truncate">{driver.vehicleNumber}</p>
                 </div>
                 <div className="rounded-xl bg-[#F5F7F3] p-3.5">
                     <div className="mb-1.5 flex items-center justify-between">
@@ -187,11 +187,11 @@ function DriverCard({ driver, onReview }: { driver: DriverApplication; onReview:
                 </div>
             </div>
 
-            <div className="flex gap-3">
+            <div className="flex flex-col sm:flex-row gap-2.5 sm:gap-3">
                 <button
                     disabled={primary.disabled}
                     onClick={() => onReview(driver.id)}
-                    className={`flex-1 rounded-xl px-4 py-2.5 text-[13px] font-medium transition-colors ${
+                    className={`flex-1 rounded-xl px-4 py-2.5 text-[13px] font-medium transition-colors cursor-pointer ${
                         primary.disabled
                             ? "cursor-not-allowed bg-[#F5F7F3] text-[#9BAAA1]"
                             : "bg-[#145C43] text-white hover:bg-[#114E39]"
@@ -201,7 +201,7 @@ function DriverCard({ driver, onReview }: { driver: DriverApplication; onReview:
                 </button>
                 <button
                     onClick={() => onReview(driver.id)}
-                    className="flex-1 rounded-xl border border-[#E3E7E1] bg-white px-4 py-2.5 text-[13px] font-medium text-[#16241D] transition-colors hover:bg-[#F5F7F3]"
+                    className="flex-1 rounded-xl border border-[#E3E7E1] bg-white px-4 py-2.5 text-[13px] font-medium text-[#16241D] transition-colors hover:bg-[#F5F7F3] cursor-pointer"
                 >
                     View Docs
                 </button>
@@ -293,23 +293,23 @@ export default function DriverApplicationsPage() {
             <div className="flex h-screen flex-1 flex-col overflow-hidden">
                 <TopBar pageTitle="Driver Applications" showSearch={false} />
 
-                <main className="flex-1 overflow-y-auto overflow-x-hidden px-7 py-6">
-                    <div className="flex flex-col gap-6">
-                        <p className="text-[14px] text-[#6E7C74]">
+                <main className="flex-1 overflow-y-auto overflow-x-hidden px-4 sm:px-7 py-4 sm:py-6">
+                    <div className="flex flex-col gap-4 sm:gap-6">
+                        <p className="text-[13px] sm:text-[14px] text-[#6E7C74]">
                             Manage and review delivery partner onboarding requests
                         </p>
 
                         {/* Alert banner */}
-                        <div className="flex items-center justify-between gap-4 rounded-2xl border border-[#E3E7E1] bg-[#F5F7F3] px-6 py-4">
+                        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4 rounded-2xl border border-[#E3E7E1] bg-[#F5F7F3] p-4 sm:px-6 sm:py-4">
                             <div className="flex items-center gap-3">
                                 <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#145C43] text-white">
                                     <AlertTriangle size={18} />
                                 </span>
                                 <div>
-                                    <p className="text-[14px] font-semibold text-[#16241D]">
+                                    <p className="text-[13.5px] sm:text-[14px] font-semibold text-[#16241D]">
                                         {stats?.pending ?? "—"} driver applications are awaiting review
                                     </p>
-                                    <p className="text-[12.5px] text-[#6E7C74]">
+                                    <p className="text-xs sm:text-[12.5px] text-[#6E7C74]">
                                         {stats?.requiringAttention ?? "—"} applications have been pending for more than 48 hours
                                     </p>
                                 </div>
@@ -317,7 +317,7 @@ export default function DriverApplicationsPage() {
                         </div>
 
                         {/* Stats */}
-                        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                        <div className="grid grid-cols-1 gap-3 sm:gap-4 sm:grid-cols-2 lg:grid-cols-4">
                             <StatCard
                                 label="Pending Applications"
                                 value={stats?.pending ?? 0}
@@ -349,8 +349,8 @@ export default function DriverApplicationsPage() {
                         </div>
 
                         {/* Filters */}
-                        <div className="flex flex-wrap items-center gap-3">
-                            <div className="flex min-w-[220px] flex-1 items-center gap-2.5 rounded-xl border border-[#E3E7E1] bg-white px-3.5 py-2.5">
+                        <div className="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-2.5 sm:gap-3">
+                            <div className="flex min-w-[200px] flex-1 items-center gap-2.5 rounded-xl border border-[#E3E7E1] bg-white px-3.5 py-2.5">
                                 <Search size={16} className="shrink-0 text-[#6E7C74]" />
                                 <input
                                     type="text"
@@ -388,12 +388,12 @@ export default function DriverApplicationsPage() {
                                     setDateFilter(e.target.value);
                                     setPage(1);
                                 }}
-                                className="rounded-xl border border-[#E3E7E1] bg-white px-3.5 py-2.5 text-[13px] text-[#16241D] focus:outline-none"
+                                className="w-full sm:w-auto rounded-xl border border-[#E3E7E1] bg-white px-3.5 py-2.5 text-[13px] text-[#16241D] focus:outline-none"
                             />
 
                             <button
                                 onClick={resetFilters}
-                                className="whitespace-nowrap text-[13px] font-medium text-[#145C43] hover:underline"
+                                className="whitespace-nowrap text-left sm:text-center text-[13px] font-medium text-[#145C43] hover:underline cursor-pointer"
                             >
                                 Reset Filters
                             </button>
@@ -409,7 +409,7 @@ export default function DriverApplicationsPage() {
                                 <p className="text-[14px] text-[#6E7C74]">Loading applications...</p>
                             </div>
                         ) : (
-                            <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
+                            <div className="grid grid-cols-1 gap-4 sm:gap-5 lg:grid-cols-2">
                                 {applications.length === 0 ? (
                                     <div className="col-span-full rounded-2xl border border-dashed border-[#E3E7E1] bg-white px-6 py-12 text-center">
                                         <p className="text-[14px] font-medium text-[#16241D]">
@@ -433,25 +433,25 @@ export default function DriverApplicationsPage() {
 
                         {/* Pagination */}
                         {total > 0 && (
-                            <div className="flex items-center justify-between border-t border-[#E3E7E1] pt-5">
-                                <p className="text-[13px] text-[#6E7C74]">
+                            <div className="flex flex-col sm:flex-row items-center justify-between gap-3 border-t border-[#E3E7E1] pt-5">
+                                <p className="text-xs sm:text-[13px] text-[#6E7C74]">
                                     Showing <span className="font-semibold text-[#16241D]">{rangeStart} – {rangeEnd}</span> of{" "}
                                     <span className="font-semibold text-[#16241D]">{total}</span> applications
                                 </p>
                                 <div className="flex items-center gap-2">
                                     <button
                                         onClick={() => setPage((p) => Math.max(1, p - 1))}
-                                        className="flex h-9 w-9 items-center justify-center rounded-lg border border-[#E3E7E1] bg-white text-[#6E7C74] transition-colors hover:bg-[#F5F7F3] disabled:cursor-not-allowed disabled:opacity-50"
+                                        className="flex h-9 w-9 items-center justify-center rounded-lg border border-[#E3E7E1] bg-white text-[#6E7C74] transition-colors hover:bg-[#F5F7F3] disabled:cursor-not-allowed disabled:opacity-50 cursor-pointer"
                                         disabled={page === 1}
                                     >
                                         <ChevronLeft size={16} />
                                     </button>
-                                    <span className="px-2 text-[13px] text-[#16241D]">
+                                    <span className="px-2 text-xs sm:text-[13px] text-[#16241D]">
                                         Page {page} of {totalPages}
                                     </span>
                                     <button
                                         onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
-                                        className="flex h-9 w-9 items-center justify-center rounded-lg border border-[#E3E7E1] bg-white text-[#6E7C74] transition-colors hover:bg-[#F5F7F3] disabled:cursor-not-allowed disabled:opacity-50"
+                                        className="flex h-9 w-9 items-center justify-center rounded-lg border border-[#E3E7E1] bg-white text-[#6E7C74] transition-colors hover:bg-[#F5F7F3] disabled:cursor-not-allowed disabled:opacity-50 cursor-pointer"
                                         disabled={page === totalPages}
                                     >
                                         <ChevronRight size={16} />

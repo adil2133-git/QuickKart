@@ -54,7 +54,7 @@ export default function KpiStrip() {
 
   if (kpisLoading && !kpis) {
     return (
-      <div className="grid grid-cols-5 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
         {Array.from({ length: 5 }).map((_, i) => (
           <KpiCardSkeleton key={i} />
         ))}
@@ -106,17 +106,17 @@ export default function KpiStrip() {
   ];
 
   return (
-    <div className="grid grid-cols-5 gap-4">
+    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
       {cards.map((kpi) => (
         <div
           key={kpi.label}
-          className="rounded-2xl border border-[#E3E7E1] bg-white px-5 py-4"
+          className="rounded-2xl border border-[#E3E7E1] bg-white p-3.5 sm:px-5 sm:py-4"
         >
-          <p className="mb-2 text-[11px] font-semibold tracking-wide text-[#6E7C74]">
+          <p className="mb-2 text-[10px] sm:text-[11px] font-semibold tracking-wide text-[#6E7C74]">
             {kpi.label}
           </p>
-          <div className="flex flex-col gap-1.5">
-            <span className="text-[26px] font-bold leading-none text-[#16241D]">
+          <div className="flex flex-col gap-1 sm:gap-1.5">
+            <span className="text-xl sm:text-[26px] font-bold leading-none text-[#16241D]">
               {kpi.value}
             </span>
             <div>

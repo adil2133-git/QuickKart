@@ -139,12 +139,12 @@ export default function StoreApplicationReview() {
             <div className="flex h-screen flex-1 flex-col overflow-hidden">
                 <TopBar pageTitle={`Review: ${application.name}`} showSearch={false} />
 
-                <main className="flex-1 overflow-y-auto overflow-x-hidden px-7 py-6">
-                    <div className="flex flex-col gap-6">
-                        <div className="flex items-center justify-between gap-4">
+                <main className="flex-1 overflow-y-auto overflow-x-hidden px-4 sm:px-7 py-4 sm:py-6">
+                    <div className="flex flex-col gap-4 sm:gap-6">
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
                             <button
                                 onClick={() => navigate("/admin/approvals/store")}
-                                className="flex w-fit items-center gap-2 text-[13px] font-medium text-[#6E7C74] transition-colors hover:text-[#16241D]"
+                                className="flex w-fit items-center gap-2 text-[13px] font-medium text-[#6E7C74] transition-colors hover:text-[#16241D] cursor-pointer"
                             >
                                 <ArrowLeft size={16} />
                                 Back to Store Applications
@@ -162,27 +162,27 @@ export default function StoreApplicationReview() {
 
                         <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
                             <div className="flex flex-col gap-6 lg:col-span-2">
-                                <div className="flex flex-col gap-5 rounded-2xl border border-[#E3E7E1] bg-white p-6">
-                                    <div className="flex items-start justify-between gap-4">
-                                        <div className="flex items-start gap-4">
+                                <div className="flex flex-col gap-5 rounded-2xl border border-[#E3E7E1] bg-white p-4 sm:p-6">
+                                    <div className="flex flex-col sm:flex-row items-start justify-between gap-4">
+                                        <div className="flex items-start gap-3 sm:gap-4 min-w-0">
                                             <StoreLogo app={application} />
-                                            <div>
-                                                <p className="text-[18px] font-semibold text-[#16241D]">{application.name}</p>
-                                                <p className="text-[13px] text-[#6E7C74]">Owner — {application.owner}</p>
-                                                <p className="mt-1 text-[12px] text-[#9BAAA1]">
+                                            <div className="min-w-0">
+                                                <p className="truncate text-base sm:text-[18px] font-semibold text-[#16241D]">{application.name}</p>
+                                                <p className="truncate text-[13px] text-[#6E7C74]">Owner — {application.owner}</p>
+                                                <p className="mt-1 text-[11px] sm:text-[12px] text-[#9BAAA1]">
                                                     Code: {application.storeCode} · Type: {application.type} · Submitted{" "}
                                                     {formatDateLabel(application.dateLabel)}
                                                 </p>
                                             </div>
                                         </div>
                                         <span
-                                            className={`whitespace-nowrap rounded-full px-3 py-1 text-[12px] font-medium ${badge.className}`}
+                                            className={`shrink-0 whitespace-nowrap rounded-full px-3 py-1 text-[12px] font-medium ${badge.className}`}
                                         >
                                             {badge.label}
                                         </span>
                                     </div>
 
-                                    <div className="grid grid-cols-1 gap-4 border-t border-[#E3E7E1] pt-4 sm:grid-cols-2">
+                                    <div className="grid grid-cols-1 gap-3 sm:gap-4 border-t border-[#E3E7E1] pt-4 sm:grid-cols-2">
                                         <InfoRow icon={Mail} label="Email Address" value={application.contactEmail} />
                                         <InfoRow icon={Phone} label="Phone Number" value={application.contactPhone} />
                                         <InfoRow icon={MapPin} label="Location" value={application.location} />

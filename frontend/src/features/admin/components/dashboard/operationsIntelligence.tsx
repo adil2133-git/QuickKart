@@ -109,12 +109,12 @@ export default function OperationsIntelligence() {
   return (
     <div className="rounded-2xl border border-[#E3E7E1] bg-white">
       {/* Tabs */}
-      <div className="flex items-center gap-7 border-b border-[#E3E7E1] px-6 pt-5">
+      <div className="flex items-center gap-4 sm:gap-7 overflow-x-auto border-b border-[#E3E7E1] px-4 sm:px-6 pt-4 sm:pt-5">
         {TABS.map((tab) => (
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
-            className={`relative pb-4 text-[14.5px] font-medium transition-colors ${
+            className={`relative pb-4 text-xs sm:text-[14.5px] whitespace-nowrap font-medium transition-colors ${
               activeTab === tab.id
                 ? "text-[#16241D]"
                 : "text-[#9BAAA1] hover:text-[#6E7C74]"
@@ -128,7 +128,7 @@ export default function OperationsIntelligence() {
         ))}
       </div>
 
-      <div className="px-6 pb-5 pt-4">
+      <div className="p-4 sm:px-6 sm:pb-5 sm:pt-4">
         {operationsError && (
           <p className="py-6 text-center text-[13px] text-[#BA1A1A]">{operationsError}</p>
         )}
@@ -161,7 +161,7 @@ export default function OperationsIntelligence() {
             )}
 
             {activeTab === "orders" && totalOrders > 0 && (
-              <div className="flex items-center gap-10">
+              <div className="flex flex-col sm:flex-row items-center gap-6 sm:gap-10">
                 <ResponsiveContainer width={240} height={240}>
                   <PieChart>
                     <Pie
@@ -179,7 +179,7 @@ export default function OperationsIntelligence() {
                     </Pie>
                   </PieChart>
                 </ResponsiveContainer>
-                <div className="flex flex-1 flex-col gap-3">
+                <div className="flex w-full flex-1 flex-col gap-3">
                   {orderStatusData.map((status) => (
                     <div key={status.name} className="flex items-center justify-between">
                       <span className="flex items-center gap-2.5 text-[13.5px] text-[#6E7C74]">
@@ -207,7 +207,7 @@ export default function OperationsIntelligence() {
             )}
 
             {activeTab === "health" && driverHealth && storeHealth && (
-              <div className="grid grid-cols-2 gap-10">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-10">
                 <div>
                   <p className="mb-4 text-[13px] font-semibold text-[#16241D]">
                     Driver Status
